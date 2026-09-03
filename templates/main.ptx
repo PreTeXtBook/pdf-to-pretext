@@ -3,6 +3,8 @@
 <!-- Transcription run: runs/<date>-<name>; see its manifest.md and notes.md -->
 <pretext xml:lang="en-US">
     <docinfo>
+        <!-- Cropped figures and other files go in external/ beside main.ptx -->
+        <directories external="external"/>
         <!-- Only semantic author macros, in forms MathJax accepts; see CLAUDE.md -->
         <macros>
         </macros>

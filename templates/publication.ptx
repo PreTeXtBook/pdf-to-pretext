@@ -4,7 +4,8 @@
 <!-- PreTeXt is more constrained, PreTeXt wins (see CLAUDE.md).            -->
 <publication>
     <source>
-        <directories external="external" generated="generated"/>
+        <!-- the external directory is declared in docinfo (main.ptx), not here -->
+        <directories generated="generated"/>
     </source>
     <numbering>
         <!-- articles: "1" numbers within sections, "0" numbers globally -->
