@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+    <responseDate>2026-09-03T18:57:35Z</responseDate>
+                <request verb="GetRecord" identifier="oai:arXiv.org:2010.15608" metadataPrefix="arXiv">http://oaipmh.arxiv.org/oai</request>
+
+
+    <GetRecord>
+                <record>
+                <header>
+        <identifier>oai:arXiv.org:2010.15608</identifier>
+        <datestamp>2020-10-30</datestamp>
+            <setSpec>math:math:CA</setSpec>
+            <setSpec>math:math:NT</setSpec>
+    </header>
+
+            <metadata>
+                        <arXiv xmlns="http://arxiv.org/OAI/arXiv/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://arxiv.org/OAI/arXiv/ https://oaipmh.arxiv.org/OAI/arXiv.xsd">
+        <id>2010.15608</id>
+        <created>2020-10-29</created>
+            <updated>2020-10-30</updated>
+        <authors>
+                <author>
+                    <keyname>Farmer</keyname>
+                        <forenames>David W.</forenames>
+                </author>
+        </authors>
+        <title>When are the roots of a polynomial real and distinct? A graphical view</title>
+            <categories>math.CA math.NT</categories>
+            <comments>18 pages, 6 figures. Comments welcome</comments>
+            <msc-class>30C15, 11M26</msc-class>
+            <license>http://arxiv.org/licenses/nonexclusive-distrib/1.0/</license>
+            <abstract>We prove the classical result, which goes back at least to Fourier, that a polynomial with real coefficients has all zeros real and distinct if and only if the polynomial and also all of its nonconstant derivatives have only negative minima and positive maxima. Intuition for the result, involving illuminating pictures, is described in detail. The generalization of Fourier&#39;s theorem to certain entire functions of order one (which is conjectural) suggests that the official description of the Riemann Hypothesis Millennium Problem incorrectly describes an equivalence to the Riemann Hypothesis. The paper is reasonably self-contained and is intended be accessible (possibly with some help) to students who have taken two semesters of calculus.</abstract>
+    </arXiv>
+
+            </metadata>
+        </record>
+
+    </GetRecord>
+</OAI-PMH>

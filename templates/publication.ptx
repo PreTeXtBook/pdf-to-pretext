@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Publication file for a transcribed research article.  The numbering  -->
+<!-- section mimics the original's levels where PreTeXt allows it; where  -->
+<!-- PreTeXt is more constrained, PreTeXt wins (see CLAUDE.md).            -->
+<publication>
+    <source>
+        <directories external="external" generated="generated"/>
+    </source>
+    <numbering>
+        <!-- articles: "1" numbers within sections, "0" numbers globally -->
+        <divisions level="2"/>
+        <blocks level="1"/>
+        <equations level="1"/>
+        <figures level="1"/>
+        <footnotes level="0"/>
+    </numbering>
+</publication>

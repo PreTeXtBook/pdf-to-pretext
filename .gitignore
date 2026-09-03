@@ -1,0 +1,13 @@
+# the PreTeXt clone used for builds
+/pretext/
+# transcription attempts
+/runs/
+# fetched documents: reproduced by scripts/fetch-arxiv.sh, licenses vary
+/corpus/**/*.pdf
+/corpus/**/source/
+/corpus/**/eprint*
+/corpus/**/pages/
+/corpus/**/*.txt
+# build and tool residue
+*.log
+__pycache__/

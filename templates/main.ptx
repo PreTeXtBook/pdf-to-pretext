@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Transcribed from: <origin, identifier, version, license> -->
+<!-- Transcription run: runs/<date>-<name>; see its manifest.md and notes.md -->
+<pretext xml:lang="en-US">
+    <docinfo>
+        <!-- Only semantic author macros, in forms MathJax accepts; see CLAUDE.md -->
+        <macros>
+        </macros>
+    </docinfo>
+
+    <article xml:id="article-NAME">
+        <title>TITLE</title>
+
+        <frontmatter>
+            <bibinfo>
+                <author>
+                    <personname>NAME</personname>
+                    <institution>INSTITUTION</institution>
+                    <email>EMAIL</email>
+                </author>
+                <date>DATE</date>
+                <keywords authority="msc" variant="2020">
+                    <keyword>CODE</keyword>
+                </keywords>
+            </bibinfo>
+            <abstract>
+                <p>ABSTRACT</p>
+            </abstract>
+        </frontmatter>
+
+        <!-- Original: Section 1 -->
+        <section xml:id="section-introduction">
+            <title>Introduction</title>
+            <p>TEXT</p>
+        </section>
+
+        <backmatter>
+            <references xml:id="references">
+                <title>References</title>
+                <!-- CSL-style entries in the canonical field order; see references/csl-bibliography.md -->
+            </references>
+        </backmatter>
+    </article>
+</pretext>
