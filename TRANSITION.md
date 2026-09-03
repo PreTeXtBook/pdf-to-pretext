@@ -25,7 +25,9 @@ through pass 3; nothing committed under `runs/`, which is gitignored).
 
 `runs/2026-09-03-farmer-real-roots/` — `manifest.md` (pass 1), `notes.md` (header, policy,
 pass-2 findings, raw material for the skill rewrite), `main.ptx` + `sections/*.ptx` +
-`publication.ptx`, `external/` (five cropped panels, SVG and PDF each).  Validation clean,
+`publication.ptx`, `publication-ams.ptx` (adds `common/journal/@name="ams"`, the PreTeXt
+texstyle for AMS journals), `paper-ams.pdf` (the AMS-style build, amsart, 17 pages),
+`external/` (five cropped panels, SVG and PDF each).  Validation clean,
 HTML and PDF build without warnings, every `xref` resolves, 73 of 73 manifest items present,
 `compare.py` similarity 0.949 (the missing runs are running heads, figure lettering, and
 moved text).  Row recorded in `evaluation/RESULTS.md`.  Rob's rulings during the run:
@@ -35,10 +37,13 @@ image; typos preserved, never corrected.  Builds are under `/tmp/pdf-to-pretext/
 
 ## Next steps, in order
 
-1. Rob reads the built PDF (`/tmp/pdf-to-pretext/farmer-pdf-2/main.pdf`, or rebuild with
-   `skill/pdf-to-pretext/scripts/build.sh`) against the original and rules on the three
-   known departures: Table 5.1 printed as 5.2, the funding sentence absent from the PDF,
-   the second URL of reference [1] dropped.
+1. Rob reads `paper-ams.pdf` (or the plain build, `/tmp/pdf-to-pretext/farmer-pdf-3/main.pdf`;
+   rebuild with `skill/pdf-to-pretext/scripts/build.sh`) against the original and rules on
+   the known departures: Table 5.1 printed as 5.2; the second URL of reference [1]
+   dropped; in the AMS style, equation numbers on the left (amsart's default; the original
+   used the right, so its class options included `reqno`, which the texstyle's
+   `documentclass/@opt` could carry but `journals/texstyles/ams.xml` does not set) and
+   reference labels "1." instead of "[1]".
 2. One small fix outside `runs/` awaits Rob's approval: CLAUDE.md names `scripts/` where
    the scripts are `skill/pdf-to-pretext/scripts/`.  (The templates and
    `references/numbering.md` were corrected and committed on 2026-09-03.)
