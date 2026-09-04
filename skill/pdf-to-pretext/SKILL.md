@@ -56,16 +56,26 @@ the page images open:
 - Every block preceded by its original-number comment; every reference an `xref`; every
   citation an `xref` to a `biblio`.
 - Element names verified against the schema (`references/article-elements.md`).
+- A construct whose rendering depends on a font feature (a bold or script Greek letter,
+  an unusual alphabet, a wide accent) is a render risk: list each one in the manifest and
+  verify it in every built output, or use the robust form and record the typographic
+  difference.  A bold Greek capital via `\mathbf` silently vanishes under xelatex.
 - Validate after every division (`scripts/validate.sh`); fix before moving on.
 
 ## Pass 3 — the whole document
 
 1. Every `xref` resolves; every manifest item is present (count them).
-2. `scripts/validate.sh` clean; `scripts/build.sh` to HTML and to PDF succeed.
-3. `scripts/compare.py <original.pdf> <built.pdf>`: record the similarity and read every
-   run it reports missing.
-4. Read three sample pages side by side with the original, one of them dense with
-   mathematics; fix what you find; repeat until a pass finds nothing.
+2. `scripts/validate.sh` clean; `scripts/build.sh` to HTML and to PDF succeed, including
+   the glyph check that follows a PDF build: no "Missing character" in the build log, no
+   U+FFFD in the PDF's text layer.  Either one is a character of the source that did not
+   reach the page, and a failure.
+3. `scripts/compare.py <original.pdf> <built.pdf>`: record the similarity, read every run
+   it reports absent (moved text counts as absent), and account for every symbol it
+   reports with a lower count in the build.
+4. Read every page of every delivered output side by side with the original when the
+   paper is short (under about twenty pages); for a longer paper, every page with a
+   display or a figure and a sample of the rest.  A single lost glyph cannot be found by
+   sampling.  Fix what you find; repeat until a pass finds nothing.
 5. Record the run in `evaluation/RESULTS.md`; finish `notes.md` with what was hard and
    what this skill should say differently next time.
 
@@ -76,4 +86,6 @@ come out as single characters; end-of-line hyphens split words; `--` and quotati
 need their PreTeXt elements; a "Notation" or "Remark" environment is often unnumbered;
 a named theorem keeps its name as a `title`; "Proof of Theorem 3" is a titled `proof`;
 lettered main theorems ("Theorem A") cannot be lettered by PreTeXt — keep the letter in
-the title and the comment.
+the title and the comment; a lost glyph leaves only two traces, the engine's "Missing
+character" warning in the build log and a U+FFFD in the text layer, and the prose
+comparison cannot see it.

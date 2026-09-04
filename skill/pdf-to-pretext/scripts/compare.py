@@ -1,32 +1,56 @@
 #!/usr/bin/env python3
-"""Compare the words of an original PDF with the words of a PDF built from the
-transcription: a similarity ratio and the longest runs of original text that
-are missing from the build.
+"""Compare an original PDF with a PDF built from the transcription, two ways.
+
+1. Words: a similarity ratio and the longest runs of original text absent from the
+   build.  Mathematics extracts as noise from both, so this measures prose, structure,
+   and omissions -- not formulas.  A run that moved (a footnote, a floated caption)
+   counts as absent; read the runs, do not trust the number alone.
+2. Symbols: counts of every non-ASCII character in the two text layers, after
+   normalization, and the characters whose count is lower in the build.  Words cannot
+   see a lost Greek letter; this can ("GREEK CAPITAL LETTER GAMMA  original 79  built 78").
+   Characters found only in the build are listed briefly: those are usually extraction
+   differences, not errors.
 
 Usage: compare.py <original.pdf> <built.pdf>
-
-Both PDFs go through pdftotext; hyphenation at line ends, ligatures, and
-whitespace are normalized before comparison.  Mathematics extracts as noise
-from both, so this measures prose, structure, and omissions — not formulas.
 """
+import collections
 import difflib
 import re
 import subprocess
 import sys
+import unicodedata
+
+LIGATURES = {"ﬁ": "fi", "ﬂ": "fl", "ﬀ": "ff", "ﬃ": "ffi", "ﬄ": "ffl"}
+PUNCTUATION = {"’": "'", "‘": "'", "“": '"', "”": '"',
+               "–": "-", "—": "-", "˜": "~", " ": " "}
 
 
-def words(pdf_path):
-    text = subprocess.run(["pdftotext", pdf_path, "-"], capture_output=True,
+def text(pdf_path):
+    return subprocess.run(["pdftotext", pdf_path, "-"], capture_output=True,
                           text=True, check=True).stdout
-    text = text.replace("ﬁ", "fi").replace("ﬂ", "fl")
-    text = re.sub(r"-\n(?=[a-z])", "", text)
-    text = text.replace("\f", " ")
-    return re.findall(r"[A-Za-z][A-Za-z'-]*", text)
+
+
+def words(t):
+    for k, v in LIGATURES.items():
+        t = t.replace(k, v)
+    t = re.sub(r"-\n(?=[a-z])", "", t)
+    t = t.replace("\f", " ")
+    return re.findall(r"[A-Za-z][A-Za-z'-]*", t)
+
+
+def symbols(t):
+    for k, v in LIGATURES.items():
+        t = t.replace(k, v)
+    for k, v in PUNCTUATION.items():
+        t = t.replace(k, v)
+    t = t.replace("ı́", "í")  # dotless i with acute has no precomposed form
+    t = unicodedata.normalize("NFC", t)
+    return collections.Counter(c for c in t if ord(c) > 127 and not c.isspace())
 
 
 def main(original_path, built_path):
-    original = words(original_path)
-    built = words(built_path)
+    original_text, built_text = text(original_path), text(built_path)
+    original, built = words(original_text), words(built_text)
     matcher = difflib.SequenceMatcher(None, original, built, autojunk=False)
     print("original words: {}   built words: {}".format(len(original), len(built)))
     print("similarity: {:.3f}".format(matcher.ratio()))
@@ -38,6 +62,15 @@ def main(original_path, built_path):
     print("longest runs of original words absent from the build:")
     for length, run in missing[:10]:
         print("  [{} words] {}".format(length, run[:160]))
+    a, b = symbols(original_text), symbols(built_text)
+    lost = sorted(((c, a[c], b[c]) for c in a if b[c] < a[c]), key=lambda r: r[2] - r[1])
+    print("symbols with a lower count in the build ({}):".format(len(lost)))
+    for c, x, y in lost:
+        print("  {} {:<38} original {:>4}  built {:>4}".format(
+            c, unicodedata.name(c, "?")[:38], x, y))
+    extra = sorted(c for c in b if a[c] == 0)
+    if extra:
+        print("symbols only in the build (extraction differences, usually): " + " ".join(extra))
 
 
 if __name__ == "__main__":
