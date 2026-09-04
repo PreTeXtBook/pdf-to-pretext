@@ -1,7 +1,9 @@
 # Transition — state of the project for the next session
 
-Updated 2026-09-03, end of the first transcription session (PDF-only run of 2010.15608 complete
-through pass 3; nothing committed under `runs/`, which is gitignored).
+Updated 2026-09-04, end of the second session.  Two documents transcribed from their PDFs alone
+(Farmer, arXiv 2010.15608; Beezer, the Sylow subgraphs preprint), both built into every
+PreTeXt output and packaged as demonstration directories.  Rob is letting the project rest.
+`runs/` is gitignored, so the runs live only on this machine.
 
 ## What exists
 
@@ -21,7 +23,16 @@ through pass 3; nothing committed under `runs/`, which is gitignored).
   figures), `metadata-oai.xml`.  See `corpus/MANIFEST.md` for title, author, license.
 - `evaluation/RESULTS.md` (one row, the PDF-only run), `notes/decisions-2026-09-03.md`.
 
-## Demonstration directory (2026-09-04)
+## Demonstration directories (2026-09-04)
+
+EPUBCheck 5.3.0 is at `/home/rob/epubcheck/` (installed 2026-09-04, delete the directory
+to remove); the system 4.2.6 gives 36 false CSS errors on every PreTeXt EPUB.  Under
+5.3.0 the Farmer EPUB has 40 errors, one per numbered display, from MathJax's
+`data-mjx-viewBox` attribute; the scvt EPUB is clean.  Filed as PreTeXtBook/pretext issue #3209 (2026-09-04).
+
+`runs/2026-09-04-scvt-demonstration/`: Rob's paper in every output, with the DOI link to
+the published version and his permission line; the two LaTeX PDFs are hand-patched
+(issues #3207 and #3208) and the XSL-FO PDF needs no patch.  Details in the scvt run notes.
 
 `runs/2026-09-04-farmer-demonstration/`: the Farmer paper in every PreTeXt output behind
 `index.html` (source zip, usual PDF, AMS PDF, PDF/UA-1 XSL-FO PDF, HTML, EPUB, Jupyter,
@@ -65,24 +76,23 @@ image; typos preserved, never corrected.  Builds are under `/tmp/pdf-to-pretext/
 
 ## Next steps, in order
 
-1. Rob reads `paper-ams.pdf` (or the plain build, `/tmp/pdf-to-pretext/farmer-pdf-3/main.pdf`;
-   rebuild with `skill/pdf-to-pretext/scripts/build.sh`) against the original and rules on
-   the known departures: Table 5.1 printed as 5.2; the second URL of reference [1]
-   dropped; in the AMS style, equation numbers on the left (amsart's default; the original
-   used the right, so its class options included `reqno`, which the texstyle's
-   `documentclass/@opt` could carry but `journals/texstyles/ams.xml` does not set) and
-   reference labels "1." instead of "[1]".
-2. One small fix outside `runs/` awaits Rob's approval: CLAUDE.md names `scripts/` where
-   the scripts are `skill/pdf-to-pretext/scripts/`.  (The templates and
-   `references/numbering.md` were corrected and committed on 2026-09-03.)
-3. For scvt: the PDF+LaTeX run (`source/scvt_expo_submit.tex` matches `paper.pdf`), the
-   diff against the PDF-only run, then a run from `published.pdf` (no key) and a diff of
-   the submitted and revised texts; the PreFigure recreation of Figure 1 (Paley graph on
-   nine vertices, geometry in the manifest, `source/scvt9.pdf` as the check).
-4. The second run on 2010.15608 with the LaTeX source as the primary text; compare with the
-   PDF-only run (words, mathematics, and the macro decisions the source makes visible).
-5. Rewrite `SKILL.md` from the runs' notes (`notes.md`, section "For the skill").
-6. More of Rob's papers into `corpus/own/`; a PreTeXt-authored article into `corpus/round-trip/`.
+1. Any new document: the prompt at the end of this file.  The skill is still the first
+   draft plus the glyph checks; the runs' notes (`notes.md`, sections "For the skill")
+   hold what it should say differently.
+2. The three PreTeXt issues filed from this work: #3207 (citations in theorem headings, and
+   the unbraced optional argument in the classic conversion), #3208 (`support` in the
+   LaTeX article), #3209 (MathJax's `data-mjx-viewBox` in EPUB).  Until #3207 and #3208
+   are fixed, the LaTeX PDFs of a paper with citations in headings or a long funding note
+   need the hand patches described in the scvt run notes.  Not filed: `-c prefigure -f
+   tactile` fails in `pretext.py` on a missing `output/tactile/` directory with prefig 0.7.4;
+   the braille conversion's errors for references to numbered equations.
+3. For scvt: the PDF+LaTeX run (`source/scvt_expo_submit.tex` matches `paper.pdf`) and the
+   diff against the PDF-only run; then a run from `published.pdf` (no key) and a diff of the
+   submitted and revised texts.
+4. For Farmer: the PDF+LaTeX run, same comparison.
+5. Rewrite `SKILL.md` from the runs' notes.
+6. One small fix outside `runs/` still awaits Rob's approval: CLAUDE.md names `scripts/`
+   where the scripts are `skill/pdf-to-pretext/scripts/`.
 
 ## Open items
 
@@ -98,11 +108,26 @@ image; typos preserved, never corrected.  Builds are under `/tmp/pdf-to-pretext/
 
 ## Prompt for a fresh session in this directory
 
+For a paper that is a local PDF (with or without LaTeX source):
+
 ```
-Read CLAUDE.md and TRANSITION.md, then skill/pdf-to-pretext/SKILL.md.  The PDF-only run of
-corpus/arxiv/2010.15608 is complete in runs/2026-09-03-farmer-real-roots; read its notes.md.
-Start the second run of the same paper with the LaTeX source in corpus/arxiv/2010.15608/source/
-as the primary text and the PDF as the visual check; never consult an HTML rendering.  Create
-a new run directory, write its notes header with the model you are, and survey into a
-manifest as SKILL.md describes.  Ask before creating anything outside runs/.
+Read CLAUDE.md and TRANSITION.md, then skill/pdf-to-pretext/SKILL.md.  Run
+`git -C pretext pull` first.  The new document is the PDF at <path>; its LaTeX source, if
+any, is at <path>.  Put it in corpus/<own or wild>/<short-name>/ with the usual layout
+(paper.pdf, pages/, paper.txt, source/ unopened), add its entry to corpus/MANIFEST.md, and
+tell me the license situation before anything else.  Then pass 1 from the PDF alone: create
+the run directory, write its notes header with the model you are, start the effort log, and
+survey the whole paper into a manifest as SKILL.md describes.  Do not open the LaTeX source
+and never consult an HTML rendering.  Ask before creating anything outside runs/ other
+than the corpus directory.
 ```
+
+For an arXiv paper, replace the second and third sentences with:
+
+```
+The new document is arXiv <identifier>; fetch it with skill/pdf-to-pretext/scripts/fetch-arxiv.sh,
+add its entry to corpus/MANIFEST.md, and tell me the license situation before anything else.
+```
+
+Then, when pass 1 is done: "your decisions were good, on to pass 2" (or the corrections
+first).  Pass 2 runs through the pass-3 checks and ends with a results row.
