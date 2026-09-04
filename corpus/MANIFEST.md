@@ -15,8 +15,8 @@ PDFs and sources are not committed; `skill/pdf-to-pretext/scripts/fetch-arxiv.sh
   Author: David W. Farmer (American Institute of Mathematics).  math.CA, math.NT;
   MSC 30C15, 11M26.  Version 1, 2020-10-29; no journal reference, no DOI.
 - License: arXiv non-exclusive distribution 1.0 (`metadata-oai.xml`) — NOT redistributable
-  by us.  The PDF and source stay out of the repository; a transcription is not to be
-  published without the author's permission.
+  by us.  The PDF and source stay out of the repository.  David Farmer has given permission
+  for the distribution of the transcription and its built outputs (Rob, 2026-09-04).
 - Role: first document.  Both paths — PDF alone (scored), then PDF+LaTeX.
 
 ## corpus/own

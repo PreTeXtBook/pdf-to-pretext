@@ -21,6 +21,15 @@ through pass 3; nothing committed under `runs/`, which is gitignored).
   figures), `metadata-oai.xml`.  See `corpus/MANIFEST.md` for title, author, license.
 - `evaluation/RESULTS.md` (one row, the PDF-only run), `notes/decisions-2026-09-03.md`.
 
+## Demonstration directory (2026-09-04)
+
+`runs/2026-09-04-farmer-demonstration/`: the Farmer paper in every PreTeXt output behind
+`index.html` (source zip, usual PDF, AMS PDF, PDF/UA-1 XSL-FO PDF, HTML, EPUB, Jupyter,
+braille).  Meant for pretextbook.org; David Farmer has given permission for the
+distribution (Rob, 2026-09-04), and the page says so.  Findings from the builds are in the Farmer run notes.
+The clone's `script/mjsre/` now has its node packages installed (needed for EPUB,
+braille, and XSL-FO).
+
 ## State of the second run (2026-09-03): corpus/own/scvt
 
 `runs/2026-09-03-beezer-scvt/` — Rob's paper "Sylow Subgraphs in Self-Complementary Vertex
@@ -35,7 +44,7 @@ nothing.  A third, in `xsl/pretext-latex-classic.xsl` (used by the AMS texstyle)
 into the amsthm optional argument unbraced, so a citation in a theorem title breaks the
 heading; the two-line fix is `runs/2026-09-03-beezer-scvt/pretext-latex-classic-optional-argument.patch`,
 and `paper-ams-patched.pdf` there shows the result.  Filed with the markup proposal as
-PreTeXtBook/pretext issue #3207 (2026-09-03); the `support` defects are not yet filed.
+PreTeXtBook/pretext issue #3207 (2026-09-03); the `support` defects as issue #3208 (2026-09-04).
 A missed glyph (a bold Γ that xelatex could not set) led to three skill changes, committed
 2026-09-03: `build.sh` fails a PDF build on "Missing character" or U+FFFD, `compare.py`
 reports symbols whose count drops in the build, and pass 3 reads every page of a short paper.  `corpus/MANIFEST.md` has the document's entry (uncommitted).
