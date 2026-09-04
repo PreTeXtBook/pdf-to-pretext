@@ -21,6 +21,25 @@ through pass 3; nothing committed under `runs/`, which is gitignored).
   figures), `metadata-oai.xml`.  See `corpus/MANIFEST.md` for title, author, license.
 - `evaluation/RESULTS.md` (one row, the PDF-only run), `notes/decisions-2026-09-03.md`.
 
+## State of the second run (2026-09-03): corpus/own/scvt
+
+`runs/2026-09-03-beezer-scvt/` — Rob's paper "Sylow Subgraphs in Self-Complementary Vertex
+Transitive Graphs", the submitted version, PDF only.  `manifest.md`, `notes.md` (with an
+effort log per pass), `main.ptx` + `sections/*.ptx`, `publication.ptx`,
+`publication-ams.ptx`, `paper-ams.pdf`, `external/` (one figure).  Validation clean; HTML
+and PDF build without warnings; 54 of 54 items; every number coincides; `compare.py`
+0.958.  Two PreTeXt defects found and recorded in `notes.md`, both in
+`xsl/pretext-latex-common.xsl`: `author/support` becomes an unbreakable `\author` row (a
+long statement pushes the author block off the page), and `bibinfo/support` renders
+nothing.  A third, in `xsl/pretext-latex-classic.xsl` (used by the AMS texstyle): titles go
+into the amsthm optional argument unbraced, so a citation in a theorem title breaks the
+heading; the two-line fix is `runs/2026-09-03-beezer-scvt/pretext-latex-classic-optional-argument.patch`,
+and `paper-ams-patched.pdf` there shows the result.  Filed with the markup proposal as
+PreTeXtBook/pretext issue #3207 (2026-09-03); the `support` defects are not yet filed.
+A missed glyph (a bold Γ that xelatex could not set) led to three skill changes, committed
+2026-09-03: `build.sh` fails a PDF build on "Missing character" or U+FFFD, `compare.py`
+reports symbols whose count drops in the build, and pass 3 reads every page of a short paper.  `corpus/MANIFEST.md` has the document's entry (uncommitted).
+
 ## State of the first run (2026-09-03)
 
 `runs/2026-09-03-farmer-real-roots/` — `manifest.md` (pass 1), `notes.md` (header, policy,
@@ -47,10 +66,14 @@ image; typos preserved, never corrected.  Builds are under `/tmp/pdf-to-pretext/
 2. One small fix outside `runs/` awaits Rob's approval: CLAUDE.md names `scripts/` where
    the scripts are `skill/pdf-to-pretext/scripts/`.  (The templates and
    `references/numbering.md` were corrected and committed on 2026-09-03.)
-3. The second run on 2010.15608 with the LaTeX source as the primary text; compare with the
+3. For scvt: the PDF+LaTeX run (`source/scvt_expo_submit.tex` matches `paper.pdf`), the
+   diff against the PDF-only run, then a run from `published.pdf` (no key) and a diff of
+   the submitted and revised texts; the PreFigure recreation of Figure 1 (Paley graph on
+   nine vertices, geometry in the manifest, `source/scvt9.pdf` as the check).
+4. The second run on 2010.15608 with the LaTeX source as the primary text; compare with the
    PDF-only run (words, mathematics, and the macro decisions the source makes visible).
-4. Rewrite `SKILL.md` from the two runs' notes (`notes.md`, section "For the skill").
-5. Rob's own papers into `corpus/own/`; a PreTeXt-authored article into `corpus/round-trip/`.
+5. Rewrite `SKILL.md` from the runs' notes (`notes.md`, section "For the skill").
+6. More of Rob's papers into `corpus/own/`; a PreTeXt-authored article into `corpus/round-trip/`.
 
 ## Open items
 
