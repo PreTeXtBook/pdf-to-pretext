@@ -1,6 +1,6 @@
 # Transition — state of the project for the next session
 
-Updated 2026-09-04, end of the second session.  Two documents transcribed from their PDFs alone
+Updated 2026-09-16, end of the third session (third document complete with its demonstration).  Two documents transcribed from their PDFs alone
 (Farmer, arXiv 2010.15608; Beezer, the Sylow subgraphs preprint), both built into every
 PreTeXt output and packaged as demonstration directories.  Rob is letting the project rest.
 `runs/` is gitignored, so the runs live only on this machine.
@@ -13,7 +13,7 @@ PreTeXt output and packaged as demonstration directories.  Rob is letting the pr
   `csl-bibliography`, `numbering`, `identifiers`, `macros`), and scripts
   (`fetch-arxiv.sh`, `render-pages.sh`, `extract-text.sh`, `build.sh`, `validate.sh`,
   `compare.py`, `run-header.sh`, `block-classes.py`).  All scripts smoke-tested.
-- `pretext/` — a clone of PreTeXtBook/pretext at `59cd06c1` (master, 2026-09-03), not
+- `pretext/` — a clone of PreTeXtBook/pretext at `93b7f665` (master, 2026-09-17), not
   committed; `git -C pretext pull` at the start of each session.  Building and validating
   the minimal example through `~/.claude/pretext-venv` from this clone works.
 - `templates/main.ptx`, `templates/publication.ptx` — starting points.
@@ -40,6 +40,53 @@ braille).  Meant for pretextbook.org; David Farmer has given permission for the
 distribution (Rob, 2026-09-04), and the page says so.  Findings from the builds are in the Farmer run notes.
 The clone's `script/mjsre/` now has its node packages installed (needed for EPUB,
 braille, and XSL-FO).
+
+## State of the third run (2026-09-16): corpus/arxiv/2607.05283, PDF only, complete
+
+`runs/2026-09-16-bharathram-burau-faithful/` — Bharathram, Birman, Brendle, "The Burau
+representation is faithful for n = 4" (arXiv 2607.05283v2, 28 pages, CC BY 4.0, so the first
+redistributable document).  `manifest.md`, `notes.md` (effort log per pass, findings for the
+skill), `errata.md` (what looks wrong in the arXiv version, none of it changed), `main.ptx`
++ `sections/*.ptx`, `publication.ptx`, `publication-ams.ptx`, `external/` (58 panels, SVG
+and PDF each), `figure-spec.json` + `figure-boxes.json` (the crop script's input and
+output), `paper.pdf` (the usual build) and `paper-ams-patched.pdf`.  Validation clean;
+HTML without warnings; PDF 30 pages, glyph check clean; every page read side by side;
+`compare.py` 0.963; every item present.  Rob's rulings: the Main Theorem is numbered
+(1.1, shifting Corollary 1.1 and Proposition 1.2 by one); `creator` + `origins` for
+attributions; figures `distinct="yes"`; titles stored without their final period because
+PreTeXt supplies it (a general rule now, in `SKILL.md`); the twenty-term display broken in
+two.  `corpus/MANIFEST.md` has the entry; `evaluation/RESULTS.md` the row.
+
+Every figure panel, all 58, is a PreFigure diagram (2026-09-18, Rob's request, in two
+efforts logged separately in the run notes): Figures 1.1, 2.1, and 3.1 measured and traced
+by hand-written scripts, the other 52 panels vectorized by the general tracer
+`skill/pdf-to-pretext/scripts/trace-figure.py` (curves by color, arrowheads, dots, dashes,
+fills, bands, labels from the text layer) and a generator; `prefigure-work/` in the run
+directory has both pipelines, the traces, the PreFigure sources, and the comparison sheets.
+The small losses of the first pass (arrowheads, dotted tails, a dotted leader, a kink, two
+marked points) were fixed on 2026-09-19; the run notes list what each needed.  Building this paper needs `pretext -c prefigure -f svg` and `-f pdf` into
+`generated/prefigure/` before the HTML and PDF builds (done; the 58 files of each kind are
+there and in the demonstration's source zip).
+
+`runs/2026-09-16-burau-demonstration/`: the paper in every output behind `index.html`
+with the CC BY 4.0 attribution and the list of changes (source zip, usual PDF, AMS PDF,
+XSL-FO PDF passing veraPDF as PDF/UA-1, HTML, EPUB, Jupyter, braille).  Ready to upload.
+
+**PreTeXt defects from this run.**  (1) Filed as PreTeXtBook/pretext #3218 (2026-09-16),
+fixed upstream in PR #3220 (merged 2026-09-17) and closed: the clone is pulled to
+`93b7f665`, the PDF builds without any patch, and the patch file in the run directory is a
+record only.  For the AMS PDF, hand-edit the generated LaTeX in one place (fontspec
+`no-math`, defect (2)).  (2) Not filed: the AMS texstyle under xelatex fails
+on a subscript inside `\mathrm` in the abstract because fontspec redeclares the `\mathrm`
+alphabet and amsart sets the abstract before its script size exists; `\usepackage[no-math]
+{fontspec}` cures it (the AMS PDF in the demonstration was compiled by hand that way).
+(3) Not filed: mathematics in the article title reaches the EPUB's `dc:title` and cover
+page as MathJax SVG markup, giving 15 EPUBCheck errors; a plain-text title belongs there.
+
+**Skill.**  `scripts/crop-figures.py` is new (page-region crops from text positions and
+ink, a JSON spec of panels per figure, contact sheets); `SKILL.md` has a paragraph of
+this run's lessons under Pitfalls.  The full rewrite of `SKILL.md` from the three runs'
+notes is still to do.
 
 ## State of the second run (2026-09-03): corpus/own/scvt
 
@@ -76,7 +123,9 @@ image; typos preserved, never corrected.  Builds are under `/tmp/pdf-to-pretext/
 
 ## Next steps, in order
 
-1. Any new document: the prompt at the end of this file.  The skill is still the first
+1. Any new document: the prompt at the end of this file.  For 2607.05283 the PDF+LaTeX run
+   (`source/Burau4-final.tex`) and the diff against the PDF-only run are next; reapply the
+   subfigure patch (issue #3218) before building its PDF.  The skill is still the first
    draft plus the glyph checks; the runs' notes (`notes.md`, sections "For the skill")
    hold what it should say differently.
 2. The three PreTeXt issues filed from this work: #3207 (citations in theorem headings, and

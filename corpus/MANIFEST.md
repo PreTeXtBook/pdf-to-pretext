@@ -19,6 +19,31 @@ PDFs and sources are not committed; `skill/pdf-to-pretext/scripts/fetch-arxiv.sh
   for the distribution of the transcription and its built outputs (Rob, 2026-09-04).
 - Role: first document.  Both paths — PDF alone (scored), then PDF+LaTeX.
 
+## corpus/arxiv/2607.05283
+
+- Fetched 2026-09-16: `paper.pdf` (28 pages, letter, arXiv GenPDF from pdflatex with TeX
+  Live 2025, post-processed by pikepdf; text layer present, 14,427 words), e-print source
+  (`source/Burau4-final.tex`, `Burau4.bib`, 41 PNG figures, `00README.json`), `pages/`
+  (150 dpi), `paper.txt`.  The fetch script's leftovers `eprint.bin` and `source/eprint`
+  (4 MB each) are still there, gitignored.
+- Every figure is a raster PNG embedded in the PDF with LaTeX-typeset labels laid over it:
+  41 images, 33 figures, 16 of them composite.  Theorem-like environments numbered within
+  sections on one shared counter (observation, theorem, corollary, proposition, lemma);
+  one unnumbered named theorem ("Main Theorem"); figures numbered within sections;
+  equations numbered globally; run-in `\paragraph` headings; `alpha`-style citation keys.
+- Title (the PDF's): "The Burau representation is faithful for n = 4".  Authors: Vasudha
+  Bharathram, Joan S. Birman, Tara E. Brendle; no affiliations printed.  Dated
+  September 15, 2026 on the title page; arXiv version 2 of 2026-09-14.  math.GT, math.GR;
+  MSC 57M07, 57M10, 20F65 (the arXiv record, whose title is longer; neither is used in the
+  transcription).
+- License: Creative Commons Attribution 4.0 (`metadata-oai.xml`) — redistributable with
+  attribution to the authors and a link to the license; the PDF and source stay out of the
+  repository by the general rule (`.gitignore`), and a transcription with its built outputs
+  may be published with that attribution.
+- Role: third document; the first under CC BY, the first with raster figures, overlays, and
+  subfigures.  PDF-only run first (`runs/2026-09-16-bharathram-burau-faithful`), scored
+  against the source later; then PDF+LaTeX.
+
 ## corpus/own
 
 Rob's own papers (rights held, LaTeX source, an original PDF and a rebuilt one each).
