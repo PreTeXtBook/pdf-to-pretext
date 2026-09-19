@@ -64,7 +64,12 @@ by hand-written scripts, the other 52 panels vectorized by the general tracer
 fills, bands, labels from the text layer) and a generator; `prefigure-work/` in the run
 directory has both pipelines, the traces, the PreFigure sources, and the comparison sheets.
 The small losses of the first pass (arrowheads, dotted tails, a dotted leader, a kink, two
-marked points) were fixed on 2026-09-19; the run notes list what each needed.  Building this paper needs `pretext -c prefigure -f svg` and `-f pdf` into
+marked points) were fixed on 2026-09-19; the run notes list what each needed.  Tactile PDFs of all 58 diagrams exist (2026-09-19): `generated/prefigure/tactile/`,
+the demonstration's `tactile/index.html`, and `runs/2026-09-16-burau-tactile/` with its zip
+for embossing.  Two tool defects met on the way, both recorded in the run notes and not
+filed: PreFigure's tactile mode needs integer `thickness` (an `int()` in `diagram.py`), and
+the script's `-c prefigure -f tactile` fails because only `-f all` creates `output/tactile/`
+(one-line fix in `individual_prefigure_conversion`); `-f all` is the working route.  Building this paper needs `pretext -c prefigure -f svg` and `-f pdf` into
 `generated/prefigure/` before the HTML and PDF builds (done; the 58 files of each kind are
 there and in the demonstration's source zip).
 
