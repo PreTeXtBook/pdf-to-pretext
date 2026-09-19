@@ -81,6 +81,25 @@ the page images open:
 
 ## Pitfalls
 
+PreTeXt supplies the period after a title, on `paragraphs`, `li`, and theorem-like blocks
+alike, so a title copied with its final period prints two: store titles without the
+period, but keep a question mark or any other final punctuation the author wrote.  A
+display wider than the text block spills into the margin in the original but is clipped
+at the page edge by the LaTeX conversion: break it into `mrow`s (a typographic change)
+rather than lose terms.  Figures that are pictures with labels typeset over them are
+cropped from the page with `scripts/crop-figures.py` (boxes from text positions and ink,
+a spec of panels per figure, contact sheets to check); composites are cut into panels,
+lettered only where the original letters them, with panel widths from the pictures'
+natural sizes.  A hand-drawn arc can be recreated in PreFigure by tracing it from a 600-dpi render with
+`scripts/trace-curve.py` and feeding the points to a `spline` with chord-length `t-values`;
+crossings with gaps are one spline drawn piecewise by `domain`, with the crossing points as
+knots.  A whole colored line drawing is vectorized by `scripts/trace-figure.py` (curves by
+color, arrowheads, dots, dashes, fills, bands) and turned into a PreFigure diagram of
+`polygon`s with labels from the text layer; tune its palette per paper and read a
+comparison sheet after every change.  Count items from the assembled XML, not from the manifest's own header.
+After a PDF build, read the `Overfull` lines above about twenty points as well as the
+glyph check.
+
 Two-column layouts interleave in extraction; footnotes float; ligatures (`fi`, `fl`)
 come out as single characters; end-of-line hyphens split words; `--` and quotation marks
 need their PreTeXt elements; a "Notation" or "Remark" environment is often unnumbered;
