@@ -69,7 +69,8 @@ the demonstration's `tactile/index.html`, and `runs/2026-09-16-burau-tactile/` w
 for embossing.  Two tool defects met on the way, both recorded in the run notes and not
 filed: PreFigure's tactile mode needs integer `thickness` (an `int()` in `diagram.py`), and
 the script's `-c prefigure -f tactile` fails because only `-f all` creates `output/tactile/`
-(one-line fix in `individual_prefigure_conversion`); `-f all` is the working route.  Building this paper needs `pretext -c prefigure -f svg` and `-f pdf` into
+(one-line fix in `individual_prefigure_conversion`, filed as PreTeXtBook/pretext issue #3221 on 2026-09-19);
+`-f all` is the working route.  Building this paper needs `pretext -c prefigure -f svg` and `-f pdf` into
 `generated/prefigure/` before the HTML and PDF builds (done; the 58 files of each kind are
 there and in the demonstration's source zip).
 
