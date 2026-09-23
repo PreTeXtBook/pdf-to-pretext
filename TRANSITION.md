@@ -37,8 +37,9 @@ to remove); the system 4.2.6 gives 36 false CSS errors on every PreTeXt EPUB.  U
 `data-mjx-viewBox` attribute; the scvt EPUB is clean.  Filed as PreTeXtBook/pretext issue #3209 (2026-09-04).
 
 `runs/2026-09-04-scvt-demonstration/`: Rob's paper in every output, with the DOI link to
-the published version and his permission line; the two LaTeX PDFs are hand-patched
-(issues #3207 and #3208) and the XSL-FO PDF needs no patch.  Details in the scvt run notes.
+the published version and his permission line.  Rebuilt 2026-09-23 from the clone at
+`93b7f665`, where #3207 and #3208 are fixed, so every PDF is now the pipeline's own,
+unpatched.  Details in the scvt run notes.
 
 `runs/2026-09-04-farmer-demonstration/`: the Farmer paper in every PreTeXt output behind
 `index.html` (source zip, usual PDF, AMS PDF, PDF/UA-1 XSL-FO PDF, HTML, EPUB, Jupyter,
@@ -115,6 +116,8 @@ into the amsthm optional argument unbraced, so a citation in a theorem title bre
 heading; the two-line fix is `runs/2026-09-03-beezer-scvt/pretext-latex-classic-optional-argument.patch`,
 and `paper-ams-patched.pdf` there shows the result.  Filed with the markup proposal as
 PreTeXtBook/pretext issue #3207 (2026-09-03); the `support` defects as issue #3208 (2026-09-04).
+Both are fixed and closed (#3207 on 2026-09-15, #3208 on 2026-09-16), and the clone at
+`93b7f665` builds this paper's LaTeX PDFs with no patch.
 A missed glyph (a bold Γ that xelatex could not set) led to three skill changes, committed
 2026-09-03: `build.sh` fails a PDF build on "Missing character" or U+FFFD, `compare.py`
 reports symbols whose count drops in the build, and pass 3 reads every page of a short paper.  `corpus/MANIFEST.md` has the document's entry (uncommitted).
@@ -144,13 +147,15 @@ image; typos preserved, never corrected.  Builds are under `/tmp/pdf-to-pretext/
    were sent for embossing (`runs/2026-09-16-burau-tactile.zip`); if the embosser wants
    heavier lines, raise the `thickness` values in the sections and rerun `-c prefigure -f all`.
 2. PreTeXt issues filed from this work: #3207 (citations in theorem headings, and the
-   unbraced optional argument in the classic conversion), #3208 (`support` in the LaTeX
-   article), #3209 (MathJax's `data-mjx-viewBox` in EPUB), #3218 (subfigures with distinct
-   figure numbering; fixed and closed), #3221 (`-c prefigure -f tactile` and the missing
-   `output/tactile/` directory).  Until #3207 and #3208 are fixed, the LaTeX PDFs of a paper
-   with citations in headings or a long funding note need the hand patches described in
-   the scvt run notes.  Not filed: the AMS texstyle under xelatex fails on a subscript inside
-   `\mathrm` in an abstract (fontspec `no-math` cures it); mathematics in an article title
+   unbraced optional argument in the classic conversion; fixed and closed), #3208
+   (`support` in the LaTeX article; fixed and closed), #3209 (MathJax's `data-mjx-viewBox`
+   in EPUB; open), #3218 (subfigures with distinct figure numbering; fixed and closed),
+   #3221 (`-c prefigure -f tactile` and the missing `output/tactile/` directory; closed
+   upstream 2026-09-22, newer than the clone at `93b7f665`).  The hand patches for #3207
+   and #3208 are no longer needed (checked on the scvt paper, 2026-09-23).  The fix for
+   #3207 added an `origins` element (PR #3217) as the home for a block's citations; the
+   scvt source still puts them in `title`, and the skill should learn `origins`.  Not
+   filed: the AMS texstyle under xelatex fails on a subscript inside `\mathrm` in an abstract (fontspec `no-math` cures it); mathematics in an article title
    reaches the EPUB's `dc:title` as MathJax markup; the braille conversion's errors for
    references to numbered equations; PreFigure's tactile mode needs integer `thickness`
    (an `int()` in `core/diagram.py`, for David Austin).
