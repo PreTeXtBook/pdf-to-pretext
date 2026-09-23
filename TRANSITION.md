@@ -1,9 +1,15 @@
 # Transition — state of the project for the next session
 
-Updated 2026-09-16, end of the third session (third document complete with its demonstration).  Two documents transcribed from their PDFs alone
-(Farmer, arXiv 2010.15608; Beezer, the Sylow subgraphs preprint), both built into every
-PreTeXt output and packaged as demonstration directories.  Rob is letting the project rest.
-`runs/` is gitignored, so the runs live only on this machine.
+Updated 2026-09-23, end of the third session.  Three documents transcribed from their PDFs
+alone (Farmer, arXiv 2010.15608; Beezer, the Sylow subgraphs preprint; Bharathram, Birman,
+Brendle, arXiv 2607.05283), each built into every PreTeXt output and packaged as a
+demonstration directory; the third has all 58 figure panels as PreFigure diagrams, with
+tactile PDFs.  `runs/` is gitignored, so the runs live only on this machine.
+
+A local server was serving the third demonstration at `http://127.0.0.1:8020/` from
+`runs/2026-09-16-burau-demonstration/` (`python3 -m http.server 8020 --bind 127.0.0.1` run in
+that directory); it does not survive a restart, and the explorable diagrams need a server,
+not a `file:` URL.
 
 ## What exists
 
@@ -130,17 +136,24 @@ image; typos preserved, never corrected.  Builds are under `/tmp/pdf-to-pretext/
 ## Next steps, in order
 
 1. Any new document: the prompt at the end of this file.  For 2607.05283 the PDF+LaTeX run
-   (`source/Burau4-final.tex`) and the diff against the PDF-only run are next; reapply the
-   subfigure patch (issue #3218) before building its PDF.  The skill is still the first
-   draft plus the glyph checks; the runs' notes (`notes.md`, sections "For the skill")
-   hold what it should say differently.
-2. The three PreTeXt issues filed from this work: #3207 (citations in theorem headings, and
-   the unbraced optional argument in the classic conversion), #3208 (`support` in the
-   LaTeX article), #3209 (MathJax's `data-mjx-viewBox` in EPUB).  Until #3207 and #3208
-   are fixed, the LaTeX PDFs of a paper with citations in headings or a long funding note
-   need the hand patches described in the scvt run notes.  Not filed: `-c prefigure -f
-   tactile` fails in `pretext.py` on a missing `output/tactile/` directory with prefig 0.7.4;
-   the braille conversion's errors for references to numbered equations.
+   (`source/Burau4-final.tex`) and the diff against the PDF-only run are next; its PDF
+   builds on the current clone with no patch (#3218 is fixed upstream), and the AMS PDF
+   needs the one fontspec edit in the generated LaTeX.  The skill is still the first draft
+   plus the glyph checks and a Pitfalls paragraph; the runs' notes (`notes.md`, sections
+   "For the skill") hold what it should say differently.  Tactile PDFs of the 58 diagrams
+   were sent for embossing (`runs/2026-09-16-burau-tactile.zip`); if the embosser wants
+   heavier lines, raise the `thickness` values in the sections and rerun `-c prefigure -f all`.
+2. PreTeXt issues filed from this work: #3207 (citations in theorem headings, and the
+   unbraced optional argument in the classic conversion), #3208 (`support` in the LaTeX
+   article), #3209 (MathJax's `data-mjx-viewBox` in EPUB), #3218 (subfigures with distinct
+   figure numbering; fixed and closed), #3221 (`-c prefigure -f tactile` and the missing
+   `output/tactile/` directory).  Until #3207 and #3208 are fixed, the LaTeX PDFs of a paper
+   with citations in headings or a long funding note need the hand patches described in
+   the scvt run notes.  Not filed: the AMS texstyle under xelatex fails on a subscript inside
+   `\mathrm` in an abstract (fontspec `no-math` cures it); mathematics in an article title
+   reaches the EPUB's `dc:title` as MathJax markup; the braille conversion's errors for
+   references to numbered equations; PreFigure's tactile mode needs integer `thickness`
+   (an `int()` in `core/diagram.py`, for David Austin).
 3. For scvt: the PDF+LaTeX run (`source/scvt_expo_submit.tex` matches `paper.pdf`) and the
    diff against the PDF-only run; then a run from `published.pdf` (no key) and a diff of the
    submitted and revised texts.
@@ -153,9 +166,11 @@ image; typos preserved, never corrected.  Builds are under `/tmp/pdf-to-pretext/
 
 - `compare.py` measures prose only; a display-mathematics comparison against a LaTeX key
   (normalized) is still to be written.
-- Figures: cropping with `pdftocairo` works (`-x -y -W -H` plus `-paperw -paperh`, both
-  SVG and PDF, `image/@source` without extension); the commands are in the run notes, not
-  yet a script.
+- Figures: `scripts/crop-figures.py` crops panels from the page (boxes from text positions
+  and ink, a JSON spec per figure, contact sheets); `scripts/trace-curve.py` and
+  `scripts/trace-figure.py` vectorize drawings for PreFigure.  The generator that turns a
+  trace into a PreFigure diagram lives in the Burau run's `prefigure-work/all-panels/`, not
+  yet in the skill.
 - A PreTeXt to-do was recorded in the `~/mathbook/claude` memory to-do list (2026-09-03):
   a CSL `biblio` that needs more than one URL.
 - Rob's idea, recorded: surface the original numbers (now XML comments) to readers as
