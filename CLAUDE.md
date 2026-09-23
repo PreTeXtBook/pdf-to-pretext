@@ -55,7 +55,10 @@ Words, mathematics, and structure are never such differences.
 ## Building and validating
 
 `pretext/` is a dedicated clone of PreTeXtBook/pretext, kept current with
-`git -C pretext pull` (do it at the start of a session).  Use the in-repo script through the
+`git -C pretext pull --ff-only`.  **Pull before every new task, not just once per session:**
+a fresh paper, or an update or rebuild of an earlier run (Rob, 2026-09-23, after the scvt
+demonstration was rebuilt on a clone 26 commits behind).  Record the commit in the run
+notes, as the decisions above require.  Use the in-repo script through the
 venv; never pretext-cli, never raw `xsltproc`.  Output directories go under `/tmp`
 (`mkdir -p` first); always pass `-p`:
 
