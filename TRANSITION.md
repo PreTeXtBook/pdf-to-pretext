@@ -19,9 +19,9 @@ not a `file:` URL.
   `csl-bibliography`, `numbering`, `identifiers`, `macros`), and scripts
   (`fetch-arxiv.sh`, `render-pages.sh`, `extract-text.sh`, `build.sh`, `validate.sh`,
   `compare.py`, `run-header.sh`, `block-classes.py`).  All scripts smoke-tested.
-- `pretext/` — a clone of PreTeXtBook/pretext at `93b7f665` (master, 2026-09-17), not
-  committed; `git -C pretext pull` at the start of each session.  Building and validating
-  the minimal example through `~/.claude/pretext-venv` from this clone works.
+- `pretext/` — a clone of PreTeXtBook/pretext at `156cd7f7` (master, 2026-09-23), not
+  committed; `git -C pretext pull --ff-only` before every new task (CLAUDE.md).  Building
+  and validating the minimal example through `~/.claude/pretext-venv` from this clone works.
 - `templates/main.ptx`, `templates/publication.ptx` — starting points.
 - `corpus/arxiv/2010.15608/` — the first document, fetched: `paper.pdf` (18 pages, dvips +
   Ghostscript, text layer present, 8,203 words), `pages/` (150 dpi PNG renderings),
@@ -38,7 +38,7 @@ to remove); the system 4.2.6 gives 36 false CSS errors on every PreTeXt EPUB.  U
 
 `runs/2026-09-04-scvt-demonstration/`: Rob's paper in every output, with the DOI link to
 the published version and his permission line.  Rebuilt 2026-09-23 from the clone at
-`93b7f665`, where #3207 and #3208 are fixed, so every PDF is now the pipeline's own,
+`156cd7f7`, where #3207 and #3208 are fixed, so every PDF is now the pipeline's own,
 unpatched.  Details in the scvt run notes.
 
 `runs/2026-09-04-farmer-demonstration/`: the Farmer paper in every PreTeXt output behind
@@ -76,8 +76,8 @@ the demonstration's `tactile/index.html`, and `runs/2026-09-16-burau-tactile/` w
 for embossing.  Two tool defects met on the way, both recorded in the run notes and not
 filed: PreFigure's tactile mode needs integer `thickness` (an `int()` in `diagram.py`), and
 the script's `-c prefigure -f tactile` fails because only `-f all` creates `output/tactile/`
-(one-line fix in `individual_prefigure_conversion`, filed as PreTeXtBook/pretext issue #3221 on 2026-09-19);
-`-f all` is the working route.  Building this paper needs `pretext -c prefigure -f svg` and `-f pdf` into
+(filed as PreTeXtBook/pretext issue #3221 on 2026-09-19; fixed by PR #3224, in the clone since
+2026-09-23, so `-f tactile` should now work alone, not yet tried here).  Building this paper needs `pretext -c prefigure -f svg` and `-f pdf` into
 `generated/prefigure/` before the HTML and PDF builds (done; the 58 files of each kind are
 there and in the demonstration's source zip).
 
@@ -117,7 +117,7 @@ heading; the two-line fix is `runs/2026-09-03-beezer-scvt/pretext-latex-classic-
 and `paper-ams-patched.pdf` there shows the result.  Filed with the markup proposal as
 PreTeXtBook/pretext issue #3207 (2026-09-03); the `support` defects as issue #3208 (2026-09-04).
 Both are fixed and closed (#3207 on 2026-09-15, #3208 on 2026-09-16), and the clone at
-`93b7f665` builds this paper's LaTeX PDFs with no patch.
+`156cd7f7` builds this paper's LaTeX PDFs with no patch.
 A missed glyph (a bold Γ that xelatex could not set) led to three skill changes, committed
 2026-09-03: `build.sh` fails a PDF build on "Missing character" or U+FFFD, `compare.py`
 reports symbols whose count drops in the build, and pass 3 reads every page of a short paper.  `corpus/MANIFEST.md` has the document's entry (uncommitted).
@@ -150,8 +150,8 @@ image; typos preserved, never corrected.  Builds are under `/tmp/pdf-to-pretext/
    unbraced optional argument in the classic conversion; fixed and closed), #3208
    (`support` in the LaTeX article; fixed and closed), #3209 (MathJax's `data-mjx-viewBox`
    in EPUB; open), #3218 (subfigures with distinct figure numbering; fixed and closed),
-   #3221 (`-c prefigure -f tactile` and the missing `output/tactile/` directory; closed
-   upstream 2026-09-22, newer than the clone at `93b7f665`).  The hand patches for #3207
+   #3221 (`-c prefigure -f tactile` and the missing `output/tactile/` directory; fixed by
+   PR #3224, in the clone since 2026-09-23).  The hand patches for #3207
    and #3208 are no longer needed (checked on the scvt paper, 2026-09-23).  The fix for
    #3207 added an `origins` element (PR #3217) as the home for a block's citations; the
    scvt source still puts them in `title`, and the skill should learn `origins`.  Not
