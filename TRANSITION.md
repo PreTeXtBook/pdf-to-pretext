@@ -89,8 +89,11 @@ scratch on 2026-09-26 on the clone at `20d10545`, for Rob to publicize; the prev
 are in `runs/2026-09-16-burau-demonstration-superseded-2026-09-19/`.  What changed, from
 upstream fixes: the EPUB has 2 EPUBCheck errors instead of 17 (only issue #3209 left) and a
 cover image of the title page; the XSL-FO PDF has typographic apostrophes; diagram labels
-are in New Computer Modern (MathJax 4).  Details in the run notes, last section.  Ready to
-upload.
+are in New Computer Modern (MathJax 4).  Details in the run notes, last section.  Two
+changes to `index.html` at Rob's request: a second list item linking arXiv's experimental
+HTML (`https://arxiv.org/html/2607.05283`, not opened, per the rule), and the typos
+sentence softened to "we made no corrections of apparent errors or typos".  Ready to
+upload; click the arXiv HTML link once before publicizing, since it is unchecked.
 
 **PreTeXt defects from this run.**  (1) Filed as PreTeXtBook/pretext #3218 (2026-09-16),
 fixed upstream in PR #3220 (merged 2026-09-17) and closed: the clone is pulled to
