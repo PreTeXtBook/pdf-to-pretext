@@ -1,6 +1,7 @@
 # Transition — state of the project for the next session
 
-Updated 2026-09-23, end of the third session.  Three documents transcribed from their PDFs
+Updated 2026-09-26: every output of the third document rebuilt on the clone at `20d10545`
+for Rob to publicize (below).  Three documents transcribed from their PDFs
 alone (Farmer, arXiv 2010.15608; Beezer, the Sylow subgraphs preprint; Bharathram, Birman,
 Brendle, arXiv 2607.05283), each built into every PreTeXt output and packaged as a
 demonstration directory; the third has all 58 figure panels as PreFigure diagrams, with
@@ -19,7 +20,7 @@ not a `file:` URL.
   `csl-bibliography`, `numbering`, `identifiers`, `macros`), and scripts
   (`fetch-arxiv.sh`, `render-pages.sh`, `extract-text.sh`, `build.sh`, `validate.sh`,
   `compare.py`, `run-header.sh`, `block-classes.py`).  All scripts smoke-tested.
-- `pretext/` — a clone of PreTeXtBook/pretext at `156cd7f7` (master, 2026-09-23), not
+- `pretext/` — a clone of PreTeXtBook/pretext at `20d10545` (master, 2026-09-26), not
   committed; `git -C pretext pull --ff-only` before every new task (CLAUDE.md).  Building
   and validating the minimal example through `~/.claude/pretext-venv` from this clone works.
 - `templates/main.ptx`, `templates/publication.ptx` — starting points.
@@ -77,13 +78,19 @@ for embossing.  Two tool defects met on the way, both recorded in the run notes 
 filed: PreFigure's tactile mode needs integer `thickness` (an `int()` in `diagram.py`), and
 the script's `-c prefigure -f tactile` fails because only `-f all` creates `output/tactile/`
 (filed as PreTeXtBook/pretext issue #3221 on 2026-09-19; fixed by PR #3224, in the clone since
-2026-09-23, so `-f tactile` should now work alone, not yet tried here).  Building this paper needs `pretext -c prefigure -f svg` and `-f pdf` into
-`generated/prefigure/` before the HTML and PDF builds (done; the 58 files of each kind are
-there and in the demonstration's source zip).
+2026-09-23; `-f tactile` works alone, used on 2026-09-26).  Building this paper needs `pretext -c prefigure -f svg` and `-f pdf` into
+`generated/prefigure/` before the HTML and PDF builds, and `-f tactile` for the tactile set
+(done 2026-09-26 on `20d10545`; the previous set is in `generated-superseded-2026-09-26/`).
 
 `runs/2026-09-16-burau-demonstration/`: the paper in every output behind `index.html`
 with the CC BY 4.0 attribution and the list of changes (source zip, usual PDF, AMS PDF,
-XSL-FO PDF passing veraPDF as PDF/UA-1, HTML, EPUB, Jupyter, braille).  Ready to upload.
+XSL-FO PDF passing veraPDF as PDF/UA-1, HTML, EPUB, Jupyter, braille).  Rebuilt from
+scratch on 2026-09-26 on the clone at `20d10545`, for Rob to publicize; the previous contents
+are in `runs/2026-09-16-burau-demonstration-superseded-2026-09-19/`.  What changed, from
+upstream fixes: the EPUB has 2 EPUBCheck errors instead of 17 (only issue #3209 left) and a
+cover image of the title page; the XSL-FO PDF has typographic apostrophes; diagram labels
+are in New Computer Modern (MathJax 4).  Details in the run notes, last section.  Ready to
+upload.
 
 **PreTeXt defects from this run.**  (1) Filed as PreTeXtBook/pretext #3218 (2026-09-16),
 fixed upstream in PR #3220 (merged 2026-09-17) and closed: the clone is pulled to
@@ -93,8 +100,9 @@ record only.  For the AMS PDF, hand-edit the generated LaTeX in one place (fonts
 on a subscript inside `\mathrm` in the abstract because fontspec redeclares the `\mathrm`
 alphabet and amsart sets the abstract before its script size exists; `\usepackage[no-math]
 {fontspec}` cures it (the AMS PDF in the demonstration was compiled by hand that way).
-(3) Not filed: mathematics in the article title reaches the EPUB's `dc:title` and cover
-page as MathJax SVG markup, giving 15 EPUBCheck errors; a plain-text title belongs there.
+(3) Mathematics in the article title reached the EPUB's `dc:title` and cover page as
+MathJax SVG markup, giving 15 EPUBCheck errors; fixed upstream (PR #3240), gone on
+2026-09-26.
 
 **Skill.**  `scripts/crop-figures.py` is new (page-region crops from text positions and
 ink, a JSON spec of panels per figure, contact sheets); `SKILL.md` has a paragraph of
@@ -151,12 +159,13 @@ image; typos preserved, never corrected.  Builds are under `/tmp/pdf-to-pretext/
    (`support` in the LaTeX article; fixed and closed), #3209 (MathJax's `data-mjx-viewBox`
    in EPUB; open), #3218 (subfigures with distinct figure numbering; fixed and closed),
    #3221 (`-c prefigure -f tactile` and the missing `output/tactile/` directory; fixed by
-   PR #3224, in the clone since 2026-09-23).  The hand patches for #3207
+   PR #3224, in the clone since 2026-09-23), #3249 (225 macOS AppleDouble files `._*` in
+   the HTML's `_static/`, from the Runestone Services archive; filed 2026-09-26; left out of
+   the Burau demonstration by hand, still in the scvt and Farmer ones).  The hand patches for #3207
    and #3208 are no longer needed (checked on the scvt paper, 2026-09-23).  The fix for
    #3207 added an `origins` element (PR #3217) as the home for a block's citations; the
    scvt source still puts them in `title`, and the skill should learn `origins`.  Not
-   filed: the AMS texstyle under xelatex fails on a subscript inside `\mathrm` in an abstract (fontspec `no-math` cures it); mathematics in an article title
-   reaches the EPUB's `dc:title` as MathJax markup; the braille conversion's errors for
+   filed: the AMS texstyle under xelatex fails on a subscript inside `\mathrm` in an abstract (fontspec `no-math` cures it, still needed at `20d10545`); the braille conversion's errors for
    references to numbered equations; PreFigure's tactile mode needs integer `thickness`
    (an `int()` in `core/diagram.py`, for David Austin).
 3. For scvt: the PDF+LaTeX run (`source/scvt_expo_submit.tex` matches `paper.pdf`) and the
