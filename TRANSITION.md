@@ -178,6 +178,11 @@ image; typos preserved, never corrected.  Builds are under `/tmp/pdf-to-pretext/
 5. Rewrite `SKILL.md` from the runs' notes.
 6. One small fix outside `runs/` still awaits Rob's approval: CLAUDE.md names `scripts/`
    where the scripts are `skill/pdf-to-pretext/scripts/`.
+7. Rob's request, 2026-09-26: the `index.html` of the scvt and Farmer demonstrations
+   should say what the Burau one now says, "The words and the mathematics are the
+   authors' own; we made no corrections of apparent errors or typos."  ("author's" for the
+   single-author papers.)  Neither page has a sentence about typos now, so it is an
+   addition, after the paragraph that describes the transcription.
 
 ## Open items
 
