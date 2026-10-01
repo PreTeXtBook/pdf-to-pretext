@@ -29,6 +29,12 @@ not a `file:` URL.
   `paper.txt` (layout text), `source/` (the e-print: `whenpolyrealzeros1g.tex`, six EPS
   figures), `metadata-oai.xml`.  See `corpus/MANIFEST.md` for title, author, license.
 - `evaluation/RESULTS.md` (one row, the PDF-only run), `notes/decisions-2026-09-03.md`.
+- `favors/` — one-off conversions done as favors, not runs (new 2026-10-01).
+  `favors/2026-10-01-mols-table/`: a ten-page table of MOLS bounds (n below 10,000)
+  converted to a Python list.  Only `report.md` is committed; `MOLS_table.pdf` and
+  `mols_table.py` are on this machine only, deliberately untracked because Rob judges
+  we have no rights to the data.  Never `git add -A` here: nothing in `.gitignore`
+  excludes those two files yet.
 
 ## Demonstration directories (2026-09-04)
 
