@@ -1,7 +1,9 @@
 # Transition — state of the project for the next session
 
-Updated 2026-09-26: every output of the third document rebuilt on the clone at `20d10545`
-for Rob to publicize (below).  Three documents transcribed from their PDFs
+Updated 2026-10-03: an experiment, one paper transcribed from the PDF alone and again from
+its LaTeX, with corrections and additions to the skill that came of it (the section after
+"What exists").  Before that, 2026-09-26: every output of the third document rebuilt on the
+clone at `20d10545` for Rob to publicize (below).  Three documents transcribed from their PDFs
 alone (Farmer, arXiv 2010.15608; Beezer, the Sylow subgraphs preprint; Bharathram, Birman,
 Brendle, arXiv 2607.05283), each built into every PreTeXt output and packaged as a
 demonstration directory; the third has all 58 figure panels as PreFigure diagrams, with
@@ -19,8 +21,9 @@ not a `file:` URL.
   (`article-elements`, `block-classes` generated from the clone's `entities.ent`,
   `csl-bibliography`, `numbering`, `identifiers`, `macros`), and scripts
   (`fetch-arxiv.sh`, `render-pages.sh`, `extract-text.sh`, `build.sh`, `validate.sh`,
-  `compare.py`, `run-header.sh`, `block-classes.py`).  All scripts smoke-tested.
-- `pretext/` — a clone of PreTeXtBook/pretext at `20d10545` (master, 2026-09-26), not
+  `compare.py`, `run-header.sh`, `block-classes.py`, `lookup-dois.py`, and the figure
+  scripts under Open items).  All scripts smoke-tested.
+- `pretext/` — a clone of PreTeXtBook/pretext at `bf795ab1` (master, 2026-10-02), not
   committed; `git -C pretext pull --ff-only` before every new task (CLAUDE.md).  Building
   and validating the minimal example through `~/.claude/pretext-venv` from this clone works.
 - `templates/main.ptx`, `templates/publication.ptx` — starting points.
@@ -28,13 +31,42 @@ not a `file:` URL.
   Ghostscript, text layer present, 8,203 words), `pages/` (150 dpi PNG renderings),
   `paper.txt` (layout text), `source/` (the e-print: `whenpolyrealzeros1g.tex`, six EPS
   figures), `metadata-oai.xml`.  See `corpus/MANIFEST.md` for title, author, license.
-- `evaluation/RESULTS.md` (one row, the PDF-only run), `notes/decisions-2026-09-03.md`.
+- `evaluation/RESULTS.md` (one row, the PDF-only run), `notes/decisions-2026-09-03.md`,
+  `notes/2026-10-03-pdf-only-versus-latex.md` (the experiment's report, next section).
 - `favors/` — one-off conversions done as favors, not runs (new 2026-10-01).
   `favors/2026-10-01-mols-table/`: a ten-page table of MOLS bounds (n below 10,000)
-  converted to a Python list.  Only `report.md` is committed; `MOLS_table.pdf` and
-  `mols_table.py` are on this machine only, deliberately untracked because Rob judges
-  we have no rights to the data.  Never `git add -A` here: nothing in `.gitignore`
-  excludes those two files yet.
+  converted to a Python list.  Only `report.md` remains.  The source `MOLS_table.pdf` and
+  the result `mols_table.py`, which the report describes, were never tracked, because Rob
+  judges we have no rights to the data, and were deleted at his word on 2026-10-03.
+
+## The experiment of 2026-10-03: one paper from the PDF alone, then from its LaTeX
+
+Rob's test of the process on arXiv 2610.02127v1 (Niles-Weed, Sadovsky, Shkrob, 12 pages, no
+figures).  Not an open license and the authors are not known to him, so by his instruction
+there is no corpus entry and no results row, and nothing of the paper is in the repository.
+The report is: `notes/2026-10-03-pdf-only-versus-latex.md`.  The rest is on this machine
+only, in `runs/2026-10-03-vector-balancing-pdf-only/`, `-latex/`, and `-experiment/` (the
+diffs, the comparison script, the effort scripts).  Never commit the two effort scripts:
+they hold the session's transcript file name, which is a session identifier.
+
+- **Result.**  The PDF-only transcription has no error of words or of mathematics against
+  the one made from the source by script: same structure, same words, 301 of 302 paired
+  formulas equivalent after eight spelling equivalences.  About 14 minutes for the
+  PDF-only run and 8 for the LaTeX one, which reused the first run's identifiers and DOIs.
+- **Rob's rulings.**  The skill gets no section for transcribing from LaTeX ("let's NOT do
+  this"); the report's section "For a LaTeX path, later" holds what it would have said and
+  the questions left open (a printed date that is `\today`, the case of the bibliography,
+  the authors' labels as identifiers, normalizing the authors' spelling).  Read it before
+  any PDF+LaTeX run of the corpus papers.
+- **Changes to the skill, all with his approval.**  `templates/main.ptx` has the
+  `titlepage` the schema requires (the template failed validation without it).
+  `references/article-elements.md`: an article has no `acknowledgement`; an unnumbered
+  Acknowledgements section is a titled `paragraphs` closing the last section.  `SKILL.md`: fonts (`pdftohtml -xml`)
+  and code points settle look-alikes; an upright remark ends only by vertical space, a
+  judgment for the manifest.  `scripts/lookup-dois.py` asks Crossref and then DataCite
+  (arXiv, Dagstuhl); `references/csl-bibliography.md` says so.  `build.sh` lists the
+  overfull boxes of the last LaTeX pass wider than 20 points.  `compare.py` prints a second
+  similarity, for the text before the reference list.
 
 ## Demonstration directories (2026-09-04)
 
@@ -159,7 +191,8 @@ image; typos preserved, never corrected.  Builds are under `/tmp/pdf-to-pretext/
    (`source/Burau4-final.tex`) and the diff against the PDF-only run are next; its PDF
    builds on the current clone with no patch (#3218 is fixed upstream), and the AMS PDF
    needs the one fontspec edit in the generated LaTeX.  The skill is still the first draft
-   plus the glyph checks and a Pitfalls paragraph; the runs' notes (`notes.md`, sections
+   plus the glyph checks, a Pitfalls paragraph, and the additions of 2026-10-03; the runs'
+   notes (`notes.md`, sections
    "For the skill") hold what it should say differently.  Tactile PDFs of the 58 diagrams
    were sent for embossing (`runs/2026-09-16-burau-tactile.zip`); if the embosser wants
    heavier lines, raise the `thickness` values in the sections and rerun `-c prefigure -f all`.
@@ -193,7 +226,12 @@ image; typos preserved, never corrected.  Builds are under `/tmp/pdf-to-pretext/
 ## Open items
 
 - `compare.py` measures prose only; a display-mathematics comparison against a LaTeX key
-  (normalized) is still to be written.
+  (normalized) is still to be written.  A first one exists for one paper,
+  `runs/2026-10-03-vector-balancing-experiment/compare-sources.py`: two of its eight
+  equivalences name that paper's macros and operators and would have to be made general.
+- The skill says to read every delivered output, and gives no way to read the HTML with
+  its mathematics rendered; in the experiment of 2026-10-03 the HTML was checked from its
+  files only.  Raised with Rob, not decided.
 - Figures: `scripts/crop-figures.py` crops panels from the page (boxes from text positions
   and ink, a JSON spec per figure, contact sheets); `scripts/trace-curve.py` and
   `scripts/trace-figure.py` vectorize drawings for PreFigure.  The generator that turns a
