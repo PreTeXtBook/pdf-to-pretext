@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Original: Section 1 -->
+<section xml:id="section-introduction" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <title>Introduction</title>
+
+    <p>A graph whose group of automorphisms acts transitively on the vertex set is called <term>vertex transitive</term>. If the complement of the edge set of a graph forms a graph isomorphic to the original, then the graph is said to be <term>self-complementary</term>. The combination of these two conditions severely restricts the possibilities for such graphs. For example, there are <m>165\,091\,172\,592</m> non-isomorphic graphs on 12 vertices <xref ref="biblio-royle-combinatorial-data"/>, with 720 of these being self-complementary <xref ref="biblio-read-counting"/>, 74 are vertex transitive <xref ref="biblio-royle-combinatorial-data"/>, but none are both self-complementary and vertex transitive (as <xref ref="theorem-order-congruent-one-mod-four"/> implies). On 13 vertices, there are <m>50\,502\,031\,367\,952</m> graphs <xref ref="biblio-royle-combinatorial-data"/>, of which <m>5\,600</m> are self-complementary <xref ref="biblio-read-counting"/>, 14 are vertex transitive <xref ref="biblio-royle-combinatorial-data"/>, yet only 2 are simultaneously self-complementary and vertex transitive <xref ref="biblio-royle-personal-communication"/>.</p>
+
+    <p>There are various ways to describe graphs that have much symmetry, and it is these highly symmetric graphs that occur in many contexts, such as error-correcting codes, combinatorial designs, and simple groups <xref ref="biblio-thompson-codes-to-groups"/>. Conditions that guarantee symmetry can be purely combinatorial (regular, distance regular) or based on the automorphism group of the graph (vertex transitive, symmetric, distance transitive). Here we consider graphs that have what is perhaps the simplest form of symmetry based on the automorphism group: being vertex transitive. However, being self-complementary is also a way to describe another type of symmetry but with more of a combinatorial flavor (though a permutation is involved). This article concentrates on elementary number-theoretic conditions that limit the possibilities for graphs that have both flavors of symmetry. Along the way we present a result of Muzychuk that goes further and describes the existence of subgraphs of self-complementary vertex transitive graphs that are again self-complementary and vertex transitive.</p>
+
+    <p>Vertex transitive graphs have been studied extensively. We mention three examples illustrating why self-complementary graphs are of interest. First, the problem of determining if two graphs are isomorphic is in NP, but is not known if it is in P or if it is NP-complete. Colbourn and Colbourn <xref ref="biblio-colbourn-graph-isomorphism"/> were able to show that the graph isomorphism problem is polynomially reducible to the problem of recognizing if a single graph is self-complementary. Second, the Ramsey number <m>R(m, n)</m> is the least integer so that any graph of that order, or greater, is guaranteed to contain a complete subgraph on <m>m</m> vertices, or its complement contains a complete subgraph on <m>n</m> vertices. A diagonal Ramsey number has <m>m = n</m>. Self-complementary vertex transitive graphs can be useful for bounding diagonal Ramsey numbers <xref ref="biblio-chvatal-erdos-hedrlin-ramsey biblio-clapham-ramsey-bounds biblio-luo-su-li-ramsey-bounds"/>. For example, Luo, <em>et.al.</em> <xref ref="biblio-luo-su-li-ramsey-bounds"/> employed self-complementary graphs to prove that <m>R(19, 19) \geq 17885</m>. In the extreme, the <q>best</q> graphs for this purpose are also vertex transitive. Third, Lovász <xref ref="biblio-lovasz-shannon-capacity"/> showed that the information-theoretic Shannon capacity of a self-complementary vertex transitive graph of order <m>n</m> is <m>\sqrt{n}</m>.</p>
+
+    <p>We are interested here in the possibilities for the orders of self-complementary vertex transitive graphs. Assume for the remainder of this introduction that <m>p</m> and <m>q</m> are distinct primes. It is straightforward to show using graph-theoretic techniques (<xref ref="theorem-order-congruent-one-mod-four"/>) that a self-complementary vertex transitive graph must have order congruent to 1 modulo 4 <xref ref="biblio-ringel-selbstkomplementare biblio-sachs-selbstcomplementare"/>. A graph is <term>circulant</term> if its automorphism group has a permutation composed of a single cycle that moves every vertex of the graph, and this condition implies vertex transitivity. Early work on self-complementary graphs assumed this more restrictive notion of symmetry. In 1962 Sachs <xref ref="biblio-sachs-selbstcomplementare"/> showed that if a circulant self-complementary graph has order <m>p^{2s}</m>, then <m>p \equiv 1 \pmod{4}</m>. Further, if the order is <m>pq</m>, then both <m>p \equiv 1 \pmod{4}</m> and <m>q \equiv 1 \pmod{4}</m>. Interest in self-complementary graphs was rekindled in 1985 with the appearance of papers by Rao <xref ref="biblio-rao-strongly-regular"/> and Suprunenko <xref ref="biblio-suprunenko-self-complementary"/>. In 1996 Fronček, Rosa, and Širáň <xref ref="biblio-froncek-rosa-siran-circulant"/> extended Sach's results to show that if <m>p</m> is any prime divisor of the order of a self-complementary circulant graph, then <m>p \equiv 1 \pmod{4}</m>. At about the same time, Koolen <xref ref="biblio-koolen-manuscript"/> in 1997 relaxed the assumption of being circulant and used combinatorial techniques to show that there are no self-complementary vertex transitive graphs of order <m>3p</m>. Concurrently, Li <xref ref="biblio-li-vertex-transitive"/> employed the heavy machinery of the classification of the finite simple groups to extend Sach's and Koolen's results to show that when the order of a self-complementary vertex transitive graph is <m>pq</m>, then both <m>p \equiv 1 \pmod{4}</m> and <m>q \equiv 1 \pmod{4}</m>. Li's survey <xref ref="biblio-li-finite-graphs"/> provides more information about these results and the status of various other problems related to self-complementary vertex transitive graphs through 1998.</p>
+
+    <p>More recently, Muzychuk <xref ref="biblio-muzychuk-sylow-subgraphs"/> has generalized all of the above results by showing that if <m>p^m</m> is the highest power of <m>p</m> dividing the order of a self-complementary vertex transitive graph, then <m>p^m \equiv 1 \pmod{4}</m> (<xref ref="theorem-prime-power-congruent"/>). The main device in this proof is to use the Sylow theorems (all of them!) to establish the existence of self-complementary vertex transitive subgraphs of order <m>p^m</m> (<xref ref="theorem-sylow-subgraphs"/>). Therefore it is natural to refer to these subgraphs as <q>Sylow subgraphs.</q> Moreover, this result is the best possible, since for every integer <m>n</m> with the property that for each prime divisor <m>p</m> the highest power of <m>p</m> dividing <m>n</m> is congruent to 1 modulo 4, there exists a self-complementary vertex transitive graph of order <m>n</m> (<xref ref="theorem-orders-sufficient"/>). Here we provide the necessary preliminary results, and finish with the construction of these Sylow subgraphs and the subsequent complete characterization of the orders of self-complementary vertex transitive graphs.</p>
+
+    <!-- Original: Fig. 1 (top of printed page 3), cropped from the page; manifest section 7 -->
+    <figure xml:id="figure-paley-nine-vertices">
+        <caption>A self-complementary vertex transitive graph on 9 vertices.</caption>
+        <image width="60%">
+            <shortdescription>Nine dots, one at the center and eight around it, joined by eighteen straight edges.</shortdescription>
+            <description><p>Nine vertices drawn as black dots: one at the center and eight around it at the corners of a regular octagon, one corner at the top. Eighteen edges join them, and every vertex has four neighbors. The center is joined to the four corners on the diagonals: upper left, upper right, lower left, and lower right.</p></description>
+            <!-- Recreated in PreFigure from the drawing (manifest section 7): the Paley graph on GF(9),  -->
+            <!-- 0 at the center and the powers of x around a regular octagon, x at the top, placed         -->
+            <!-- clockwise as the text says; the two edges between opposite corners are bowed to the left  -->
+            <!-- of the center, as drawn.  The cropped original stays in external/.                         -->
+            <prefigure xmlns="https://prefigure.org" label="figure-paley-nine-vertices">
+                <diagram dimensions="(400,400)" margins="10">
+                    <coordinates bbox="(-1.15,-1.15,1.15,1.15)">
+                        <network node-fill="black" node-stroke="black" node-size="8" edge-thickness="2" labels="no">
+                            <node at="0" p="(0,0)" edges="[2,4,6,8]"/>
+                            <node at="1" p="(0,1)" edges="[2,3,4,7]"/>
+                            <node at="2" p="(0.7071,0.7071)" edges="[7]"/>
+                            <node at="3" p="(1,0)" edges="[4,5,6]"/>
+                            <node at="4" p="(0.7071,-0.7071)"/>
+                            <node at="5" p="(0,-1)" edges="[6,7,8]"/>
+                            <node at="6" p="(-0.7071,-0.7071)"/>
+                            <node at="7" p="(-1,0)" edges="[8]"/>
+                            <node at="8" p="(-0.7071,0.7071)"/>
+                        </network>
+                        <path at="edge-2-6" start="(0.7071,0.7071)" stroke="black" thickness="2">
+                            <quadratic-bezier controls="(-0.28,0.28),(-0.7071,-0.7071)"/>
+                        </path>
+                        <path at="edge-4-8" start="(0.7071,-0.7071)" stroke="black" thickness="2">
+                            <quadratic-bezier controls="(-0.28,-0.28),(-0.7071,0.7071)"/>
+                        </path>
+                    </coordinates>
+                    <annotations text="The Paley graph on nine vertices, drawn with one vertex at the center and eight around it at the corners of a regular octagon.  Every vertex has four neighbors, and there are eighteen edges.">
+                        <annotation ref="vertices" text="The nine vertices: 0 at the center, and the powers of x at the corners, x at the top and higher powers clockwise.">
+                            <annotation ref="node-0" text="0, at the center, joined to x squared, x to the fourth, x to the sixth, and x to the eighth, which is 1."/>
+                            <annotation ref="node-1" text="x, at the top, joined to x squared, x cubed, x to the fourth, and x to the seventh."/>
+                            <annotation ref="node-2" text="x squared, at the upper right, joined to 0, x, x to the sixth, and x to the seventh."/>
+                            <annotation ref="node-3" text="x cubed, at the right, joined to x, x to the fourth, x to the fifth, and x to the sixth."/>
+                            <annotation ref="node-4" text="x to the fourth, at the lower right, joined to 0, x, x cubed, and x to the eighth, which is 1."/>
+                            <annotation ref="node-5" text="x to the fifth, at the bottom, joined to x cubed, x to the sixth, x to the seventh, and x to the eighth, which is 1."/>
+                            <annotation ref="node-6" text="x to the sixth, at the lower left, joined to 0, x squared, x cubed, and x to the fifth."/>
+                            <annotation ref="node-7" text="x to the seventh, at the left, joined to x, x squared, x to the fifth, and x to the eighth, which is 1."/>
+                            <annotation ref="node-8" text="x to the eighth, which is 1, at the upper left, joined to 0, x to the fourth, x to the fifth, and x to the seventh."/>
+                        </annotation>
+                        <annotation ref="edges" text="The eighteen edges: two vertices are joined exactly when their difference is a nonzero square in the field.">
+                            <annotation ref="edge-0-2" text="From 0 at the center to x squared at the upper right."/>
+                            <annotation ref="edge-0-4" text="From 0 at the center to x to the fourth at the lower right."/>
+                            <annotation ref="edge-0-6" text="From 0 at the center to x to the sixth at the lower left."/>
+                            <annotation ref="edge-0-8" text="From 0 at the center to x to the eighth, which is 1 at the upper left."/>
+                            <annotation ref="edge-1-2" text="From x at the top to x squared at the upper right."/>
+                            <annotation ref="edge-1-3" text="From x at the top to x cubed at the right."/>
+                            <annotation ref="edge-1-4" text="From x at the top to x to the fourth at the lower right."/>
+                            <annotation ref="edge-1-7" text="From x at the top to x to the seventh at the left."/>
+                            <annotation ref="edge-2-6" text="From x squared at the upper right to x to the sixth at the lower left.  Drawn as a curve passing to the left of the center."/>
+                            <annotation ref="edge-2-7" text="From x squared at the upper right to x to the seventh at the left."/>
+                            <annotation ref="edge-3-4" text="From x cubed at the right to x to the fourth at the lower right."/>
+                            <annotation ref="edge-3-5" text="From x cubed at the right to x to the fifth at the bottom."/>
+                            <annotation ref="edge-3-6" text="From x cubed at the right to x to the sixth at the lower left."/>
+                            <annotation ref="edge-4-8" text="From x to the fourth at the lower right to x to the eighth, which is 1 at the upper left.  Drawn as a curve passing to the left of the center."/>
+                            <annotation ref="edge-5-6" text="From x to the fifth at the bottom to x to the sixth at the lower left."/>
+                            <annotation ref="edge-5-7" text="From x to the fifth at the bottom to x to the seventh at the left."/>
+                            <annotation ref="edge-5-8" text="From x to the fifth at the bottom to x to the eighth, which is 1 at the upper left."/>
+                            <annotation ref="edge-7-8" text="From x to the seventh at the left to x to the eighth, which is 1 at the upper left."/>
+                        </annotation>
+                    </annotations>
+                </diagram>
+            </prefigure>
+        </image>
+    </figure>
+</section>

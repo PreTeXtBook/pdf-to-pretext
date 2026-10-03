@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Transcribed from: the author's preprint, the version submitted December 30, 2004, from the PDF alone -->
+<!-- (the LaTeX source and the published version were not opened).  Rights: the author's, who permits   -->
+<!-- the redistribution of this transcription.  The working papers are in ../transcription.             -->
+<pretext xml:lang="en-US" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <docinfo>
+        <!-- The figure cropped from the page is in ../assets -->
+        <directories external="../assets"/>
+        <!-- PDF-only path: no author macros are visible; notation is written inline (manifest section 5) -->
+        <macros>
+        </macros>
+    </docinfo>
+
+    <article xml:id="article-sylow-subgraphs">
+        <title>Sylow Subgraphs in Self-Complementary Vertex Transitive Graphs</title>
+
+        <frontmatter>
+            <bibinfo>
+                <author>
+                    <personname>Robert A. Beezer</personname>
+                    <department>Department of Mathematics and Computer Science</department>
+                    <institution>University of Puget Sound</institution>
+                    <location>Tacoma, Washington 98416 USA</location>
+                    <email>beezer@ups.edu</email>
+                    <!-- Original: unmarked footnote at the foot of printed page 1 -->
+                    <support>This work was supported by a University of Puget Sound Martin Nelson Summer Research Award and the hospitality of the Department of Computer Science and Software Engineering at the University of Western Australia during a sabbatical visit.</support>
+                </author>
+                <!-- Original: title page -->
+                <date>December 30, 2004</date>
+                <!-- Original: "Keywords:" line, printed page 1 -->
+                <keywords>
+                    <keyword>graph theory</keyword>
+                    <keyword>vertex transitive</keyword>
+                    <keyword>self-complementary</keyword>
+                </keywords>
+            </bibinfo>
+            <titlepage>
+                <titlepage-items/>
+            </titlepage>
+            <!-- Original: "Abstract:" paragraph, printed page 1 -->
+            <abstract>
+                <p>A graph is self-complementary if it is isomorphic to its complement. A graph is vertex transitive if for each choice of vertices <m>u</m> and <m>v</m> there is an automorphism that carries the vertex <m>u</m> to <m>v</m>. The number of vertices in a self-complementary vertex transitive graph must necessarily be congruent to 1 mod 4. However, Muzychuk has shown that if <m>p^m</m> is the largest power of a prime <m>p</m> dividing the order of a self-complementary vertex transitive graph, then <m>p^m</m> must individually be congruent to 1 mod 4. This is accomplished by establishing the existence of a self-complementary vertex transitive subgraph of order <m>p^m</m>, a result reminiscent of the Sylow theorems. This article is a self-contained survey, culminating with a detailed proof of Muzychuk's result.</p>
+            </abstract>
+        </frontmatter>
+
+        <xi:include href="sections/section-introduction.ptx"/>
+        <xi:include href="sections/section-definitions-notation.ptx"/>
+        <xi:include href="sections/section-two-basic-properties.ptx"/>
+        <xi:include href="sections/section-constructing-graphs.ptx"/>
+        <xi:include href="sections/section-sylow-subgraphs.ptx"/>
+        <xi:include href="sections/section-recent-progress.ptx"/>
+
+        <backmatter>
+            <xi:include href="sections/references.ptx"/>
+        </backmatter>
+    </article>
+</pretext>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The same, in PreTeXt's style for AMS journals.  The numbering                    -->
+<!-- mimics the original: sections only; theorem-like blocks on one counter within    -->
+<!-- sections; the one figure numbered globally; no numbered equations or footnotes.  -->
+<publication>
+    <common>
+        <journal name="ams"/>
+    </common>
+    <source>
+        <directories generated="../generated-assets"/>
+    </source>
+    <numbering>
+        <divisions level="1"/>
+        <blocks level="1"/>
+        <equations level="0"/>
+        <figures level="0" distinct="yes"/>
+        <footnotes level="0"/>
+    </numbering>
+</publication>

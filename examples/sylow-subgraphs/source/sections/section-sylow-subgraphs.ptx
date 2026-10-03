@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Original: Section 5 -->
+<section xml:id="section-sylow-subgraphs" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <title>Sylow Subgraphs</title>
+
+    <p>Our main result is the following, due to Muzychuk <xref ref="biblio-muzychuk-sylow-subgraphs"/>, whose proof we follow closely.</p>
+
+    <!-- Original: Theorem 5.1 ([14], Theorem 2) -->
+    <theorem xml:id="theorem-sylow-subgraphs">
+        <title><xref ref="biblio-muzychuk-sylow-subgraphs" detail="Theorem 2"/></title>
+        <statement>
+            <p>Suppose that <m>\Gamma = (V, E)</m> is a self-complementary vertex transitive graph with <m>\lvert V \rvert = p_1^{r_1} p_2^{r_2} \ldots p_k^{r_k}</m>, where the <m>p_i</m> are distinct primes. Then for each <m>1 \leq i \leq k</m>, <m>\Gamma</m> contains a vertex-induced subgraph of order <m>p_i^{r_i}</m> that is both self-complementary and vertex transitive.</p>
+        </statement>
+        <proof>
+            <p>Let <m>p</m> be one of the prime divisors of <m>\lvert V \rvert</m> and suppose <m>p^m</m> is the highest power of <m>p</m> that divides <m>\lvert V \rvert</m>. Let <m>G</m> denote the automorphism group of <m>\Gamma</m> and suppose <m>p^n</m> is the highest power of <m>p</m> that divides <m>\lvert G \rvert</m>. For a subgroup <m>H</m> and a group element <m>\sigma</m>, we will denote conjugation by <m>H^{\sigma} = \sigma H \sigma^{-1}</m>.</p>
+
+            <p>For a vertex <m>v</m> of <m>\Gamma</m>, denote its stabilizer in <m>G</m> by <m>G_v = \{\sigma \in G \mid \sigma(v) = v\}</m> and its orbit by <m>v^G = \{\sigma(v) \mid \sigma \in G\}</m>. Since <m>\Gamma</m> is vertex transitive, <m>\lvert G \rvert = \lvert G_v \rvert \lvert v^G \rvert = \lvert G_v \rvert \lvert V \rvert</m> for any <m>v</m>, and therefore <m>p^{n-m}</m> is the highest power of <m>p</m> that divides the order of <m>G_v</m> Thus, a Sylow <m>p</m>-subgroup of <m>G_v</m> has order <m>p^{n-m}</m>, while a Sylow <m>p</m>-subgroup of <m>G</m> has order <m>p^n</m>.</p>
+
+            <p>Denote the unique fixed point of <m>\sigma \in C(\Gamma)</m> by <m>x(\sigma)</m>, whose existence is guaranteed by <xref ref="lemma-complementing-map-cycles"/>. For any <m>p</m>-group, <m>P</m> of <m>G</m>, define
+            <!-- Original: unnumbered display, printed page 6 -->
+            <md>D(P) = \{\sigma \in C(\Gamma) \mid P^{\sigma} = P, \lvert P_{x(\sigma)} \rvert = p^{n-m}\}.</md>
+            Our goal is to find a Sylow <m>p</m>-subgroup of <m>G</m>, <m>P</m>, for which <m>D(P)</m> is non-empty. To this end, define <m>\mathcal{P} = \{P \mid P \text{ is a } p-\text{group in } G, D(P) \neq \varnothing\}</m>.</p>
+
+            <p>First, we show that <m>\mathcal{P}</m> is not empty. Since <m>\Gamma</m> is self-complementary, choose an arbitrary <m>\sigma \in C(\Gamma)</m>. Let <m>x = x(\sigma)</m> denote its fixed point. By Sylow's First Theorem, choose a Sylow <m>p</m>-subgroup of <m>G_x</m>, say <m>P</m>. Since <m>\sigma</m> normalizes <m>G_x</m>, <m>P^{\sigma}</m> is also a Sylow <m>p</m>-subgroup of <m>G_x</m>. Therefore, by Sylow's Third Theorem, <m>P</m> and <m>P^{\sigma}</m> are conjugate in <m>G_x</m> so there exists <m>\tau \in G_x</m> such that <m>P^{\sigma} = P^{\tau}</m>.</p>
+
+            <p>Define <m>\widetilde{\sigma} = \tau^{-1}\sigma</m>. Note that <m>\widetilde{\sigma}</m> is a complementing map since <m>\sigma</m> is a complementing map and <m>\tau^{-1}</m> is an automorphism. Then <m>P</m> satisfies the first condition for membership in <m>\mathcal{P}</m> since <m>P^{\widetilde{\sigma}} = P</m>. Because <m>\tau</m> is in the stabilizer of <m>x</m>, and <m>\sigma</m> fixes <m>x</m> by definition, <m>\widetilde{\sigma}</m> also fixes <m>x</m>. <xref ref="lemma-complementing-map-cycles"/> says this fixed point is unique, so <m>x(\widetilde{\sigma}) = x = x(\sigma)</m>. Thus <m>P_{x(\widetilde{\sigma})} = P_{x(\sigma)} = P_x = P</m>, where the last equality follows since <m>P</m> is a subgroup of <m>G_x</m>. Therefore <m>\lvert P_{x(\widetilde{\sigma})} \rvert = \lvert P \rvert = p^{n-m}</m>. This is the second condition required of <m>P</m>, and hence <m>\mathcal{P} \neq \varnothing</m>.</p>
+
+            <p>Now we can choose an element <m>M</m> from <m>\mathcal{P}</m> that is maximal with respect to inclusion. We will determine that <m>M</m> is a Sylow <m>p</m>-subgroup of <m>G</m> and use it to build a self-complementary vertex transitive subgraph. Let <m>K = N_G(M)</m> be the normalizer of <m>M</m> in <m>G</m>. By Sylow's Second Theorem, we can choose a Sylow <m>p</m>-subgroup of <m>K</m> that contains <m>M</m>, which we denote as <m>\widetilde{M}</m>. We now show that <m>\widetilde{M} \in \mathcal{P}</m>, implying that <m>M = \widetilde{M}</m>.</p>
+
+            <p>Since <m>D(M) \neq \varnothing</m>, choose <m>\sigma \in D(M)</m>, and let <m>x = x(\sigma)</m>. Thus, <m>M^{\sigma} = M</m> and <m>\lvert M_x \rvert = p^{n-m}</m>. Because <m>\sigma</m> normalizes <m>M</m>, it also normalizes <m>K</m>. This makes <m>(\widetilde{M})^{\sigma}</m> also a Sylow <m>p</m>-subgroup of <m>K</m>. Hence <m>\widetilde{M}</m> and <m>(\widetilde{M})^{\sigma}</m> are conjugate in <m>K</m> which implies there exists <m>\kappa \in K</m> such that <m>(\widetilde{M})^{\sigma} = (\widetilde{M})^{\kappa}</m>.</p>
+
+            <p>Define <m>\widetilde{\sigma} = \kappa^{-1}\sigma</m>. Note first that <m>\widetilde{\sigma}</m> is a complementing map and that <m>(\widetilde{M})^{\widetilde{\sigma}} = \widetilde{M}</m>, meeting the first condition for <m>D(\widetilde{M})</m> to be non-empty. Let <m>W = x^K</m> be the orbit of the fixed point of <m>\sigma</m> under the action of <m>K</m>. Because <m>\sigma</m> fixes <m>x</m>, and <m>\sigma</m> normalizes <m>K</m>, we must have <m>W</m> invariant under <m>\sigma</m>. That is, <m>\sigma(W) = \{\sigma(w) \mid w \in W\} = W</m>. Trivially, <m>x \in W</m> and by <xref ref="lemma-complementing-map-cycles"/>, <m>\sigma</m> has non-identity cycles with lengths divisible by 4, and so <m>\lvert W \rvert \equiv 1 \pmod{4}</m>.</p>
+
+            <p>Now, <m>\widetilde{\sigma}(W) = \kappa^{-1}\sigma(W) = \kappa^{-1}(W) = W</m>. So <m>\lvert \widetilde{\sigma}(W) \rvert \equiv 1 \pmod{4}</m>. Combining this with the cycle structure of <m>\widetilde{\sigma}</m>, it follows that the unique fixed point of <m>\widetilde{\sigma}</m> must be in <m>W</m> also. With <m>x = x(\sigma)</m> and <m>x(\widetilde{\sigma})</m> both in <m>W = x^K</m>, there exists <m>\rho \in K</m> such that <m>\rho(x(\sigma)) = x(\widetilde{\sigma})</m>.</p>
+
+            <p>One easily checks that elements of <m>{M_x}^{\rho}</m> fix <m>x(\widetilde{\sigma})</m>. Moreover, since <m>\rho</m> normalizes <m>M</m>, we have <m>{M_x}^{\rho} \subseteq M^{\rho} = M</m>. Therefore, <m>{M_x}^{\rho} \subseteq M_{x(\widetilde{\sigma})}</m> and we have
+            <!-- Original: unnumbered display, printed page 7 -->
+            <md>p^{n-m} = \lvert M_x \rvert = \lvert {M_x}^{\rho} \rvert \leq \lvert M_{x(\widetilde{\sigma})} \rvert \leq \lvert \widetilde{M}_{x(\widetilde{\sigma})} \rvert \leq p^{n-m}.</md>
+            In particular, <m>\lvert \widetilde{M}_{x(\widetilde{\sigma})} \rvert = p^{n-m}</m>, establishing the second condition for <m>D(\widetilde{M})</m> to be non-empty. Thus <m>\widetilde{M} \in \mathcal{P}</m>.</p>
+
+            <p>The subgroup <m>M</m> was chosen as a maximal element of <m>\mathcal{P}</m>, yet <m>M \subseteq \widetilde{M}</m>, so <m>M = \widetilde{M}</m>. Thus <m>M</m> is a Sylow <m>p</m>-subgroup of <m>K</m>. This means that <m>M</m> is also a Sylow <m>p</m>-subgroup of <m>G</m>, as we now establish by contradiction. Suppose that <m>M</m> is not a Sylow <m>p</m>-subgroup of <m>G</m>, so because it is a <m>p</m>-group, it must be properly contained in some Sylow <m>p</m>-subgroup of <m>G</m>, say <m>P^{*}</m>. Because <m>M</m> and <m>P^{*}</m> are <m>p</m>-groups, <m>M \subset N(M)</m> and there exists <m>g \in P^{*} \setminus M</m> such that <m>g</m> normalizes <m>M</m>. Consider the subgroup generated by <m>g</m> and <m>M</m>, <m>H = \langle M, g \rangle</m>. First, <m>H \subseteq K</m>. Second, <m>H</m> is a subgroup of <m>P^{*}</m>, so <m>H</m> is a <m>p</m>-group. Third, <m>M</m> is a proper subset of <m>H</m>. Thus, <m>M \subset H \subseteq K</m>, and the existence of <m>H</m> contradicts that <m>M</m> is a Sylow <m>p</m>-subgroup of <m>K</m>. Thus we conclude that <m>M</m> is a Sylow <m>p</m>-subgroup of <m>G</m> and therefore <m>M</m> has order <m>p^n</m>.</p>
+
+            <p>We now use properties of <m>M</m> to create the desired subgraph of <m>\Gamma</m>. Since <m>D(M)</m> is non-empty, choose a <m>\sigma \in D(M)</m>. Then <m>\sigma \in C(\Gamma)</m>, <m>M^{\sigma} = M</m>, <m>\lvert M_{x(\sigma)} \rvert = p^{n-m}</m>. Let <m>X = x(\sigma)^M</m>, the orbit of the fixed point of <m>\sigma</m> under the action of <m>M</m>, and consider the subgraph, <m>\Delta</m>, of <m>\Gamma</m> induced by the vertices in <m>X</m>.</p>
+
+            <p>We now show that the subgraph <m>\Delta</m> has the properties required by the conclusion of the theorem. Since <m>\sigma</m> normalizes <m>M</m> and fixes <m>x(\sigma)</m>, <m>\sigma(X) = X</m>, making <m>\sigma</m> a permutation of the vertex set of <m>\Delta</m>. Because <m>\sigma \in C(\Gamma)</m>, <m>\sigma</m> is a complementing map of <m>\Delta</m>, and therefore <m>\Delta</m> is a self-complementary graph. The set <m>X</m> is an orbit under the action of <m>M \subseteq G</m>, so the elements of <m>M</m> are automorphisms of <m>\Delta</m> that act transitively on the vertices of <m>\Delta</m>, and hence <m>\Delta</m> is a vertex transitive graph. Finally, in the action of the group <m>M</m> on <m>X</m>, we have <m>p^n = \lvert M \rvert = \lvert M_{x(\sigma)} \rvert \lvert x(\sigma)^M \rvert = p^{n-m} \lvert X \rvert</m> implying that <m>\lvert X \rvert = p^m</m> and therefore <m>\Delta</m> is a graph of order <m>p^m</m>.</p>
+        </proof>
+    </theorem>
+
+    <!-- Original: Theorem 5.2 ([14], Theorem 1) -->
+    <theorem xml:id="theorem-prime-power-congruent">
+        <title><xref ref="biblio-muzychuk-sylow-subgraphs" detail="Theorem 1"/></title>
+        <statement>
+            <p>Suppose that <m>\Gamma</m> is a self-complementary vertex transitive graph with <m>\lvert V \rvert = p_1^{r_1} p_2^{r_2} \ldots p_k^{r_k}</m>, where the <m>p_i</m> are distinct primes. Then for each <m>1 \leq i \leq k</m>, <m>p_i^{r_i} \equiv 1 \pmod{4}</m>.</p>
+        </statement>
+        <proof>
+            <p>Apply <xref ref="theorem-order-congruent-one-mod-four"/> to the Sylow subgraphs determined in <xref ref="theorem-sylow-subgraphs"/>.</p>
+        </proof>
+    </theorem>
+</section>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Original: Section 3 -->
+<section xml:id="section-two-basic-properties" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <title>Two Basic Properties</title>
+
+    <!-- Original: Theorem 3.1 ([17, 22]) -->
+    <theorem xml:id="theorem-order-congruent-one-mod-four">
+        <title><xref ref="biblio-ringel-selbstkomplementare biblio-sachs-selbstcomplementare"/></title>
+        <statement>
+            <p>If <m>\Gamma = (V, E)</m> is a self-complementary regular graph with <m>\lvert V \rvert = n</m>, then <m>n \equiv 1 \pmod{4}</m>.</p>
+        </statement>
+        <proof>
+            <p>Let <m>r</m> denote the common degree of the vertices of <m>\Gamma</m>. The complement, <m>\overline{\Gamma}</m>, is also a regular graph, with common degree <m>n - r - 1</m>. Since <m>\Gamma</m> is self-complementary, these degrees must be equal, yielding <m>n = 2r + 1</m>, and so <m>n</m> is odd.</p>
+            <p>There are a total of <m>\binom{n}{2} = \frac{n(n-1)}{2}</m> possible edges among the vertices <m>V</m>. In order for <m>\Gamma</m> and <m>\overline{\Gamma}</m> to be isomorphic, this set must partition into two sets of equal size, <m>E</m> and <m>\overline{E}</m>. Thus <m>n(n - 1)</m> is divisible by 4, and since <m>n</m> is odd, we have the desired conclusion.</p>
+        </proof>
+    </theorem>
+
+    <p>The main goal of this paper is to show how this simple result extends to the individual prime power divisors of <m>n</m>.</p>
+
+    <!-- Original: Lemma 3.2 ([22, 17, 21]) -->
+    <lemma xml:id="lemma-complementing-map-cycles">
+        <title><xref ref="biblio-sachs-selbstcomplementare biblio-ringel-selbstkomplementare biblio-suprunenko-self-complementary"/></title>
+        <statement>
+            <p>Suppose <m>\Gamma = (V, E)</m> is a graph with <m>\lvert V \rvert \equiv 1 \pmod{4}</m> and <m>\sigma \in C(\Gamma)</m>. Then <m>\sigma</m> fixes exactly one element of <m>V</m>, and the remaining cycle lengths of <m>\sigma</m> are divisible by 4.</p>
+        </statement>
+        <proof>
+            <p>First suppose that <m>\sigma</m> fixes two elements of <m>V</m>, say <m>u</m> and <m>v</m>. Then <m>\sigma(\{u, v\}) = \{\sigma(u), \sigma(v)\} = \{u, v\}</m>. The pair <m>\{u, v\}</m> is either an edge of <m>\Gamma</m> or <m>\overline{\Gamma}</m>, and either case contradicts that <m>\sigma</m> is a complementing map. Thus <m>\sigma</m> fixes at most one element of <m>V</m>.</p>
+            <p>Now suppose that <m>\sigma</m> contains a transposition, a cycle of length two. Considering the two vertices of this transposition as a pair, and proceeding as above, it is clear this is also impossible.</p>
+            <p>Suppose that <m>m</m> is any odd integer and define <m>\tau = \sigma^m</m>. If we apply the permutation <m>\sigma^2</m> to <m>E</m>, it first maps <m>E</m> to <m>\overline{E}</m> (relative to the set of all possible two-element subsets of <m>V</m>), and then maps <m>\overline{E}</m> back to <m>E</m>. Since <m>\tau</m> is an odd power of <m>\sigma</m>, <m>\tau(E) = \overline{E}</m>, and therefore <m>\tau \in C(\Gamma)</m>. Now the previous properties observed for <m>\sigma</m> are equally true for <m>\tau</m>, so <m>\tau</m> fixes at most one element and has no transpositions.</p>
+            <p>Suppose that <m>\sigma</m> contains a non-identity cycle <m>\rho</m> of length <m>m</m>. Then <m>\tau</m> would contain <m>m</m> fixed points, with <m>m \gt 1</m>, which is a contradiction. Further, suppose that <m>\sigma</m> contains a cycle <m>\rho</m> of length <m>2m</m>. Then <m>\tau</m> would contain transpositions, also a contradiction. Therefore, non-identity cycle lengths in <m>\sigma</m> are divisible by 4.</p>
+        </proof>
+    </lemma>
+
+    <!-- Original: unnumbered Remark, printed page 4 -->
+    <remark xml:id="remark-fixed-vertex">
+        <p>Suppose a graph <m>\Gamma</m> is self-complementary and vertex transitive. Since <m>\Gamma</m> is vertex transitive, it is regular, so by <xref ref="theorem-order-congruent-one-mod-four"/> <m>\lvert V \rvert \equiv 1 \pmod{4}</m>. Since <m>\Gamma</m> is self-complementary, every <m>\sigma \in C(\Gamma)</m> fixes exactly one vertex by <xref ref="lemma-complementing-map-cycles"/>. The lone vertex left fixed by complementing maps of self-complementary vertex transitive graphs plays a pivotal role in the proofs that follow.</p>
+    </remark>
+</section>

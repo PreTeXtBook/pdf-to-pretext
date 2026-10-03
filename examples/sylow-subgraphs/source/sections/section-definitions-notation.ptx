@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Original: Section 2 -->
+<section xml:id="section-definitions-notation" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <title>Definitions and Notation</title>
+
+    <p>A <term>graph</term> <m>\Gamma = (V, E)</m> is a finite set of <term>vertices</term> <m>V</m>, together with a set of <term>edges</term> <m>E</m> that is composed of two-element subsets of <m>V</m>. A permutation <m>\sigma</m> of <m>V</m> is an <term>automorphism</term> of <m>\Gamma</m> if it preserves edges, that is whenever <m>\{u, v\} \in E</m>, then <m>\{\sigma(u), \sigma(v)\} \in E</m>. The set of all automorphisms of a graph <m>\Gamma</m> forms a group, <m>\mathbf{Aut}(\Gamma)</m>. A <term>complementing map</term> of <m>\Gamma</m> is a permutation <m>\sigma</m> of <m>V</m> such that <m>\{u, v\} \in E</m> if and only if <m>\{\sigma(u), \sigma(v)\} \notin E</m>. For example, the graph of <xref ref="figure-paley-nine-vertices"/> is self-complementary, as can be seen by the existence of the complementing map obtained by rotating the figure about the central vertex through an angle of <m>\pi/4</m>. We denote the set of all complementing maps of a graph <m>\Gamma</m> as <m>C(\Gamma)</m>. We can now carefully state our two main definitions.</p>
+
+    <!-- Original: Definition 2.1 -->
+    <definition xml:id="definition-vertex-transitive">
+        <statement>
+            <p>A graph <m>\Gamma = (V, E)</m> is <term>vertex transitive</term> if its automorphism group acts transitively on the set of vertices. That is, for any <m>u, v \in V</m> there exists <m>\sigma \in \mathrm{Aut}(\Gamma)</m> such that <m>\sigma(u) = v</m>.</p>
+        </statement>
+    </definition>
+
+    <!-- Original: Definition 2.2 -->
+    <definition xml:id="definition-self-complementary">
+        <statement>
+            <p>A graph <m>\Gamma = (V, E)</m> is <term>self-complementary</term> if <m>C(\Gamma)</m> is non-empty. That is, there is at least one complementing map of <m>\Gamma</m>.</p>
+        </statement>
+    </definition>
+
+    <p><xref ref="figure-paley-nine-vertices"/> is an example of a construction from <xref ref="section-constructing-graphs"/> that yields graphs that are both self-complementary and vertex transitive.</p>
+
+    <p>The complement of a set <m>X</m> will be denoted by <m>\overline{X}</m>. Many of the other definitions and constructions used here are also described in <xref ref="biblio-godsil-royle-algebraic-graph-theory"/>.</p>
+</section>

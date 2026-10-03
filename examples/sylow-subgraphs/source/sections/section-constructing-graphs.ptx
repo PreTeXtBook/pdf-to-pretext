@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Original: Section 4 -->
+<section xml:id="section-constructing-graphs" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <title>Constructing Self-Complementary Vertex Transitive Graphs</title>
+
+    <p>In this section we describe a construction of self-complementary vertex transitive graphs due to Rao, that shows that in a certain sense our final result is the best possible. The results in this section can be found in Rao <xref ref="biblio-rao-strongly-regular"/>.</p>
+
+    <!-- Original: Definition 4.1 -->
+    <definition xml:id="definition-lexicographic-product">
+        <statement>
+            <p>Suppose that <m>\Gamma_1 = (V_1, E_1)</m> and <m>\Gamma_2 = (V_2, E_2)</m> are graphs. Define the <term>lexicographic product</term>, <m>\Gamma_1[\Gamma_2]</m>, by <m>V(\Gamma_1[\Gamma_2]) = V_1 \times V_2</m>, the usual Cartesian product, and <m>E(\Gamma_1[\Gamma_2]) = \{\,\{(u_1, u_2), (v_1, v_2)\} \mid \{u_1, v_1\} \in E_1, \text{ or } u_1 = v_1, \{u_2, v_2\} \in E_2\}</m>.</p>
+        </statement>
+    </definition>
+
+    <p>The next two propositions are routine to verify.</p>
+
+    <!-- Original: Theorem 4.2 -->
+    <theorem xml:id="theorem-lexicographic-vertex-transitive">
+        <statement>
+            <p>If <m>\Gamma_1</m> and <m>\Gamma_2</m> are vertex transitive graphs, then the lexicographic product <m>\Gamma_1[\Gamma_2]</m> is also vertex transitive.</p>
+        </statement>
+        <proof>
+            <p>Use the fact that if <m>\sigma_1</m> and <m>\sigma_2</m> are automorphisms of <m>\Gamma_1</m> and <m>\Gamma_2</m>, respectively, then the function <m>\psi</m> defined by <m>\psi(u_1, u_2) = (\sigma_1(u_1), \sigma_2(u_2))</m> is a automorphism of <m>\Gamma_1[\Gamma_2]</m>.</p>
+        </proof>
+    </theorem>
+
+    <!-- Original: Theorem 4.3 -->
+    <theorem xml:id="theorem-lexicographic-self-complementary">
+        <statement>
+            <p>If <m>\Gamma_1</m> and <m>\Gamma_2</m> are self-complementary graphs, then the lexicographic product <m>\Gamma_1[\Gamma_2]</m> is also self-complementary.</p>
+        </statement>
+        <proof>
+            <p>First, note that <m>\overline{\Gamma_1[\Gamma_2]} = \overline{\Gamma_1}\,[\overline{\Gamma_2}]</m>. Then, for complementing maps, <m>\sigma_1</m>, <m>\sigma_2</m> of <m>\Gamma_1</m>, <m>\Gamma_2</m>, respectively, construct as above the complementing map <m>\psi</m> of <m>\Gamma_1[\Gamma_2]</m>.</p>
+        </proof>
+    </theorem>
+
+    <p>With these two general results about lexicographic products, we extend the building blocks of the following construction to create a variety of self-complementary vertex transitive graphs.</p>
+
+    <!-- Original: Theorem 4.4 -->
+    <theorem xml:id="theorem-paley-graph-exists">
+        <statement>
+            <p>Let <m>p</m> be a prime such that <m>p^r \equiv 1 \pmod{4}</m>. Then there exists a self-complementary vertex transitive graph with <m>p^r</m> vertices.</p>
+        </statement>
+        <proof>
+            <p>Write <m>p^r = 4k + 1</m> and let <m>x</m> be a primitive element of the finite field <m>\mathrm{GF}(p^r)</m>. That is, <m>x</m> is a generator of the multiplicative group of non-zero elements, <m>\mathrm{GF}(p^r)^{*}</m>. Define a graph <m>\Gamma = (V, E)</m> by <m>V = \{0, x, x^2, \ldots, x^{4k} = 1\}</m>, <m>E = \{\,\{u, v\} \mid u - v = x^{2s}, s \in \mathbb{Z}\,\}</m>.</p>
+            <p>To verify that <m>\Gamma</m> is self-complementary, check that <m>\sigma = (0)(x\ x^2\ x^3 \ldots x^{4k})</m> is a complementing map.</p>
+            <p>To verify that <m>\Gamma</m> is vertex transitive, suppose that <m>u</m> and <m>v</m> are two vertices of <m>\Gamma</m>, and check that the permutation <m>\rho</m> defined on <m>V</m> by <m>\rho(w) = w + (v - u)</m> is an automorphism of <m>\Gamma</m> that carries <m>u</m> to <m>v</m>.</p>
+        </proof>
+    </theorem>
+
+    <p>The graphs of this construction are known as Paley graphs, and are also examples of a more general construction known as Cayley graphs, which employ groups as vertex sets. The graph of <xref ref="figure-paley-nine-vertices"/> is a Paley graph on 9 vertices, where <m>x</m> is a root of the irreducible polynomial <m>x^2 + 2x + 2</m> over <m>\mathrm{GF}(3)</m>. The central vertex is 0, and powers of <m>x</m> are placed around the perimeter clockwise, beginning with <m>x</m> at the top center vertex. The complementing map <m>\sigma</m> is a clockwise rotation through an angle of <m>\pi/4</m>.</p>
+
+    <!-- Original: Theorem 4.5 ([16], Theorem 4.5) -->
+    <theorem xml:id="theorem-orders-sufficient">
+        <title><xref ref="biblio-rao-strongly-regular" detail="Theorem 4.5"/></title>
+        <statement>
+            <p>Suppose <m>n = p_1^{r_1} p_2^{r_2} \ldots p_k^{r_k}</m>, where the <m>p_i</m> are distinct primes and each <m>p_i^{r_i} \equiv 1 \pmod{4}</m>. Then there exists a self-complementary vertex transitive graph with <m>n</m> vertices.</p>
+        </statement>
+        <proof>
+            <p>Construct Paley graphs of order <m>p_i^{r_i}</m> as described in <xref ref="theorem-paley-graph-exists"/>, combine them with lexicographic products, and apply <xref ref="theorem-lexicographic-vertex-transitive"/> and <xref ref="theorem-lexicographic-self-complementary"/> to see that the result is a self-complementary vertex transitive graph of the desired order.</p>
+        </proof>
+    </theorem>
+
+    <p>Next we show that this description of the prime decomposition of the order of a self-complementary vertex transitive graph is not only sufficient, but necessary.</p>
+</section>

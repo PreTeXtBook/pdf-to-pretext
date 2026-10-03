@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Original: References, printed pages 8-9.  CSL-style entries; the author's wording and numbers  -->
+<!-- as printed; page ranges with a hyphen, the CSL convention (the original prints en dashes);        -->
+<!-- DOIs from Crossref.                                                                               -->
+<references xml:id="references" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <title>References</title>
+
+    <!-- Original: [1] -->
+    <biblio xml:id="biblio-chvatal-erdos-hedrlin-ramsey" type="article-journal">
+        <author>
+            <name><family>Chvátal</family><given>V.</given></name>
+            <name><family>Erdös</family><given>P.</given></name>
+            <name><family>Hedrlín</family><given>Z.</given></name>
+        </author>
+        <title>Ramsey's theorem and self-complementary graphs</title>
+        <container-title>Discrete Math.</container-title>
+        <volume>3</volume>
+        <issued><date year="1972"/></issued>
+        <page>301-304</page>
+        <DOI>10.1016/0012-365x(72)90087-8</DOI>
+    </biblio>
+
+    <!-- Original: [2] -->
+    <biblio xml:id="biblio-clapham-ramsey-bounds" type="article-journal">
+        <author><name><family>Clapham</family><given>C.R.J.</given></name></author>
+        <title>A class of self-complementary graphs and lower bounds of some Ramsey numbers</title>
+        <container-title>J. Graph Theory</container-title>
+        <volume>3</volume>
+        <issue>3</issue>
+        <issued><date year="1979"/></issued>
+        <page>287-289</page>
+        <DOI>10.1002/jgt.3190030311</DOI>
+    </biblio>
+
+    <!-- Original: [3] -->
+    <biblio xml:id="biblio-colbourn-graph-isomorphism" type="article-journal">
+        <author>
+            <name><family>Colbourn</family><given>M.J.</given></name>
+            <name><family>Colbourn</family><given>C.J.</given></name>
+        </author>
+        <title>Graph isomorphisms and self-complementary graphs</title>
+        <container-title>SIGACT News</container-title>
+        <volume>10</volume>
+        <issue>1</issue>
+        <issued><date year="1978"/></issued>
+        <page>25-29</page>
+        <DOI>10.1145/1008605.1008608</DOI>
+    </biblio>
+
+    <!-- Original: [4] -->
+    <biblio xml:id="biblio-froncek-rosa-siran-circulant" type="article-journal">
+        <author>
+            <name><family>Fronček</family><given>D.</given></name>
+            <name><family>Rosa</family><given>A.</given></name>
+            <name><family>Širáň</family><given>J.</given></name>
+        </author>
+        <title>The existence of selfcomplementary circulant graphs</title>
+        <container-title>European J. Combin.</container-title>
+        <volume>17</volume>
+        <issue>7</issue>
+        <issued><date year="1996"/></issued>
+        <page>625-628</page>
+        <DOI>10.1006/eujc.1996.0053</DOI>
+    </biblio>
+
+    <!-- Original: [5] -->
+    <biblio xml:id="biblio-godsil-royle-algebraic-graph-theory" type="book">
+        <author>
+            <name><family>Godsil</family><given>C.</given></name>
+            <name><family>Royle</family><given>G.</given></name>
+        </author>
+        <title>Algebraic Graph Theory</title>
+        <collection-title>Graduate Texts in Mathematics</collection-title>
+        <volume>207</volume>
+        <issued><date year="2001"/></issued>
+        <publisher>Springer</publisher>
+        <publisher-place>New York</publisher-place>
+        <DOI>10.1007/978-1-4613-0163-9</DOI>
+    </biblio>
+
+    <!-- Original: [6] -->
+    <biblio xml:id="biblio-koolen-manuscript" type="manuscript">
+        <author><name><family>Koolen</family><given>J.H.</given></name></author>
+        <title>On selfcomplementary vertex-transitive graphs</title>
+        <genre>Manuscript</genre>
+        <issued><date year="1997"/></issued>
+    </biblio>
+
+    <!-- Original: [7] -->
+    <biblio xml:id="biblio-li-vertex-transitive" type="article-journal">
+        <author><name><family>Li</family><given>C.H.</given></name></author>
+        <title>On self-complementary vertex-transitive graphs</title>
+        <container-title>Comm. Algebra</container-title>
+        <volume>25</volume>
+        <issue>12</issue>
+        <issued><date year="1997"/></issued>
+        <page>3903-3908</page>
+        <DOI>10.1080/00927879708826094</DOI>
+    </biblio>
+
+    <!-- Original: [8] (no DOI: the journal is not in Crossref) -->
+    <biblio xml:id="biblio-li-finite-graphs" type="article-journal">
+        <author><name><family>Li</family><given>C.H.</given></name></author>
+        <title>On finite graphs that are self-complementary and vertex-transitive</title>
+        <container-title>Australas. J. Combin.</container-title>
+        <volume>18</volume>
+        <issued><date year="1998"/></issued>
+        <page>147-155</page>
+    </biblio>
+
+    <!-- Original: [9] -->
+    <biblio xml:id="biblio-li-praeger-not-cayley" type="article-journal">
+        <author>
+            <name><family>Li</family><given>C.H.</given></name>
+            <name><family>Praeger</family><given>C.E.</given></name>
+        </author>
+        <title>Self-complementary vertex-transitive graphs need not be Cayley graphs</title>
+        <container-title>Bull. London Math. Soc.</container-title>
+        <volume>33</volume>
+        <issue>6</issue>
+        <issued><date year="2001"/></issued>
+        <page>653-661</page>
+        <DOI>10.1112/s0024609301008505</DOI>
+    </biblio>
+
+    <!-- Original: [10] -->
+    <biblio xml:id="biblio-li-praeger-orbitals" type="article-journal">
+        <author>
+            <name><family>Li</family><given>C.H.</given></name>
+            <name><family>Praeger</family><given>C.E.</given></name>
+        </author>
+        <title>On partitioning the orbitals of a transitive permutation group</title>
+        <container-title>Trans. Amer. Math. Soc.</container-title>
+        <volume>355</volume>
+        <issue>2</issue>
+        <issued><date year="2003"/></issued>
+        <page>637-653</page>
+        <DOI>10.1090/s0002-9947-02-03110-0</DOI>
+    </biblio>
+
+    <!-- Original: [11] ("homogenous" and the hyphenated page range as printed) -->
+    <biblio xml:id="biblio-li-praeger-homogeneous-factorisations" type="article-journal">
+        <author>
+            <name><family>Li</family><given>C.H.</given></name>
+            <name><family>Praeger</family><given>C.E.</given></name>
+        </author>
+        <title>Constructing homogenous factorisations of complete graphs and digraphs</title>
+        <container-title>Graphs and Combinatorics</container-title>
+        <volume>18</volume>
+        <issued><date year="2002"/></issued>
+        <page>757-761</page>
+        <DOI>10.1007/s003730200061</DOI>
+    </biblio>
+
+    <!-- Original: [12] -->
+    <biblio xml:id="biblio-lovasz-shannon-capacity" type="article-journal">
+        <author><name><family>Lovász</family><given>L.</given></name></author>
+        <title>On the Shannon capacity of a graph</title>
+        <container-title>IEEE Trans. Inform. Theory</container-title>
+        <volume>25</volume>
+        <issue>1</issue>
+        <issued><date year="1979"/></issued>
+        <page>1-7</page>
+        <DOI>10.1109/tit.1979.1055985</DOI>
+    </biblio>
+
+    <!-- Original: [13] (names printed family first, without commas; no DOI: the journal is not in Crossref) -->
+    <biblio xml:id="biblio-luo-su-li-ramsey-bounds" type="article-journal">
+        <author>
+            <name><literal>Luo Haipeng</literal></name>
+            <name><literal>Su Wenlong</literal></name>
+            <name><literal>Li Zhenchong</literal></name>
+        </author>
+        <title>The properties of self-complementary graphs and new lower bounds for diagonal Ramsey numbers</title>
+        <container-title>Australas. J. Combin.</container-title>
+        <volume>25</volume>
+        <issued><date year="2002"/></issued>
+        <page>103-116</page>
+    </biblio>
+
+    <!-- Original: [14] -->
+    <biblio xml:id="biblio-muzychuk-sylow-subgraphs" type="article-journal">
+        <author><name><family>Muzychuk</family><given>M.</given></name></author>
+        <title>On Sylow subgraphs of vertex-transitive self-complementary graphs</title>
+        <container-title>Bull. London Math. Soc.</container-title>
+        <volume>31</volume>
+        <issued><date year="1999"/></issued>
+        <page>531-533</page>
+        <DOI>10.1112/s0024609399005925</DOI>
+    </biblio>
+
+    <!-- Original: [15] -->
+    <biblio xml:id="biblio-peisert-symmetric-graphs" type="article-journal">
+        <author><name><family>Peisert</family><given>W.</given></name></author>
+        <title>All self-complementary symmetric graphs</title>
+        <container-title>J. Algebra</container-title>
+        <volume>240</volume>
+        <issue>1</issue>
+        <issued><date year="2001"/></issued>
+        <page>209-229</page>
+        <DOI>10.1006/jabr.2000.8714</DOI>
+    </biblio>
+
+    <!-- Original: [16] -->
+    <biblio xml:id="biblio-rao-strongly-regular" type="article-journal">
+        <author><name><family>Rao</family><given>S.B.</given></name></author>
+        <title>On regular and strongly-regular self-complementary graphs</title>
+        <container-title>Discrete Math.</container-title>
+        <volume>54</volume>
+        <issued><date year="1985"/></issued>
+        <page>73-82</page>
+        <DOI>10.1016/0012-365x(85)90063-9</DOI>
+    </biblio>
+
+    <!-- Original: [17] -->
+    <biblio xml:id="biblio-ringel-selbstkomplementare" type="article-journal">
+        <author><name><family>Ringel</family><given>G.</given></name></author>
+        <title>Selbstkomplementäre Graphen</title>
+        <container-title>Arch. Math.</container-title>
+        <volume>14</volume>
+        <issued><date year="1963"/></issued>
+        <page>354-358</page>
+        <DOI>10.1007/bf01234967</DOI>
+    </biblio>
+
+    <!-- Original: [18] -->
+    <biblio xml:id="biblio-read-counting" type="article-journal">
+        <author><name><family>Read</family><given>R.C.</given></name></author>
+        <title>On the number of self-complementary graphs and digraphs</title>
+        <container-title>J. London Math. Soc.</container-title>
+        <volume>38</volume>
+        <issued><date year="1963"/></issued>
+        <page>99-104</page>
+        <DOI>10.1112/jlms/s1-38.1.99</DOI>
+    </biblio>
+
+    <!-- Original: [19] (the printed date is taken as the access date) -->
+    <biblio xml:id="biblio-royle-combinatorial-data" type="webpage">
+        <author><name><family>Royle</family><given>G.</given></name></author>
+        <title>Combinatorial Data</title>
+        <accessed><date year="2004" month="12" day="24"/></accessed>
+        <URL>http://www.csse.uwa.edu.au/~gordon/data.html</URL>
+    </biblio>
+
+    <!-- Original: [20] -->
+    <biblio xml:id="biblio-royle-personal-communication" type="document">
+        <author><name><family>Royle</family><given>G.</given></name></author>
+        <genre>personal communication</genre>
+    </biblio>
+
+    <!-- Original: [21] (1985 as printed; Crossref says 1986) -->
+    <biblio xml:id="biblio-suprunenko-self-complementary" type="article-journal">
+        <author><name><family>Suprunenko</family><given>D.A.</given></name></author>
+        <title>Self-complementary graphs</title>
+        <container-title>Cybernetics</container-title>
+        <volume>21</volume>
+        <issued><date year="1985"/></issued>
+        <page>559-567</page>
+        <DOI>10.1007/bf01074707</DOI>
+    </biblio>
+
+    <!-- Original: [22] (spelling as printed) -->
+    <biblio xml:id="biblio-sachs-selbstcomplementare" type="article-journal">
+        <author><name><family>Sachs</family><given>H.</given></name></author>
+        <title>Über Selbstcomplementäre Graphen</title>
+        <container-title>Publ. Math. Debrecen</container-title>
+        <volume>9</volume>
+        <issued><date year="1962"/></issued>
+        <page>270-288</page>
+        <DOI>10.5486/pmd.1962.9.3-4.11</DOI>
+    </biblio>
+
+    <!-- Original: [23] -->
+    <biblio xml:id="biblio-thompson-codes-to-groups" type="book">
+        <author><name><family>Thompson</family><given>T.M.</given></name></author>
+        <title>From error-correcting codes through sphere packings to simple groups</title>
+        <collection-title>Carus Mathematical Monographs</collection-title>
+        <volume>21</volume>
+        <issued><date year="1983"/></issued>
+        <publisher>Mathematical Association of America</publisher>
+        <publisher-place>Washington, DC</publisher-place>
+        <DOI>10.5948/upo9781614440215</DOI>
+    </biblio>
+</references>

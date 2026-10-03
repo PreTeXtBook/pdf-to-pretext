@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Project manifest for the PreTeXt-CLI.  The transcription does not use it: every  -->
+<!-- build and validation here is done with PreTeXt's own script.  It is provided so  -->
+<!-- that an author who works with the CLI can take the project up from this point;   -->
+<!-- the two targets write where the skill's builds write, output/web and output/print. -->
+<project ptx-version="2">
+    <targets>
+        <target name="web" format="html"/>
+        <target name="print" format="pdf"/>
+    </targets>
+</project>
