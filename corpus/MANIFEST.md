@@ -50,7 +50,7 @@ Rob's own papers (rights held, LaTeX source, an original PDF and a rebuilt one e
 
 ### corpus/own/scvt
 
-- Added 2026-09-03 from `/home/rob/papers/scvt/`: `paper.pdf` is the submitted version
+- Added 2026-09-03 from Rob's own files: `paper.pdf` is the submitted version
   (`scvt_expo_submit.pdf`, pdfTeX, dated December 30, 2004, 10 pages, letter, text layer
   present, 4,775 words); `published.pdf` is the version of record, Expositiones
   Mathematicae 24 (2006) 185–194, doi:10.1016/j.exmath.2005.09.003 (Elsevier, Distiller,
@@ -70,7 +70,22 @@ Rob's own papers (rights held, LaTeX source, an original PDF and a rebuilt one e
 
 ## corpus/round-trip
 
-PreTeXt-authored articles built to PDF and transcribed back; exact keys.  None yet.
+PreTeXt-authored articles built to PDF and transcribed back; exact keys.  Each was written
+for the purpose (invented people and publications, mathematics too simple to be anyone's)
+and is under the repository's license.  `tests/run.sh` validates and builds every one;
+`CONTRIBUTING.md` says how to add one and how to score the skill on one.
+
+- `blocks-and-proofs` (2 pages): theorem-like blocks on one counter within sections, a
+  remark, attached and detached proofs, numbered and unnumbered displays, aligned rows,
+  cases, cross-references of every kind, a footnote, lists, a run-in Acknowledgements.
+- `front-matter-and-bibliography` (2 pages): three authors with affiliations and emails,
+  a date, keywords and subject codes, an abstract with mathematics, seven bibliography
+  entries of six kinds, cited singly, several at once, and with a pinpoint.
+- `tables-and-lists` (1 page): two tables, nested lists, a description list, references
+  to tables and to a list item.
+- `figures` (2 pages): a single figure, a figure of two unlettered panels of different
+  widths, a figure of two lettered subfigures; the pictures are drawn by the TikZ files in
+  its `figures/`.
 
 ## corpus/wild
 

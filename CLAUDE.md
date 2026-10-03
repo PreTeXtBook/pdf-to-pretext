@@ -44,7 +44,8 @@ Words, mathematics, and structure are never such differences.
 
 ## The three passes
 
-1. Survey the whole document and write the manifest (`runs/<date>-<name>/manifest.md`):
+1. Survey the whole document and write the manifest
+   (`runs/<date>-<name>/transcription/manifest.md`):
    divisions; every numbered item with its original number and proposed id; equations;
    figures and tables; bibliography keys; macros with keep/expand decisions; notation.
    Much of PreTeXt is global — the manifest is what keeps section-by-section work consistent.
@@ -60,18 +61,23 @@ Words, mathematics, and structure are never such differences.
 a fresh paper, or an update or rebuild of an earlier run (Rob, 2026-09-23, after the scvt
 demonstration was rebuilt on a clone 26 commits behind).  Record the commit in the run
 notes, as the decisions above require.  Use the in-repo script through the
-venv; never pretext-cli, never raw `xsltproc`.  Output directories go under `/tmp`
-(`mkdir -p` first); always pass `-p`:
+venv; never pretext-cli, never raw `xsltproc`.  The skill's scripts run it; they find the
+clone and the venv's Python from `skill/pdf-to-pretext/config.local` (not tracked; on
+Rob's machine the venv is `~/.claude/pretext-venv`).  A run directory is laid out as the
+PreTeXt-CLI lays out a project, by `skill/pdf-to-pretext/scripts/new-transcription.sh`
+(Rob, 2026-10-03: the CLI's directories and files, never its processing).  Output
+directories go under `/tmp`, named as the last argument:
 
 ```
-mkdir -p /tmp/pdf-to-pretext/<name>-html && \
-/home/rob/.claude/pretext-venv/bin/python3 pretext/pretext/pretext -vv -c doc -f html \
-    -p runs/<run>/publication.ptx -d /tmp/pdf-to-pretext/<name>-html runs/<run>/main.ptx
+skill/pdf-to-pretext/scripts/build.sh runs/<run> html /tmp/pdf-to-pretext/<name>-html
 ```
 
-Validation: the same script with `-V full` in place of `-c doc -f html`; it writes
-`<name>-validation.txt` (line numbers refer to the assembled file).  `build.sh` and
-`validate.sh` in `skill/pdf-to-pretext/scripts/` wrap both.  Verify every element name
+A run made before 2026-10-03 has `main.ptx` at its top, and the scripts take its two
+files: `build.sh runs/<run>/main.ptx runs/<run>/publication.ptx html <directory>`.
+
+Validation: `skill/pdf-to-pretext/scripts/validate.sh runs/<run> <directory>`; it writes
+`<name>-validation.txt` (line numbers refer to the assembled file beside it).  After a
+change to the skill, and after the clone moves, `tests/run.sh`.  Verify every element name
 against `pretext/schema/pretext.rnc` before using it; `me`, `men`, `mdn` no longer exist —
 display math is `md` (with `@number` for a single numbered line, `mrow`s for several).
 
