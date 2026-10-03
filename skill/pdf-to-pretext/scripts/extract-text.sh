@@ -4,4 +4,4 @@
 set -eu
 . "$(dirname "$0")/pretext-location.sh"
 "$PRETEXT_PYTHON" "$skill/scripts/pdftool.py" text "$1" --layout > "$2"
-wc -w "$2"
+echo "text layer written: $2"

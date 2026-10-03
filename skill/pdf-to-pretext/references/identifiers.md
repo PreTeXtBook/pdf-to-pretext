@@ -10,6 +10,10 @@
   `<!-- Original: Theorem 2.3 -->`; for a display equation `<!-- Original: (2.4) -->`;
   for a division `<!-- Original: Section 4.1 -->`; for an unnumbered environment
   `<!-- Original: unnumbered Remark, page 7 -->`.
+- A numbered line of a display in several lines has its comment inside the `md`,
+  immediately before its own `mrow`.  A footnote has `<!-- Original: footnote 3 -->`
+  immediately before its `fn`, inside the sentence, with no space between the comment and
+  the `fn` (a space there would be printed before the footnote's mark).
 - A section is a file of its own, and a comment before the root element of an included
   file is lost when the files are assembled.  Put a section's comment in `main.ptx`,
   before its `xi:include`.

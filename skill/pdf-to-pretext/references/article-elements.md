@@ -7,7 +7,9 @@ PreTeXt changes; this list was last checked on 2026-10-03 against commit `bf795a
 - Root: `pretext` (`@xml:lang="en-US"`), `docinfo` (`macros`), `article` (`title`).
 - Front matter, in this order: `frontmatter/bibinfo` with `author` (`personname`,
   then `department`, `institution`, `location` as the document separates them, `email`;
-  an affiliation printed as one line with no such separation is one `institution`, and
+  an affiliation printed as one line with no such separation is one `institution` (a
+  comma within the line is not a separation: "Department of X, University of Y" on one
+  line is one `institution` holding those words), and
   one printed on several lines holds `line`s),
   `date`, `keywords` (`@authority="msc"`, `@variant` for the year, `keyword`s), `support`;
   `frontmatter/titlepage` holding an empty `titlepage-items` (required);

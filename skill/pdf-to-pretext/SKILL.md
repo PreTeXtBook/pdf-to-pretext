@@ -41,16 +41,18 @@ Three rules follow from it.
    is used on a machine, and again before each new transcription. It gets PreTeXt and
    builds a Python environment for it, both in the skill's own data directory, updates
    them when they are already there, and ends with a trial build. The person should not
-   have to do any of this. The one thing it cannot do is install programs for the whole
-   machine (the PDF tools, a TeX distribution); when one is missing it prints the single
-   command that installs them, and that command is what you pass on to the person.
+   have to do any of this. The one thing it cannot do is install a program for the whole
+   machine, and the only such program it needs is a TeX distribution; when that is
+   missing it prints the single command that installs it, and that command is what you
+   pass on to the person.
    PreTeXt changes from week to week, which is why the script is run each time; the
    notes' header records the commit that was used.
 3. **Inputs.** The PDF, always, and it must have a text layer: a scan without one is
-   outside this skill. `scripts/pdftool.py` does everything the skill asks of a PDF
-   (text, page images, fonts, pictures, crops); run it with no arguments for the list. The LaTeX source when it exists, as the primary text. Never an HTML
-   rendering of the paper (arXiv's, a journal's): that is another party's conversion, with
-   its own errors.
+   outside this skill. The LaTeX source when it exists, as the primary text. Never an
+   HTML rendering of the paper (arXiv's, a journal's): that is another party's
+   conversion, with its own errors. `scripts/pdftool.py` does everything the skill asks
+   of a PDF (text, the position of every line, the font of every run, page images, zooms,
+   pictures, crops); run it with no arguments for the list.
 4. **The project.** `scripts/new-transcription.sh <paper.pdf> <directory> <model-id>`
    lays out the project, copies the original in, renders its pages at 150 dpi, extracts
    its text, and begins the notes. `references/project-layout.md` says what goes where:
@@ -149,12 +151,15 @@ once. Then, one file per section in `source/sections/`, with the page images ope
    symbol it reports with a lower count in the build.
 4. Read every page of the built PDF side by side with the original when the paper is
    short (under about twenty pages); for a longer paper, every page with a display or a
-   figure and a sample of the rest. A single lost glyph cannot be found by sampling.
-   Correct what you find, and repeat until a reading finds nothing.
+   figure and a sample of the rest. `scripts/pdftool.py render output/print/main.pdf
+   transcription/built-pages` makes the page images of the build, as
+   `transcription/pages` holds the original's. A single lost glyph cannot be found by
+   sampling. Correct what you find, and repeat until a reading finds nothing.
 5. The HTML is typeset in the reader's browser, and this skill does not ask for one, so
    it is checked from its files. `scripts/html-outline.py <project>/output/web` lists
-   every page's headings, numbers, captions, equation tags, cross-references, and images.
-   They must agree with the PDF you have just read, and no image may be missing.
+   every page's headings, numbers, captions, equation tags, cross-references, footnotes,
+   and images, and the title page's authors and abstract. They must agree with the PDF
+   you have just read, and no image may be missing.
 
 ## Finishing
 

@@ -8,9 +8,10 @@ as a PreFigure diagram is a further step, worth taking only when asked.
 
 `scripts/pdftool.py images transcription/original.pdf` lists the raster pictures embedded
 in the PDF, with the page, the place, and the size of each on the page, in points.  A
-figure that is not listed is a vector drawing.  Either way the labels are usually typeset over the picture by LaTeX, so pulling
-the embedded picture out loses every label.  Crop the region of the page instead: that
-keeps picture and labels together, raster and vector alike.
+figure that is not listed is a vector drawing.  Either way the labels are usually typeset
+over the picture by LaTeX, so pulling the embedded picture out loses every label.  Crop
+the region of the page instead: that keeps picture and labels together, raster and vector
+alike.
 
 ## Cropping
 
@@ -31,12 +32,19 @@ positions of the text around it and the ink between, and writes every panel as S
 PDF, so that `image/@source` needs no extension.  Read the script's own header for the
 rules it applies and for the options that fit another page layout.
 
-- **Look at the contact sheets** it writes (in `transcription/crop-work/`) before
-  authoring.  Every wrong box so far was found on a contact sheet and none any other way.
+- **Look at the contact sheets** it writes (`transcription/crop-work/sheet-1.png`, ...)
+  before authoring: every panel, over its name.  Every wrong box so far was found on a
+  contact sheet and none any other way.
 - **Its limits.**  It knows subcaptions lettered (a), (b), (c) and no further, and it
-  takes a wide line of labels inside a picture for body text.  Its header says which
-  options to set for a page that is not letter paper with one-inch margins.  A box it
-  gets wrong is cropped by hand, as below.
+  takes a wide line of labels inside a picture for body text.  Its defaults suit letter
+  or A4 paper with a text block no wider than about 470 points; its header says which
+  options to set otherwise, and `scripts/pdftool.py info` prints the block's edges.  A
+  box it gets wrong is cropped by hand, as below.
+- **The SVG is made from the cropped PDF**, by the same library, so the PDF is the one
+  to look at, and the contact sheet is a rendering of it.  Do not judge an SVG by
+  rendering it with `pdftool.py`: the library reads SVG less completely than it writes
+  it (a dashed line comes back solid), and a browser, which is what will draw it, reads
+  what is written.
 - **Page numbers.**  The specification wants PDF page numbers, which can differ from the
   printed ones.
 - **By hand**, one crop is
@@ -56,7 +64,9 @@ rules it applies and for the options that fit another page layout.
   would still need a second panel).  A grid of two, two, and one becomes three and two in
   an `sbsgroup`, which itself needs two `sidebyside`s.
 - **A picture keeps the share of the text block it has in the original.**  A width is a
-  percentage: the crop's width divided by the width of the original's text block.  Three
+  percentage: the crop's width divided by the width of the original's text block.  The
+  crop's width is `w` in `transcription/crop-work/figure-boxes.json`, and
+  `scripts/pdftool.py info transcription/original.pdf` prints the text block's.  Three
   drawings 82, 179, and 100 points wide on a page whose text is 390 points wide are
   `widths="21% 46% 26%"`; equal widths would rescale them against each other.  The same
   rule gives a single `image/@width`.
@@ -67,10 +77,12 @@ rules it applies and for the options that fit another page layout.
 
 ## Describing
 
-Every `image` gets a `description`, or a `shortdescription` of at most 125 characters,
-written from the picture: what is drawn, what is labeled, what a reader is meant to see.
-The caption is the author's; the description is yours, and it is what a reader who cannot
-see the picture receives.
+Every `image` gets one of two, written from the picture: a `shortdescription`, plain
+text of at most 125 characters, when a phrase says all there is to see, and otherwise a
+`description`, made of `p`s, saying what is drawn, what is labeled, and what a reader is
+meant to see.  Not both: a second one adds nothing for the reader who gets them.  The
+caption is the author's; the description is yours, and it is what a reader who cannot see
+the picture receives.
 
 ## Numbering
 
@@ -87,9 +99,11 @@ row against the page image.
 
 ## Checking
 
-Text inside a figure extracts differently from the original and from the build, so
+Text inside a figure can extract differently from the original and from the build (the
+labels of a picture come out in another order, or between other lines), and then
 `scripts/compare.py` reports caption and label words as absent.  Read each such run
-against the page.
+against the page.  When the labels extract alike, it reports nothing, which is not a
+check of the picture: the contact sheet and the built page are.
 
 ## Recreating a drawing in PreFigure
 

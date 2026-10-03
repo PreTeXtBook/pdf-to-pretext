@@ -40,8 +40,9 @@ Things to know:
 
 - The scaffold is for a paper with an introduction and a bibliography.  Rename
   `section-introduction.ptx` when the first section is called something else, add a file
-  and an `xi:include` for each further section, and take the `backmatter` and
-  `references.ptx` out when the paper has no bibliography.
+  and an `xi:include` for each further section, and take the `backmatter` out of
+  `main.ptx` when the paper has no bibliography (`references.ptx` is then read by
+  nothing, and need not be touched).
 
 - The directory of external files is declared in `docinfo` (`source/main.ptx`), as
   `../assets`, relative to the main file.  The directory of generated files is declared in

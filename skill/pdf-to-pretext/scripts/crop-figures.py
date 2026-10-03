@@ -23,16 +23,21 @@ continuation lines; the figure region runs from the last body-text line above (a
 wider than a label, or a line at the left margin with a letter in it) down to the
 caption.  Inside that region the ink of a render at --dpi gives the tight box, with
 caption and subcaption text blanked first.  Composite figures split at the widest white
-gaps.  Boxes are padded by --pad points and written to <work>/figure-boxes.json; each
-panel is also rendered to PNG in <work>/panels/, and contact sheets sheet-N.png are
-written there for a visual check, which is the check to make before authoring.
+gaps.  Boxes are padded by --pad points and written to <work>/figure-boxes.json (x, y, w,
+h in points: w is the width to set against the text block's when choosing `image/@width`);
+each panel is also rendered to PNG in <work>/panels/, and contact sheets
+<work>/sheet-N.png show them all together, each over its name.  Reading the contact
+sheets is the check to make before authoring.
 
 Needs: Python with PyMuPDF, Pillow, and numpy (setup.sh installs all three).
-The constants suit letter paper with a text block from about 72 to 540 points.  For
-another layout give the block's edges as --left and --right (a little outside the text),
-and --margin, a little right of where body lines begin: a line that starts left of
---margin is taken for body text, not for a label in the picture.  The contact sheets
-show whether they fit.
+
+The layout options.  The defaults suit letter paper with a text block from about 72 to
+540 points, and any narrower block centered on such a page.  `pdftool.py info` prints the
+block's edges.  Give the options when the block is wider than that, or the paper is not
+letter or A4, or a contact sheet shows a panel cut short at a side or holding body text:
+--left and --right are the block's edges (a little outside the text), and --margin is a
+little right of where body lines begin, since a line that starts left of --margin is
+taken for body text, not for a label in the picture.
 
 Two limits, each kept because loosening it moved boxes that were right (the 58 panels
 of arXiv 2607.05283 are the regression test: change a rule only if they all stay put).
@@ -157,17 +162,19 @@ for b in result:
     pdftool.crop(DOC, b["page"], x, y, w, h, stem)
     pdftool.page_pixels(pdftool.document(stem + ".pdf"), 1, 110).save(os.path.join(WORK, "panels", b["name"] + ".png"))
 
-# 5. contact sheets
+# 5. contact sheets: every panel over its name; a panel narrower than its name gets the name's width
 sheet_w, x, y, row_h, sheets = 1400, 10, 10, 0, []
 canvas = Image.new("RGB", (sheet_w, 1800), "white"); d = ImageDraw.Draw(canvas)
 for b in result:
     im = Image.open(os.path.join(WORK, "panels", b["name"] + ".png"))
     if im.width > 650: im = im.resize((650, int(im.height * 650 / im.width)))
-    if x + im.width + 10 > sheet_w: x, y, row_h = 10, y + row_h + 26, 0
+    cell = max(im.width, int(d.textlength(b["name"])) + 2)
+    if x + cell + 10 > sheet_w: x, y, row_h = 10, y + row_h + 26, 0
     if y + im.height + 26 > canvas.height:
         sheets.append(canvas); canvas = Image.new("RGB", (sheet_w, 1800), "white"); d = ImageDraw.Draw(canvas); x = y = 10; row_h = 0
     canvas.paste(im, (x, y)); d.rectangle([x - 1, y - 1, x + im.width, y + im.height], outline="gray")
-    d.text((x, y + im.height + 2), b["name"], fill="black"); x += im.width + 14; row_h = max(row_h, im.height)
+    d.text((x, y + im.height + 2), b["name"], fill="black"); x += cell + 14; row_h = max(row_h, im.height)
 sheets.append(canvas)
-for i, s in enumerate(sheets, 1): s.save(os.path.join(WORK, "panels", f"sheet-{i}.png"))
-print(f"{len(result)} panels cropped into {args.external}; boxes and {len(sheets)} contact sheet(s) in {WORK}")
+for i, s in enumerate(sheets, 1): s.save(os.path.join(WORK, f"sheet-{i}.png"))
+print(f"{len(result)} panels cropped into {args.external}")
+print(f"boxes: {os.path.join(WORK, 'figure-boxes.json')}   contact sheets to read: " + " ".join(os.path.join(WORK, f"sheet-{i}.png") for i in range(1, len(sheets) + 1)))

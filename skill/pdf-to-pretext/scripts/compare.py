@@ -59,6 +59,9 @@ def symbols(t):
     for k, v in PUNCTUATION.items():
         t = t.replace(k, v)
     t = t.replace("ı́", "í")  # dotless i with acute has no precomposed form
+    # TeX's \not is a stroke set before the symbol it crosses: put it after, so that the
+    # two glyphs and the one-glyph form of the same symbol are counted as the same
+    t = re.sub("\u0338(\\S)", "\\1\u0338", t)
     t = unicodedata.normalize("NFC", t)
     return collections.Counter(c for c in t if ord(c) > 127 and not c.isspace())
 
@@ -88,6 +91,8 @@ def main(original_path, built_path):
     print("longest runs of original words absent from the build:")
     for length, run in missing[:10]:
         print("  [{} words] {}".format(length, run[:160]))
+    if not missing and matcher.ratio() == 1:
+        print("  none: every word of the original is in the build, in order")
     if not missing and matcher.ratio() < 1:
         # nothing long is absent, yet the texts differ: show where, however short
         short = sorted(((i2 - i1, " ".join(original[i1:i2]), " ".join(built[j1:j2]))

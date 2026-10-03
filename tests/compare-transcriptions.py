@@ -270,6 +270,8 @@ def formulas(tree):
     for e in tree.iter("m", "md", "mrow"):
         if e.tag == "md" and e.find("mrow") is not None:
             continue
+        if any(a.tag in ("description", "shortdescription") for a in e.iterancestors()):
+            continue  # a description is the transcriber's own words
         out.append((e.tag, "".join(e.itertext())))
     return out
 
@@ -384,7 +386,7 @@ def structure(tree, where):
     for e in tree.iter(*STRUCTURAL):
         if e.tag == "p" and e.getparent().tag == "li":
             continue  # an item's text may sit in the "li" itself or in a "p" inside it
-        if any(a.tag == "description" for a in e.iterancestors()):
+        if any(a.tag in ("description", "shortdescription") for a in e.iterancestors()):
             continue  # a description is the transcriber's own words
         item = e.tag
         if e.get("number") == "yes":

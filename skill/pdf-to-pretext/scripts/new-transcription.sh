@@ -53,4 +53,4 @@ if [ "$words" -lt $((pages * 50)) ]; then
     echo "WARNING: fewer than 50 words a page.  This looks like a scan with no text layer,"
     echo "         which this skill cannot transcribe."
 fi
-echo "page images: $(ls "$work/pages" | head -1) ... $(ls "$work/pages" | tail -1)"
+echo "page images: $work/pages/$(ls "$work/pages" | head -1) ... $(ls "$work/pages" | tail -1)"

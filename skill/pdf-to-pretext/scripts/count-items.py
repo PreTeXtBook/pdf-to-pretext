@@ -10,8 +10,9 @@ included file knitted into one), so run validate.sh first.  Pass 3 asks that eve
 of the manifest be present: compare these counts with the manifest's tables, not with
 its own tallies.
 
-It prints the number of each kind of element a manifest lists, the numbered equations
-in order, every cross-reference and citation whose target does not exist, and every
+It prints the number of each kind of element a manifest lists (the formulas written
+inside image descriptions apart, since the page prints none of them), the numbered
+equations in order, every cross-reference and citation whose target does not exist, and every
 bibliography entry that is never cited.  PreTeXt's validation checks none of the last
 three.
 """
@@ -55,11 +56,15 @@ def main(arguments):
         else:
             print("references: every one has its target")
         return
+    # a description of an image is written by the transcriber: its formulas are not the paper's
+    described = {m for d in root.iter() if d.tag in ("description", "shortdescription") for m in d.iter("m")}
     print("counts, from the assembled source:")
     for kind in KINDS:
-        n = sum(1 for _ in root.iter(kind))
+        n = sum(1 for e in root.iter(kind) if e not in described)
         if n:
             extra = ""
+            if kind == "m" and described:
+                extra = "   (and {} more inside image descriptions)".format(len(described))
             if kind == "proof":
                 extra = "   ({} detached, with @ref)".format(sum(1 for p in root.iter("proof") if p.get("ref")))
             if kind == "md":
