@@ -306,13 +306,13 @@ image; typos preserved, never corrected.  Builds are under `/tmp/pdf-to-pretext/
    organized for others").
 6. Done 2026-10-03, with Rob's approval: `CLAUDE.md` names the scripts where they are,
    `skill/pdf-to-pretext/scripts/`.
-8. Make the repository public: the list at the end of the section "The skill organized
-   for others".
 7. Rob's request, 2026-09-26: the `index.html` of the scvt and Farmer demonstrations
    should say what the Burau one now says, "The words and the mathematics are the
    authors' own; we made no corrections of apparent errors or typos."  ("author's" for the
    single-author papers.)  Neither page has a sentence about typos now, so it is an
    addition, after the paragraph that describes the transcription.
+8. Make the repository public: the list at the end of the section "The skill organized
+   for others".
 
 ## Open items
 
