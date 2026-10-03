@@ -66,20 +66,25 @@ def load(path):
 
 
 def targets(tree):
-    """xml:id -> "kind ordinal", the ordinal counted among elements of that kind."""
-    out, count = {}, {}
+    """Name every element "kind ordinal", the ordinal counted among elements of that kind.
+
+    Returns two tables: by xml:id, for what a cross-reference points at, and by element,
+    for saying where a paragraph is.  A numbered display or row is an "equation".
+    """
+    by_id, by_element, count = {}, {}, {}
     for e in tree.iter():
         if not isinstance(e.tag, str):
             continue
-        kind = e.tag if not (e.tag in ("md", "mrow")) else "equation"
         if e.tag in ("md", "mrow") and e.get("number") != "yes":
-            if e.get(XML + "id"):
-                out[e.get(XML + "id")] = "display"
-            continue
-        count[kind] = count.get(kind, 0) + 1
+            label = "display"
+        else:
+            kind = "equation" if e.tag in ("md", "mrow") else e.tag
+            count[kind] = count.get(kind, 0) + 1
+            label = "{} {}".format(kind, count[kind])
+        by_element[e] = label
         if e.get(XML + "id"):
-            out[e.get(XML + "id")] = "{} {}".format(kind, count[kind])
-    return out
+            by_id[e.get(XML + "id")] = label
+    return by_id, by_element
 
 
 # ---- mathematics -------------------------------------------------------------------
@@ -279,10 +284,11 @@ def inline(e, where, table):
     """The content of a text element as one string; table is None for "as written"."""
     def math(body):
         return normalize(body, table) if table is not None else re.sub(r"\s+", " ", body).strip()
-    parts = [e.text or ""]
+    flat = lambda text: re.sub(r"\s+", " ", text or "")
+    parts = [flat(e.text)]
     for c in e:
         if not isinstance(c.tag, str):
-            parts.append(c.tail or "")
+            parts.append(flat(c.tail))
             continue
         if c.tag == "m":
             parts.append("$" + math("".join(c.itertext())) + "$")
@@ -306,25 +312,29 @@ def inline(e, where, table):
             parts.append(" {footnote: " + inline(c, where, table) + "} ")
         else:
             parts.append(inline(c, where, table))
-        parts.append(c.tail or "")
+        parts.append(flat(c.tail))
     return "".join(parts)
 
 
-def context(e, where):
+def context(e, where, places):
     while e is not None and e.tag not in ("article", "pretext"):
         if e.tag in ("section", "subsection", "paragraphs", "proof", "biblio", "figure", "table") \
                 or e.tag in STRUCTURAL[4:19]:
-            label = where.get(e.get(XML + "id") or "", e.tag)
-            return label + (" -> " + pointer(e, where) if e.get("ref") else "")
+            return places[e] + (" -> " + pointer(e, where) if e.get("ref") else "")
         e = e.getparent()
     return "front"
 
 
-def canonical(tree, where, table):
+def nested(e):
+    """A paragraph inside a paragraph (in a list item) is read as part of the outer one."""
+    return any(a.tag in ("p", "biblio", "description") for a in e.iterancestors())
+
+
+def canonical(tree, where, places, table):
     lines, last = [], None
     for e in tree.iter("title", "personname", "institution", "email", "date", "p", "caption", "cell", "biblio"):
         if e.tag == "biblio":
-            lines.append("== {} [{}]".format(where.get(e.get(XML + "id") or "", "biblio"), e.get("type")))
+            lines.append("== {} [{}]".format(places[e], e.get("type")))
             for f in e:
                 if not isinstance(f.tag, str):
                     continue
@@ -338,9 +348,9 @@ def canonical(tree, where, table):
                 else:
                     lines.append("    {}: {}".format(f.tag, re.sub(r"\s+", " ", "".join(f.itertext())).strip()))
             continue
-        if any(a.tag == "biblio" for a in e.iterancestors()):
+        if nested(e):
             continue
-        here = context(e, where)
+        here = context(e, where, places)
         if here != last:
             lines.append("== " + here)
             last = here
@@ -360,7 +370,7 @@ def canonical(tree, where, table):
 def words(tree, where, table):
     out = []
     for e in tree.iter("title", "p", "caption", "cell"):
-        if any(a.tag == "biblio" for a in e.iterancestors()):
+        if nested(e):
             continue
         s = inline(e, where, table)
         s = re.sub(r"\$\$.*?\$\$(\s*\(numbered\))?", " § ", s)
@@ -372,6 +382,10 @@ def words(tree, where, table):
 def structure(tree, where):
     out = []
     for e in tree.iter(*STRUCTURAL):
+        if e.tag == "p" and e.getparent().tag == "li":
+            continue  # an item's text may sit in the "li" itself or in a "p" inside it
+        if any(a.tag == "description" for a in e.iterancestors()):
+            continue  # a description is the transcriber's own words
         item = e.tag
         if e.get("number") == "yes":
             item += " numbered"
@@ -385,7 +399,7 @@ def structure(tree, where):
 
 def main(path_a, path_b, outdir=None):
     a, b = load(path_a), load(path_b)
-    where_a, where_b = targets(a), targets(b)
+    (where_a, places_a), (where_b, places_b) = targets(a), targets(b)
     table_a, table_b = macros(a), macros(b)
 
     sa, sb = structure(a, where_a), structure(b, where_b)
@@ -445,7 +459,8 @@ def main(path_a, path_b, outdir=None):
         os.makedirs(outdir, exist_ok=True)
         for table_pair, stem, name in (((None, None), "canonical", "as-written.diff"),
                                        ((table_a, table_b), "normalized", "normalized.diff")):
-            ca, cb = canonical(a, where_a, table_pair[0]), canonical(b, where_b, table_pair[1])
+            ca = canonical(a, where_a, places_a, table_pair[0])
+            cb = canonical(b, where_b, places_b, table_pair[1])
             open(os.path.join(outdir, stem + "-transcription.txt"), "w").write("\n".join(ca) + "\n")
             open(os.path.join(outdir, stem + "-key.txt"), "w").write("\n".join(cb) + "\n")
             diff = list(difflib.unified_diff(ca, cb, "transcription", "key", lineterm="", n=1))
