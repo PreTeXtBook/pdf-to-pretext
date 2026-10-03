@@ -40,5 +40,19 @@ agrees is a candidate only: compare authors, volume, and pages, and say in a com
 the record and the printed entry disagree (a year, a volume).  In a `DOI` element `<` and
 `>` are written `&lt;` and `&gt;` (the old Wiley identifiers contain them).
 
-Citations in the text are `<xref ref="biblio-farmer-zeros"/>`; a pinpoint ("[3, Theorem 2]")
-uses `@detail`.  Verify against the schema before relying on any field name here.
+As printed, in the order printed:
+
+- A page range takes a hyphen (`100-120`), whatever dash the original prints.
+- A long dash standing for a repeated author is written out as the name, with a comment
+  that the original prints a dash.
+- A preprint printed with "arXiv preprint arXiv:NNNN.NNNNN" where a journal would be is
+  type `article` with that string as its `container-title`, so the printed words survive.
+- An entry with no author prints a leading comma in PreTeXt's rendering; say so in the
+  notes rather than invent an author.
+- PreTeXt renders these entries in its own order and punctuation (family name first, the
+  DOI at the end).  That is a difference of typography, not an error to work around.
+
+Citations in the text are `<xref ref="biblio-farmer-zeros"/>`; several keys in one
+citation ("[7, 4, 6]") are one `xref` whose `@ref` lists the targets in the printed
+order.  A pinpoint ("[3, Theorem 2]") uses `@detail`.  Verify against the schema before
+relying on any field name here.
