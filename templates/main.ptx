@@ -25,6 +25,10 @@
                     <keyword>CODE</keyword>
                 </keywords>
             </bibinfo>
+            <!-- Required by the schema, between bibinfo and abstract -->
+            <titlepage>
+                <titlepage-items/>
+            </titlepage>
             <abstract>
                 <p>ABSTRACT</p>
             </abstract>

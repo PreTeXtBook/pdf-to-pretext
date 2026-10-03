@@ -1,11 +1,14 @@
 # PreTeXt elements for a research article
 
 Verify each against `pretext/schema/pretext.rnc` before use (`grep -n 'element NAME {'`);
-this list is a map, not the authority.  Names in effect 2026-09-03.
+this list is a map, not the authority.  Names in effect 2026-09-03; the front matter and
+the acknowledgements corrected 2026-10-03 against the clone at `bf795ab1`.
 
 - Root: `pretext` (`@xml:lang="en-US"`), `docinfo` (`macros`), `article` (`title`).
-- Front matter: `frontmatter/bibinfo` with `author` (`personname`, `institution`, `email`),
+- Front matter, in this order: `frontmatter/bibinfo` with `author` (`personname`,
+  `institution`, `email`; an `institution` printed on several lines holds `line`s),
   `date`, `keywords` (`@authority="msc"`, `@variant` for the year, `keyword`s), `support`;
+  `frontmatter/titlepage` holding an empty `titlepage-items` (required);
   `frontmatter/abstract` with `p`s.
 - Divisions: `section`, `subsection`, `subsubsection`, each with `@xml:id` and `title`;
   an `introduction`/`conclusion` inside a sectioned division when the paper has text
@@ -24,5 +27,7 @@ this list is a map, not the authority.  Names in effect 2026-09-03.
 - Tables: `table` (`title`) around `tabular` (`row`/`cell`, `col` widths, `@halign`).
 - Text: `p`, `em`, `term` (a defined term), `q`, `fn`, `ul`/`ol` with `li`, `url`,
   `notation` (feeds a notation list), `idx` (index entries — optional in a paper).
-- Back matter: `backmatter/references` with `biblio` entries (see `csl-bibliography.md`);
-  `acknowledgement` in the front matter.
+- Back matter: `backmatter/references` with `biblio` entries (see `csl-bibliography.md`).
+- Acknowledgements: an `article` has no `acknowledgement` element (that is a book's front
+  matter) and no unnumbered division.  An unnumbered "Acknowledgements" section is a
+  `paragraphs` with that `title`, closing the last section.
