@@ -1,0 +1,346 @@
+[
+ {
+  "figure": "1.1",
+  "page": 2,
+  "panels": [
+   "figure-brunnian-braid"
+  ],
+  "split": null
+ },
+ {
+  "figure": "2.1",
+  "page": 4,
+  "panels": [
+   "figure-cover-decks-1",
+   "figure-cover-decks-2",
+   "figure-cover-decks-3"
+  ],
+  "split": [
+   "cols",
+   3
+  ]
+ },
+ {
+  "figure": "2.2",
+  "page": 5,
+  "panels": [
+   "figure-arcs-alpha-beta"
+  ],
+  "split": null
+ },
+ {
+  "figure": "3.1",
+  "page": 6,
+  "panels": [
+   "figure-winding-singleton",
+   "figure-winding-sequence"
+  ],
+  "split": [
+   "cols",
+   2
+  ]
+ },
+ {
+  "figure": "4.1",
+  "page": 7,
+  "panels": [
+   "figure-disk-winding-one",
+   "figure-disk-winding-two",
+   "figure-disk-winding-three"
+  ],
+  "split": [
+   "cols",
+   3
+  ]
+ },
+ {
+  "figure": "5.1",
+  "page": 8,
+  "panels": [
+   "figure-push-map-example-left",
+   "figure-push-map-example-right"
+  ],
+  "split": [
+   "cols",
+   2
+  ]
+ },
+ {
+  "figure": "5.2",
+  "page": 9,
+  "panels": [
+   "figure-bigon",
+   "figure-generalized-bigon"
+  ],
+  "split": [
+   "cols",
+   2
+  ]
+ },
+ {
+  "figure": "5.3",
+  "page": 10,
+  "panels": [
+   "figure-trigon",
+   "figure-generalized-trigon"
+  ],
+  "split": [
+   "cols",
+   2
+  ]
+ },
+ {
+  "figure": "5.4",
+  "page": 10,
+  "panels": [
+   "figure-generalized-rectangle",
+   "figure-degenerate-rectangle"
+  ],
+  "split": [
+   "cols",
+   2
+  ]
+ },
+ {
+  "figure": "5.5",
+  "page": 11,
+  "panels": [
+   "figure-rectangle-with-basepoint"
+  ],
+  "split": null
+ },
+ {
+  "figure": "5.6",
+  "page": 12,
+  "panels": [
+   "figure-proper-product-local-picture-left",
+   "figure-proper-product-local-picture-right"
+  ],
+  "split": [
+   "cols",
+   2
+  ]
+ },
+ {
+  "figure": "5.7",
+  "page": 12,
+  "panels": [
+   "figure-adjacent-crossings-signs-left",
+   "figure-adjacent-crossings-signs-middle",
+   "figure-adjacent-crossings-signs-right"
+  ],
+  "split": [
+   "cols",
+   3
+  ]
+ },
+ {
+  "figure": "5.8",
+  "page": 13,
+  "panels": [
+   "figure-subarc-types"
+  ],
+  "split": null
+ },
+ {
+  "figure": "5.9",
+  "page": 13,
+  "panels": [
+   "figure-bigon-two-original-points-left",
+   "figure-bigon-two-original-points-right"
+  ],
+  "split": [
+   "cols",
+   2
+  ]
+ },
+ {
+  "figure": "5.10",
+  "page": 14,
+  "panels": [
+   "figure-bigon-one-original-point-left",
+   "figure-bigon-one-original-point-middle",
+   "figure-bigon-one-original-point-right"
+  ],
+  "split": [
+   "cols",
+   3
+  ]
+ },
+ {
+  "figure": "5.11",
+  "page": 14,
+  "panels": [
+   "figure-bigon-from-trigon-left",
+   "figure-bigon-from-trigon-right"
+  ],
+  "split": [
+   "cols",
+   2
+  ]
+ },
+ {
+  "figure": "6.1",
+  "page": 15,
+  "panels": [
+   "figure-sign-preserving-disk"
+  ],
+  "split": null
+ },
+ {
+  "figure": "6.2",
+  "page": 16,
+  "panels": [
+   "figure-pushing-local-picture",
+   "figure-pushing-first-strand"
+  ],
+  "split": [
+   "cols",
+   2
+  ]
+ },
+ {
+  "figure": "6.3",
+  "page": 16,
+  "panels": [
+   "figure-particular-push-map"
+  ],
+  "split": null
+ },
+ {
+  "figure": "6.4",
+  "page": 17,
+  "panels": [
+   "figure-disks-off-loop"
+  ],
+  "split": null
+ },
+ {
+  "figure": "6.5",
+  "page": 18,
+  "panels": [
+   "figure-five-disk-types-1",
+   "figure-five-disk-types-2",
+   "figure-five-disk-types-3",
+   "figure-five-disk-types-4",
+   "figure-five-disk-types-5"
+  ],
+  "split": [
+   "grid",
+   [
+    2,
+    2,
+    1
+   ]
+  ]
+ },
+ {
+  "figure": "6.6",
+  "page": 18,
+  "panels": [
+   "figure-band-of-four-disks-left",
+   "figure-band-of-four-disks-right"
+  ],
+  "split": [
+   "cols",
+   2
+  ]
+ },
+ {
+  "figure": "6.7",
+  "page": 19,
+  "panels": [
+   "figure-disk-beta-gamma"
+  ],
+  "split": null
+ },
+ {
+  "figure": "6.8",
+  "page": 20,
+  "panels": [
+   "figure-two-new-subarcs"
+  ],
+  "split": null
+ },
+ {
+  "figure": "6.9",
+  "page": 21,
+  "panels": [
+   "figure-four-configurations-1",
+   "figure-four-configurations-2",
+   "figure-four-configurations-3",
+   "figure-four-configurations-4"
+  ],
+  "split": [
+   "grid",
+   [
+    2,
+    2
+   ]
+  ]
+ },
+ {
+  "figure": "6.10",
+  "page": 21,
+  "panels": [
+   "figure-loop-construction"
+  ],
+  "split": null
+ },
+ {
+  "figure": "6.11",
+  "page": 23,
+  "panels": [
+   "figure-alternate-construction"
+  ],
+  "split": null
+ },
+ {
+  "figure": "6.12",
+  "page": 23,
+  "panels": [
+   "figure-innermost-four-disk-choice"
+  ],
+  "split": null
+ },
+ {
+  "figure": "6.13",
+  "page": 25,
+  "panels": [
+   "figure-free-basis"
+  ],
+  "split": null
+ },
+ {
+  "figure": "7.1",
+  "page": 25,
+  "panels": [
+   "figure-example-arc"
+  ],
+  "split": null
+ },
+ {
+  "figure": "7.2",
+  "page": 26,
+  "panels": [
+   "figure-example-push-map"
+  ],
+  "split": null
+ },
+ {
+  "figure": "7.3",
+  "page": 26,
+  "panels": [
+   "figure-example-image-arc"
+  ],
+  "split": null
+ },
+ {
+  "figure": "7.4",
+  "page": 27,
+  "panels": [
+   "figure-example-image-basepoint-arc"
+  ],
+  "split": null
+ }
+]

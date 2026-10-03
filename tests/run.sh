@@ -8,6 +8,10 @@
 #   2. Every round-trip case in corpus/round-trip: its pictures compile, its source
 #      validates with no message, it builds to HTML and to PDF with the glyph check, and
 #      the two comparison scripts find it identical to itself.
+#   3. Every worked example in examples/ validates and builds.
+#   4. crop-figures.py puts the 58 figure panels of arXiv 2607.05283 where they were, if
+#      that paper has been fetched into corpus/arxiv/2607.05283 (it is not in the
+#      repository; the specification and the boxes, in tests/crop-figures, are).
 #
 # The PDF each case builds (corpus/round-trip/<case>/output/print/main.pdf) is the input
 # for scoring the skill itself, which takes a model and is done by hand: CONTRIBUTING.md.
@@ -77,6 +81,38 @@ for case in "$root"/corpus/round-trip/*/; do
         fail "compare.py against itself"
     fi
 done
+
+for example in "$root"/examples/*/; do
+    example=${example%/}
+    [ -f "$example/source/main.ptx" ] || continue
+    echo "== example $(basename "$example")"
+    log=$example/output/checks
+    mkdir -p "$log"
+    if "$scripts/validate.sh" "$example" > "$log/validate.txt" 2>&1 \
+        && "$scripts/build.sh" "$example" html > "$log/html.txt" 2>&1 \
+        && "$scripts/build.sh" "$example" pdf > "$log/pdf.txt" 2>&1; then
+        echo "  ok       validates, builds to HTML and to PDF ($(pdfinfo "$example/output/print/main.pdf" | awk '/^Pages/ {print $2}') pages), glyph check clean"
+    else
+        fail "example: $log"
+    fi
+done
+
+echo "== crop-figures.py on the 58 panels of arXiv 2607.05283"
+paper=$root/corpus/arxiv/2607.05283/paper.pdf
+if [ -f "$paper" ]; then
+    work=$(mktemp -d)
+    cp "$root/tests/crop-figures/2607.05283-figure-spec.json" "$work/figure-spec.json"
+    if python3 "$scripts/crop-figures.py" "$paper" "$work/figure-spec.json" "$work/assets" > "$work/crop.log" 2>&1 \
+        && python3 -c 'import json, sys; sys.exit(0 if json.load(open(sys.argv[1])) == json.load(open(sys.argv[2])) else 1)' \
+            "$work/crop-work/figure-boxes.json" "$root/tests/crop-figures/2607.05283-figure-boxes.json"; then
+        echo "  ok       every box where it was"
+    else
+        fail "crop-figures.py: boxes moved, or the script failed ($work)"
+    fi
+else
+    echo "  skipped  the paper is not here; fetch it (it is CC BY 4.0) with"
+    echo "           skill/pdf-to-pretext/scripts/fetch-arxiv.sh 2607.05283 corpus/arxiv/2607.05283"
+fi
 
 echo
 if [ "$failures" -eq 0 ]; then
