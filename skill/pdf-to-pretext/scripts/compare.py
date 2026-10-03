@@ -4,7 +4,11 @@
 1. Words: a similarity ratio and the longest runs of original text absent from the
    build.  Mathematics extracts as noise from both, so this measures prose, structure,
    and omissions -- not formulas.  A run that moved (a footnote, a floated caption)
-   counts as absent; read the runs, do not trust the number alone.
+   counts as absent; read the runs, do not trust the number alone.  A second ratio is
+   for the text before the reference list (up to the last line that reads "References"
+   or "Bibliography" in each PDF): PreTeXt sets a CSL entry in its own order, so the
+   list drags the first ratio down by an amount that says nothing about the
+   transcription, most of all in a short paper.
 2. Symbols: counts of every non-ASCII character in the two text layers, after
    normalization, and the characters whose count is lower in the build.  Words cannot
    see a lost Greek letter; this can ("GREEK CAPITAL LETTER GAMMA  original 79  built 78").
@@ -23,6 +27,15 @@ import unicodedata
 LIGATURES = {"ﬁ": "fi", "ﬂ": "fl", "ﬀ": "ff", "ﬃ": "ffi", "ﬄ": "ffl"}
 PUNCTUATION = {"’": "'", "‘": "'", "“": '"', "”": '"',
                "–": "-", "—": "-", "˜": "~", " ": " "}
+
+
+HEADING = re.compile(r"^[ \t]*(?:\d+\.?[ \t]+)?(References|Bibliography)[ \t]*$", re.M | re.I)
+
+
+def before_references(t):
+    """The text up to the last heading of a reference list, or None when there is none."""
+    hits = list(HEADING.finditer(t))
+    return t[:hits[-1].start()] if hits else None
 
 
 def text(pdf_path):
@@ -54,6 +67,15 @@ def main(original_path, built_path):
     matcher = difflib.SequenceMatcher(None, original, built, autojunk=False)
     print("original words: {}   built words: {}".format(len(original), len(built)))
     print("similarity: {:.3f}".format(matcher.ratio()))
+    original_body, built_body = before_references(original_text), before_references(built_text)
+    if original_body is None or built_body is None:
+        print("similarity before the reference list: no such heading found in {}".format(
+            " or ".join(name for name, body in (("the original", original_body), ("the build", built_body))
+                        if body is None)))
+    else:
+        a_words, b_words = words(original_body), words(built_body)
+        print("similarity before the reference list: {:.3f}   (original words: {}   built words: {})".format(
+            difflib.SequenceMatcher(None, a_words, b_words, autojunk=False).ratio(), len(a_words), len(b_words)))
     missing = []
     for tag, i1, i2, j1, j2 in matcher.get_opcodes():
         if tag in ("delete", "replace") and i2 - i1 >= 8:

@@ -6,7 +6,9 @@
 # The build log is kept as <output-directory>/build.log.  For a PDF, two checks follow:
 # the engine's "Missing character" warnings in the log, and U+FFFD (a glyph the text
 # layer could not name) in the PDF.  Either one means a character of the source did not
-# reach the page, and the script exits with status 1.
+# reach the page, and the script exits with status 1.  The overfull boxes of the last
+# LaTeX pass are then counted, and those wider than 20 points listed, widest first, each
+# with the start of its text: look at those on the page.  They do not change the status.
 set -eu
 project=$(cd "$(dirname "$0")/../../.." && pwd)
 mkdir -p "$4"
@@ -34,6 +36,21 @@ if [ "$3" = "pdf" ]; then
             failed=1
         fi
     done
+    # every LaTeX pass repeats the overfull boxes; only the last pass describes the PDF
+    limit=20
+    start=$(grep -n '^This is .*TeX, Version' "$log" | tail -1 | cut -d: -f1)
+    pass=$(tail -n +"${start:-1}" "$log")
+    total=$(printf '%s\n' "$pass" | grep -c '^Overfull \\hbox' || true)
+    wide=$(printf '%s\n' "$pass" | awk -v limit="$limit" '
+        /^Overfull \\hbox \(/ {
+            width = $3; sub(/^\(/, "", width); sub(/pt$/, "", width)
+            where = $0; sub(/^.*too wide\) /, "", where)
+            if (width + 0 > limit) { getline text; printf "%9.1f pt  %s: %s\n", width, where, substr(text, 1, 70) }
+        }' | sort -rn)
+    echo "overfull boxes in the last LaTeX pass: $total; wider than $limit pt: $(printf '%s' "$wide" | grep -c . || true)"
+    if [ -n "$wide" ]; then
+        printf '%s\n' "$wide"
+    fi
     if [ "$failed" -ne 0 ]; then
         exit 1
     fi

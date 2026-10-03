@@ -75,10 +75,13 @@ the page images open:
 2. `scripts/validate.sh` clean; `scripts/build.sh` to HTML and to PDF succeed, including
    the glyph check that follows a PDF build: no "Missing character" in the build log, no
    U+FFFD in the PDF's text layer.  Either one is a character of the source that did not
-   reach the page, and a failure.
-3. `scripts/compare.py <original.pdf> <built.pdf>`: record the similarity, read every run
-   it reports absent (moved text counts as absent), and account for every symbol it
-   reports with a lower count in the build.
+   reach the page, and a failure.  The script then lists the overfull boxes of the last
+   LaTeX pass that are wider than twenty points: find each on the page.
+3. `scripts/compare.py <original.pdf> <built.pdf>`: record both similarities (the whole
+   text, and the text before the reference list, where PreTeXt's own ordering of a
+   bibliography entry does not count against the transcription), read every run it
+   reports absent (moved text counts as absent), and account for every symbol it reports
+   with a lower count in the build.
 4. Read every page of every delivered output side by side with the original when the
    paper is short (under about twenty pages); for a longer paper, every page with a
    display or a figure and a sample of the rest.  A single lost glyph cannot be found by
@@ -104,8 +107,7 @@ knots.  A whole colored line drawing is vectorized by `scripts/trace-figure.py` 
 color, arrowheads, dots, dashes, fills, bands) and turned into a PreFigure diagram of
 `polygon`s with labels from the text layer; tune its palette per paper and read a
 comparison sheet after every change.  Count items from the assembled XML, not from the manifest's own header.
-After a PDF build, read the `Overfull` lines above about twenty points as well as the
-glyph check.
+After a PDF build, read the overfull boxes that `build.sh` lists as well as the glyph check.
 
 Two-column layouts interleave in extraction; footnotes float; ligatures (`fi`, `fl`)
 come out as single characters; end-of-line hyphens split words; `--` and quotation marks
