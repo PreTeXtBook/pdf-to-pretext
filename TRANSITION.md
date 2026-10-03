@@ -215,8 +215,8 @@ image; typos preserved, never corrected.  Builds are under `/tmp/pdf-to-pretext/
    submitted and revised texts.
 4. For Farmer: the PDF+LaTeX run, same comparison.
 5. Rewrite `SKILL.md` from the runs' notes.
-6. One small fix outside `runs/` still awaits Rob's approval: CLAUDE.md names `scripts/`
-   where the scripts are `skill/pdf-to-pretext/scripts/`.
+6. Done 2026-10-03, with Rob's approval: `CLAUDE.md` names the scripts where they are,
+   `skill/pdf-to-pretext/scripts/`.
 7. Rob's request, 2026-09-26: the `index.html` of the scvt and Farmer demonstrations
    should say what the Burau one now says, "The words and the mathematics are the
    authors' own; we made no corrections of apparent errors or typos."  ("author's" for the
@@ -231,7 +231,9 @@ image; typos preserved, never corrected.  Builds are under `/tmp/pdf-to-pretext/
   equivalences name that paper's macros and operators and would have to be made general.
 - The skill says to read every delivered output, and gives no way to read the HTML with
   its mathematics rendered; in the experiment of 2026-10-03 the HTML was checked from its
-  files only.  Raised with Rob, not decided.
+  files only.  Rob's ruling, 2026-10-03, on a step that would open the build in Chrome:
+  "no, lets not have people needing to make chrome a tool".  So the skill gets no step
+  that needs a browser, and its sentence about reading every output stands as written.
 - Figures: `scripts/crop-figures.py` crops panels from the page (boxes from text positions
   and ink, a JSON spec per figure, contact sheets); `scripts/trace-curve.py` and
   `scripts/trace-figure.py` vectorize drawings for PreFigure.  The generator that turns a

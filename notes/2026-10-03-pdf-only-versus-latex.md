@@ -165,7 +165,9 @@ Left open, since without that section nothing forces an answer:
 
 One open point is not about LaTeX.  The skill says to read every delivered output and gives
 no way to read HTML with its mathematics rendered.  Here both HTML builds were checked
-from their files (headings, block numbers, equation tags) and not in a browser.
+from their files (headings, block numbers, equation tags) and not in a browser.  Rob's
+ruling the same day, on a step that would open the build in Chrome: no; using the skill
+is not to require making Chrome a tool.
 
 ## Effort
 
