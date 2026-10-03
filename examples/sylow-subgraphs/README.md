@@ -10,8 +10,9 @@ not here.
 It was transcribed from the PDF alone on 2026-09-03; the LaTeX source was not opened.
 Every word, formula, block, and reference of the original is present (54 of 54 numbered
 and listed items), every number agrees with the original's, and in the comparison of the
-built PDF with the original 95.8 percent of the words pair up (what does not is the
+built PDF with the original 97.9 percent of the words pair up (what does not is the
 bibliography's formatting, running heads, and mathematics, which extracts as noise).
+The notes say 0.958: that was measured when the text was extracted by another program.
 
 ## What to read
 

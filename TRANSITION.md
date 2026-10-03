@@ -146,8 +146,7 @@ section on transcribing from LaTeX.
   every later run; the skill tells Claude to run it unasked.  A clone or Python that is
   named (the environment, `config.local`) is used and left alone, as here.  `jing` is no
   longer required: without it validation goes through PreTeXt's server.  What remains
-  for the person is the system's programs (poppler, a TeX distribution), for which the
-  check prints one install command.  The README gives the copy and the link side by
+  for the person is a TeX distribution, for which the check prints one install command.  The README gives the copy and the link side by
   side.  Tested from a plain copy of the skill with nothing configured, into a scratch
   data directory: clone, environment (465 MB), trial build, "Ready"; the clone in that
   test came from this machine's clone, not from GitHub, whose address was only checked
@@ -157,6 +156,42 @@ section on transcribing from LaTeX.
   skill's or PreTeXt's; the rule for sorting now has a test (would it trip a different
   paper by different authors; when in doubt it is the document's).  It is still the
   model's judgment, so the person reads the draft before sending it.
+
+- **PDFs are read with PyMuPDF; poppler and mutool are gone** (Rob asked whether poppler
+  could be installed with pip; it cannot, but PyMuPDF is among PreTeXt's own
+  requirements.  "yes, replace poppler with PyMuPDF, but be prepared to rollback if the
+  results are not so good").  `scripts/pdftool.py` is the one place a PDF is opened:
+  `info` (with the text block's edges), `text` (plain, or set out as on the page),
+  `lines` and `fonts` for a page, `render`, `zoom`, `images`, `crop` (PDF and SVG),
+  `lost`.  The results were equal or better on everything measured:
+
+  | | poppler | PyMuPDF |
+  |---|---|---|
+  | `compare.py`, Farmer | 0.954 | 0.959 |
+  | `compare.py`, scvt | 0.962 | 0.979 |
+  | `compare.py`, Burau | 0.961 | 0.968 |
+  | `compare.py`, the experiment's paper | 0.918 (0.937 before the references) | 0.968 (0.992) |
+  | symbols reported with a lower count, the four papers | 0, 0, 12, 4 | 0, 2, 10, 0 |
+  | the 58 crop boxes of the Burau paper | the reference | all within 0.3 points |
+  | the defective-glyph PDF | caught | caught |
+
+  The cropped PDFs and SVGs draw the same as before, pixel for pixel, and a crop now
+  holds only its own region (poppler's kept the whole page behind a window).  A second
+  pair of fresh sessions, with the poppler programs hidden, transcribed the blocks case
+  and the figures case: both matched their keys exactly under
+  `tests/compare-transcriptions.py` (structure, words, every formula), in about ten
+  minutes each by their own notes.  What they reported about the tools and the wording
+  was acted on (line positions and the text block's width from `pdftool.py`, the contact
+  sheets beside the boxes, a fuller `html-outline.py`, formulas inside image descriptions
+  counted apart).  `tests/run.sh` passes with poppler and mutool hidden and calls neither.
+  Four things PyMuPDF does differently, each handled in `pdftool.py`: a lost glyph is
+  U+FFFF, not U+FFFD; an accent set as its own glyph comes out beside its letter and is
+  joined to it; the library's own page-layout routine crashes on some pages, so the
+  layout is the skill's own (words placed by their left edges, sideways stamps set
+  apart); and the glyphs of the Dingbats font, among them the square that ends a proof in
+  PreTeXt's PDF, come out as letters and are put right.  **To go back**: the tag
+  `poppler-last` is the last commit before the change.  Scores recorded before
+  2026-10-03 used poppler's extraction and run lower (`evaluation/RESULTS.md`).
 
 **Before the repository is made public** (Rob's to do or to rule on):
 

@@ -104,9 +104,9 @@ and several hundred thousand tokens.  On the one paper checked against its LaTeX
 the transcription made from the PDF alone had no error of words or of mathematics
 (`notes/2026-10-03-pdf-only-versus-latex.md`).
 
-The skill as it now stands was then given to two fresh sessions with nothing but the
-skill and a test document each; both transcriptions matched their keys, and what those
-sessions had to work out for themselves has gone into the skill.
+The skill was then given, twice, to two fresh sessions with nothing but the skill and a
+test document each.  All four transcriptions matched their keys, and what those sessions
+had to work out for themselves has gone into the skill.
 
 It has not been tried on scanned PDFs (it needs a text layer), two-column layouts, books,
 or documents not made with LaTeX.  It is for articles.
