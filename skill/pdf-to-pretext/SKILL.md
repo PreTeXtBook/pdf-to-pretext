@@ -38,7 +38,9 @@ Three rules follow from it.
    author's permission a transcription may be made but not distributed; that is their
    decision, and they need the facts to make it.
 2. **Setup.** On a machine new to this skill, run `scripts/check-setup.sh`. It names what
-   is missing and how to get it, and ends with a trial run.
+   is missing and how to get it, and ends with a trial run. PreTeXt changes from week to
+   week, so update the clone before each new transcription (`git pull --ff-only` in it);
+   the notes' header records the commit that was used.
 3. **Inputs.** The PDF, always, and it must have a text layer: a scan without one is
    outside this skill. The LaTeX source when it exists, as the primary text. Never an HTML
    rendering of the paper (arXiv's, a journal's): that is another party's conversion, with
@@ -48,6 +50,9 @@ Three rules follow from it.
    its text, and begins the notes. `references/project-layout.md` says what goes where:
    PreTeXt source in `source/`, the publication file in `publication/`, figures in
    `assets/`, builds in `output/`, your working papers in `transcription/`.
+
+In this file, a path that begins `scripts/` or `references/` is in the skill's own
+directory; every other path is in the project.
 
 PreTeXt is run only through its own script, by `scripts/validate.sh` and
 `scripts/build.sh`. When the script fails, correct the source if the source is at fault,
@@ -72,7 +77,8 @@ Read every page image with the extracted text beside it. Fill in
 6. Bibliography entries with identifiers and CSL types (`references/csl-bibliography.md`),
    and their DOIs: `scripts/lookup-dois.py` asks Crossref and then DataCite.
 7. Figures and tables. Read `references/figures.md` before describing the figures: how a
-   figure is stored in the PDF decides how it is cropped and split.
+   figure is stored in the PDF decides how it is cropped and split. The list of figures
+   and panels made here is what the cropping script reads at the start of pass 2.
 8. Render risks: anything whose appearance depends on a font feature (a bold or script
    Greek letter, an unusual alphabet, a wide accent).
 9. Anything unreadable, with page numbers.
@@ -91,8 +97,9 @@ once. Then, one file per section in `source/sections/`, with the page images ope
 - Prose from the text layer, hyphenation and ligatures repaired, running heads and page
   numbers removed. Never paraphrase.
 - Mathematics from the page image (or the LaTeX source). Where a formula is dense, render
-  that part of the page again at 300 dpi before trusting a subscript
-  (`pdftoppm -r 300 -f N -l N -x X -y Y -W W -H H -png`).
+  that part of the page again at 300 dpi before trusting a subscript:
+  `pdftoppm -r 300 -f N -l N -x X -y Y -W W -H H -png transcription/original.pdf transcription/zoom/NAME`,
+  the box in pixels at 300 dpi (twice its coordinates in the 150-dpi page image).
 - Symbols that look alike are settled by the PDF, not by eye.
   `pdftohtml -xml -i -f N -l N -stdout original.pdf` names the font of every run of text on
   page N: text italic or math italic (is the "n" of "n-dimensional" mathematics?), a bold
@@ -108,28 +115,38 @@ once. Then, one file per section in `source/sections/`, with the page images ope
   with `\mathbf` silently vanishes under xelatex.
 - Validate after every section (`scripts/validate.sh <project>`), and correct what it
   reports before going on. Errors are cheap to find one section at a time and expensive
-  to untangle at the end.
+  to untangle at the end. Validation itself does not test whether a reference has a
+  target; the script lists the references that have none. One that points into a section
+  not yet written stays on that list until the section exists.
 
 ## Pass 3: the whole document
 
-1. Every `xref` resolves, and every manifest item is present. Count from the assembled
-   source that validation leaves in `output/validation/`, not from the manifest's own
-   tallies.
+1. Every `xref` resolves, and every manifest item is present.
+   `scripts/count-items.py <project>` counts the elements of the assembled source that
+   validation leaves in `output/validation/`, and lists every reference with no target
+   and every bibliography entry never cited. Compare its counts with the manifest's
+   tables, not with the manifest's own tallies.
 2. `scripts/validate.sh <project>` is clean. `scripts/build.sh <project> html` and
    `scripts/build.sh <project> pdf` succeed, including the glyph check that follows a PDF
    build: no "Missing character" in the build log, no U+FFFD in the PDF's text layer.
    Either one is a character of the source that did not reach the page, and a failure.
    The script then lists the overfull boxes of the last LaTeX pass wider than twenty
-   points: find each on the page.
+   points: find each on the page. A build is also refused when PreTeXt's log reports an
+   error, which is where a reference with no target shows; PreTeXt itself still exits as
+   if all were well.
 3. `scripts/compare.py transcription/original.pdf output/print/main.pdf`: record both
    similarities (the whole text, and the text before the reference list, where PreTeXt's
    own ordering of a bibliography entry does not count against the transcription), read
    every run it reports absent (moved text counts as absent), and account for every
    symbol it reports with a lower count in the build.
-4. Read every page of every delivered output side by side with the original when the
-   paper is short (under about twenty pages); for a longer paper, every page with a
-   display or a figure and a sample of the rest. A single lost glyph cannot be found by
-   sampling. Correct what you find, and repeat until a reading finds nothing.
+4. Read every page of the built PDF side by side with the original when the paper is
+   short (under about twenty pages); for a longer paper, every page with a display or a
+   figure and a sample of the rest. A single lost glyph cannot be found by sampling.
+   Correct what you find, and repeat until a reading finds nothing.
+5. The HTML is typeset in the reader's browser, and this skill does not ask for one, so
+   it is checked from its files. `scripts/html-outline.py <project>/output/web` lists
+   every page's headings, numbers, captions, equation tags, cross-references, and images.
+   They must agree with the PDF you have just read, and no image may be missing.
 
 ## Finishing
 

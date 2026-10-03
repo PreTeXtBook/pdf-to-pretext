@@ -14,6 +14,9 @@ keeps picture and labels together, raster and vector alike.
 
 ## Cropping
 
+Write the specification in pass 1, from the manifest's list of figures; crop at the start
+of pass 2, before any section with a figure is written.
+
 `scripts/crop-figures.py transcription/original.pdf transcription/figure-spec.json assets`
 crops every panel of every figure.  The specification is a list, in page order:
 
@@ -28,8 +31,12 @@ positions of the text around it and the ink between, and writes every panel as S
 PDF, so that `image/@source` needs no extension.  Read the script's own header for the
 rules it applies and for the options that fit another page layout.
 
-- **Look at the contact sheets** it writes before authoring.  Every wrong box so far was
-  found on a contact sheet and none any other way.
+- **Look at the contact sheets** it writes (in `transcription/crop-work/`) before
+  authoring.  Every wrong box so far was found on a contact sheet and none any other way.
+- **Its limits.**  It knows subcaptions lettered (a), (b), (c) and no further, and it
+  takes a wide line of labels inside a picture for body text.  Its header says which
+  options to set for a page that is not letter paper with one-inch margins.  A box it
+  gets wrong is cropped by hand, as below.
 - **Page numbers.**  The specification wants PDF page numbers, which can differ from the
   printed ones.
 - **By hand**, one crop is `pdftocairo -svg -f P -l P -x X -y Y -W W -H H -paperw W -paperh H`
@@ -43,11 +50,16 @@ rules it applies and for the options that fit another page layout.
 - One picture holding several drawings, with no lettering, is cut into `image` panels in
   a `sidebyside`.  Letter panels only where the original letters them.
 - A `sidebyside` needs two panels or more.  A two-part figure stacked vertically under
-  one caption therefore stays one image.  A grid of two, two, and one becomes three and
-  two in an `sbsgroup`, which itself needs two `sidebyside`s.
-- **Panel widths come from the pictures' natural sizes.**  Three drawings 82, 179, and
-  100 points wide are `widths="21% 46% 26%"`; equal widths would rescale them against
-  each other.
+  one caption therefore stays one image (a `stack` is a panel of a `sidebyside`, which
+  would still need a second panel).  A grid of two, two, and one becomes three and two in
+  an `sbsgroup`, which itself needs two `sidebyside`s.
+- **A picture keeps the share of the text block it has in the original.**  A width is a
+  percentage: the crop's width divided by the width of the original's text block.  Three
+  drawings 82, 179, and 100 points wide on a page whose text is 390 points wide are
+  `widths="21% 46% 26%"`; equal widths would rescale them against each other.  The same
+  rule gives a single `image/@width`.
+- `sidebyside/@valign` is as the original sets the panels: `bottom` when their captions
+  or baselines line up, `top` when their tops do.
 - An outer `figure` needs a `caption`, which may be empty when the original has only
   subcaptions.
 

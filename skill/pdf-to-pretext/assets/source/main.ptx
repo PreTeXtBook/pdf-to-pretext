@@ -36,10 +36,17 @@
             </abstract>
         </frontmatter>
 
-        <!-- One file for each section of the original, in the original's order -->
+        <!-- One file for each section of the original, in the original's order.  The  -->
+        <!-- comment with a section's original number goes here, before its include: -->
+        <!-- a comment before the root element of an included file is lost when the  -->
+        <!-- files are assembled.  Rename the file for the section's own title.      -->
+
+        <!-- Original: Section 1 -->
         <xi:include href="sections/section-introduction.ptx"/>
 
+        <!-- A document with no bibliography has no backmatter: take these lines out. -->
         <backmatter>
+            <!-- Original: References (unnumbered) -->
             <xi:include href="sections/references.ptx"/>
         </backmatter>
     </article>

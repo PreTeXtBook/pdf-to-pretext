@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Original: References; entries in the original's order -->
-<!-- CSL-style entries, fields in the order of references/csl-bibliography.md -->
 <references xml:id="references">
     <title>References</title>
+    <!-- Entries in the original's order; CSL-style, fields in the order of references/csl-bibliography.md -->
 
     <!-- Original: [1] -->
     <biblio xml:id="biblio-AUTHOR-WORDS" type="article-journal">

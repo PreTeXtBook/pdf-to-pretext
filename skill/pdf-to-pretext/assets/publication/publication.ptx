@@ -8,7 +8,9 @@
         <directories generated="../generated-assets"/>
     </source>
     <numbering>
-        <!-- articles: "1" numbers within sections, "0" numbers through the whole paper -->
+        <!-- divisions: how deep the numbered divisions go ("1" sections only, "2"   -->
+        <!-- sections and subsections).  The others: "0" numbers through the whole -->
+        <!-- paper, "1" within sections ("Theorem 2.3"), "2" within subsections.   -->
         <divisions level="2"/>
         <blocks level="1"/>
         <equations level="1"/>

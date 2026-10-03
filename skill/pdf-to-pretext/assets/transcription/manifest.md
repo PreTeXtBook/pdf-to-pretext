@@ -26,6 +26,8 @@ subject codes (only what the document prints); abstract; acknowledgements; fundi
 
 Unnumbered displays: (a count)
 
+Footnotes: (each with its page and the words it hangs on)
+
 ## 4. Numbering
 
 The original's scheme, and the `numbering` element that mimics it.  Where they must
@@ -43,8 +45,9 @@ differ, say so here.
 
 ## 7. Figures and tables
 
-Each figure: page, what it is (vector, raster, composite), how it splits into panels.
-Each table: page, shape.
+Each figure: page (the PDF's page number), what it is (vector, raster, composite), how it
+splits into panels, and each panel's name.  The same list, as `figure-spec.json` here, is
+what `scripts/crop-figures.py` reads.  Each table: page, shape.
 
 ## 8. Render risks
 

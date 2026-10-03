@@ -36,6 +36,18 @@ New entries go under the heading they fit, one entry to a paragraph.
 - **Run-in headings.**  A bold run-in heading begins a `paragraphs` that runs to the next
   heading.
 
+- **The comment before a section.**  A section is a file of its own, and a comment before
+  the root element of an included file is lost in assembly.  Its `<!-- Original: ... -->`
+  goes in `main.ptx`, before the `xi:include`.
+
+## References
+
+- **A reference with no target passes validation.**  PreTeXt's validation says "no
+  messages" for an `xref` that names nothing, and PreTeXt's builds exit as if all were
+  well, with one line in the log.  `scripts/validate.sh` lists such references and
+  `scripts/build.sh` refuses the build; do not run PreTeXt's script some other way and
+  take its silence for success.
+
 ## Titles
 
 - **The final period.**  PreTeXt supplies the period after a title, on `paragraphs`, `li`,
@@ -49,6 +61,10 @@ New entries go under the heading they fit, one entry to a paragraph.
 - **A title cited in prose** is an `articletitle` or a `pubtitle`.
 
 ## Mathematics
+
+- **The three characters XML keeps for itself.**  In mathematics write `\amp`, `\lt`,
+  `\gt` for `&`, `<`, `>`.  A bare `&` or `<` is not well-formed XML, and these three
+  are what PreTeXt defines for the purpose.
 
 - **A display wider than the text block** spills into the margin in the original but is
   clipped at the page edge by the LaTeX conversion, losing terms; HTML scrolls instead.
