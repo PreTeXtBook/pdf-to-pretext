@@ -26,7 +26,10 @@ else
     out=$3
 fi
 mkdir -p "$out"
-pretext_script -V full -p "$publication" -d "$out" "$main" > "$out/validate.log" 2>&1 || {
+# without a local jing, PreTeXt's validation server does the same examination
+method=""
+command -v jing > /dev/null 2>&1 || method="-M server"
+pretext_script -V full $method -p "$publication" -d "$out" "$main" > "$out/validate.log" 2>&1 || {
     cat "$out/validate.log"
     echo "the validation itself failed; log: $out/validate.log"
     exit 2

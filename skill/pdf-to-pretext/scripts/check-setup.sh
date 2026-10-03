@@ -1,51 +1,81 @@
 #!/bin/bash
-# Say what this skill needs and whether this machine has it.
-# Usage: check-setup.sh
+# Say what this skill needs and whether this machine has it.  setup.sh runs this at its
+# end; run setup.sh, not this, on a machine new to the skill.
+#
+# Usage: check-setup.sh [--quick]
 # Status 0 when everything a transcription requires is present, 1 otherwise.  What is
-# needed only for some papers (figures) or some outputs is reported and does not fail.
+# needed only for some papers (figures) is reported and does not fail.  Unless --quick
+# is given it ends with a trial run: the template laid out, validated, and built.
 set -u
 . "$(dirname "$0")/pretext-location.sh"
 missing=0
+packages=""
 have() { command -v "$1" > /dev/null 2>&1; }
 ok() { printf '  ok       %s\n' "$1"; }
-bad() { printf '  MISSING  %s\n           %s\n' "$1" "$2"; missing=1; }
+bad() { printf '  MISSING  %s\n' "$1"; missing=1; }
 note() { printf '  absent   %s\n           %s\n' "$1" "$2"; }
+# the name of a system package, for the package manager this machine has
+package() {  # arguments: apt name, dnf name, brew name
+    if have apt-get; then packages="$packages $1"; elif have dnf; then packages="$packages $2"; else packages="$packages $3"; fi
+}
 
 echo "The PDF tools (poppler):"
+poppler=1
 for tool in pdftotext pdftoppm pdftocairo pdfinfo pdffonts pdfimages pdftohtml; do
-    if have "$tool"; then ok "$tool"; else bad "$tool" "install poppler (poppler-utils on Debian and Ubuntu, poppler with Homebrew)"; fi
+    if have "$tool"; then ok "$tool"; else bad "$tool"; poppler=0; fi
 done
+[ "$poppler" -eq 1 ] || package poppler-utils poppler-utils poppler
 
-echo "PreTeXt (its own script; the PreTeXt-CLI is not used):"
+echo "PreTeXt (its own script, pretext/pretext):"
 if [ -n "$PRETEXT_HOME" ] && [ -f "$PRETEXT_HOME/pretext/pretext" ]; then
     ok "clone at $PRETEXT_HOME, commit $(git -C "$PRETEXT_HOME" rev-parse --short HEAD 2>/dev/null || echo unknown)"
-    if "$PRETEXT_PYTHON" -c 'import sys; sys.exit(0 if sys.version_info >= (3, 10) else 1)' 2>/dev/null; then
-        ok "$PRETEXT_PYTHON is Python 3.10 or newer"
-    else
-        bad "Python 3.10 or newer as $PRETEXT_PYTHON" "set PRETEXT_PYTHON in $skill/config.local"
-    fi
     if "$PRETEXT_PYTHON" "$PRETEXT_HOME/pretext/pretext" -h > /dev/null 2>&1; then
-        ok "the script runs"
+        ok "$PRETEXT_PYTHON runs it"
     else
-        bad "the script's Python packages" "make a virtual environment, run: pip install -r $PRETEXT_HOME/pretext/requirements.txt  and name its python3 as PRETEXT_PYTHON in $skill/config.local"
+        bad "a Python that runs it ($PRETEXT_PYTHON does not): run $skill/scripts/setup.sh, which builds one"
     fi
 else
-    bad "a clone of PreTeXtBook/pretext" "git clone https://github.com/PreTeXtBook/pretext  then write two lines in $skill/config.local:
-             PRETEXT_HOME=/where/the/clone/is
-             PRETEXT_PYTHON=/a/python3/with/the/clone's/pretext/requirements.txt/installed"
+    bad "PreTeXt: run $skill/scripts/setup.sh, which gets it"
 fi
-if have jing; then ok "jing (validation)"; else bad "jing" "the RELAX NG validator (package jing on Debian and Ubuntu, jing-trang with Homebrew)"; fi
-if have xelatex; then ok "xelatex (PDF builds)"; else bad "xelatex" "a TeX distribution with xelatex; the PDF build is how a transcription is compared with the original"; fi
+if have jing; then
+    ok "jing (validation)"
+else
+    note "jing" "validation will go through PreTeXt's validation server instead, which needs the network"
+fi
+if have xelatex; then
+    ok "xelatex (PDF builds)"
+else
+    bad "xelatex: the PDF build is how a transcription is compared with its original"
+    package texlive-xetex texlive-xetex mactex-no-gui
+fi
 
 echo "For papers with figures:"
-if have mutool; then ok "mutool"; else note "mutool" "MuPDF's tools (mupdf-tools); crop-figures.py reads text positions with it"; fi
+if have mutool; then
+    ok "mutool"
+else
+    note "mutool" "crop-figures.py reads text positions with it"
+    package mupdf-tools mupdf mupdf-tools
+fi
 for module in numpy scipy PIL; do
-    if python3 -c "import $module" 2>/dev/null; then ok "python3 module $module"; else note "python3 module $module" "pip install numpy scipy pillow; the figure scripts use them"; fi
+    if "$PRETEXT_PYTHON" -c "import $module" 2>/dev/null || python3 -c "import $module" 2>/dev/null; then
+        ok "Python module $module"
+    else
+        note "Python module $module" "run $skill/scripts/setup.sh, which installs it"
+    fi
 done
 
 echo "Network: api.crossref.org and api.datacite.org for looking up DOIs; PreTeXt's HTML"
 echo "build downloads some of its static files."
 
+if [ -n "$packages" ]; then
+    echo
+    echo "Programs for the whole machine cannot be installed from here.  The person whose"
+    echo "machine this is can install what is listed above with one command:"
+    if have apt-get; then echo "    sudo apt-get install$packages"
+    elif have dnf; then echo "    sudo dnf install$packages"
+    elif have brew; then echo "    brew install$packages"
+    else echo "    (with this system's package manager:$packages)"; fi
+fi
 if [ "$missing" -ne 0 ]; then
     echo "Not ready: see MISSING above."
     exit 1

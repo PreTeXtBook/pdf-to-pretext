@@ -37,10 +37,15 @@ Three rules follow from it.
    working for what it allows, before anything else. Without an open license or the
    author's permission a transcription may be made but not distributed; that is their
    decision, and they need the facts to make it.
-2. **Setup.** On a machine new to this skill, run `scripts/check-setup.sh`. It names what
-   is missing and how to get it, and ends with a trial run. PreTeXt changes from week to
-   week, so update the clone before each new transcription (`git pull --ff-only` in it);
-   the notes' header records the commit that was used.
+2. **Setup.** Run `scripts/setup.sh` yourself, without asking: the first time the skill
+   is used on a machine, and again before each new transcription. It gets PreTeXt and
+   builds a Python environment for it, both in the skill's own data directory, updates
+   them when they are already there, and ends with a trial build. The person should not
+   have to do any of this. The one thing it cannot do is install programs for the whole
+   machine (the PDF tools, a TeX distribution); when one is missing it prints the single
+   command that installs them, and that command is what you pass on to the person.
+   PreTeXt changes from week to week, which is why the script is run each time; the
+   notes' header records the commit that was used.
 3. **Inputs.** The PDF, always, and it must have a text layer: a scan without one is
    outside this skill. The LaTeX source when it exists, as the primary text. Never an HTML
    rendering of the paper (arXiv's, a journal's): that is another party's conversion, with
@@ -164,10 +169,14 @@ entry to `transcription/upstream-notes.md` in the form given there. That file is
 transcription improves the next person's: the skill does not learn unless somebody
 carries the lesson back. Three cautions. Sort each entry as the file asks (a gap in the
 skill, a defect in PreTeXt, or a peculiarity of this one document), because they go to
-different places and the third goes nowhere. Never quote the document in an entry; show
+different places and the third goes nowhere. The test for a gap in the skill is whether
+the same thing would trip the transcription of a different paper by different authors:
+one publisher's styling or one author's habit is the document's own, and a rule made
+from it would mislead on the next ten papers. When in doubt, it is the document's. Never
+quote the document in an entry; show
 the construct with a few lines of your own, since the document is not yours to publish.
 And at the end, when there are entries of the first two kinds, offer to draft an issue
-from them: show the draft, and leave the filing to the person you work for.
+from those entries only: show the draft, and leave the filing to the person you work for.
 
 ## Reference files
 

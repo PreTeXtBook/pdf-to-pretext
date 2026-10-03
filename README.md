@@ -8,20 +8,33 @@ HTML, EPUB, braille, and print.
 
 ## What you need
 
-- Claude Code.
-- The poppler tools (`pdftotext`, `pdftoppm`, `pdftocairo`, and the rest), Python 3.10 or
-  newer, `jing`, and a TeX distribution with `xelatex`.
-- A clone of [PreTeXtBook/pretext](https://github.com/PreTeXtBook/pretext) and a Python
-  with its requirements installed.  The skill runs PreTeXt's own script, `pretext/pretext`,
-  and nothing else; it does not use the PreTeXt-CLI.
-- For papers with figures: MuPDF's `mutool`, and the Python packages numpy, scipy, Pillow.
+- Claude Code: you can type `claude` at a terminal.
+- The poppler tools (`pdftotext` and its relatives) and a TeX distribution with `xelatex`;
+  for papers with figures, MuPDF's `mutool` as well.  These are programs for the whole
+  machine.  If one is missing, the skill gives you the one command that installs them.
 
-The skill's `check-setup.sh` tests for each of these and says how to get what is missing.
+That is all.  The first time it is used, the skill gets PreTeXt itself and builds a
+Python environment for it, in `~/.local/share/pdf-to-pretext`, and it keeps both up to
+date.  It runs PreTeXt's own script, `pretext/pretext`.
 
 ## Installing
 
-Clone this repository, and link the skill into Claude Code's skills directory, so that a
-correction you make is in a working tree and can be sent back:
+Claude Code looks for skills in `~/.claude/skills/`.  The skill is the directory
+`skill/pdf-to-pretext` of this repository.  Put it there as a copy or as a link.
+
+**A copy** is the simplest.  Clone the repository anywhere (or download it as a zip
+file), and copy the one directory:
+
+```
+git clone REPOSITORY-URL
+mkdir -p ~/.claude/skills
+cp -r pdf-to-pretext/skill/pdf-to-pretext ~/.claude/skills/
+```
+
+To update a copy, get the repository again and copy the directory again.
+
+**A link** keeps the skill in step with a clone, and is the one to choose if you might
+send a correction back, since a change you make is then in a working tree:
 
 ```
 git clone REPOSITORY-URL ~/src/pdf-to-pretext
@@ -29,27 +42,20 @@ mkdir -p ~/.claude/skills
 ln -s ~/src/pdf-to-pretext/skill/pdf-to-pretext ~/.claude/skills/pdf-to-pretext
 ```
 
-Get PreTeXt and a Python for it:
+To update a link, `git pull` in the clone.
 
-```
-git clone https://github.com/PreTeXtBook/pretext ~/src/pretext
-python3 -m venv ~/src/pretext-venv
-~/src/pretext-venv/bin/pip install -r ~/src/pretext/pretext/requirements.txt
-```
+Either way the skill is then available in every directory.  To have it in one project
+only, put the copy or the link in `.claude/skills/` inside that project's directory
+instead.
 
-Tell the skill where they are, in the file `config.local` in the skill's directory, and
-check:
+There is nothing more to install by hand.  If you would like to see it get ready before
+you give it a paper, run `~/.claude/skills/pdf-to-pretext/scripts/setup.sh`: it gets
+PreTeXt, builds the Python environment, checks for the programs above, and builds a
+small trial article.  When it says "Ready", it is.
 
-```
-cat > ~/src/pdf-to-pretext/skill/pdf-to-pretext/config.local <<EOF
-PRETEXT_HOME=$HOME/src/pretext
-PRETEXT_PYTHON=$HOME/src/pretext-venv/bin/python3
-EOF
-~/.claude/skills/pdf-to-pretext/scripts/check-setup.sh
-```
-
-The check ends with a trial run: it lays out the skill's template, validates it, and
-builds it to HTML and to PDF.  When it says "Ready", it is.
+If you already keep a clone of PreTeXt and want the skill to use it, name it and its
+Python in a file `config.local` in the skill's directory (`PRETEXT_HOME=...` and
+`PRETEXT_PYTHON=...`, one to a line).  The skill then leaves both alone.
 
 ## A first transcription
 

@@ -26,6 +26,7 @@ The overlay PNG draws every result on the crop, and is the check to make.  The f
 arXiv 2607.05283 (2026-09-18) were the test set; expect to tune the color ranges in
 PALETTE and the thresholds for another paper's drawing style.  Needs numpy, scipy, Pillow.
 """
+import venv_python; venv_python.ensure("numpy", "scipy", "PIL")
 import json, math, numpy as np
 from collections import deque
 from PIL import Image

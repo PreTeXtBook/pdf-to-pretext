@@ -11,7 +11,12 @@ Each entry is one of three kinds, and they go to different places:
 - `pretext`: PreTeXt itself misbehaves.  An issue for PreTeXtBook/pretext, with a minimal
   source that shows it.
 - `document`: a peculiarity of this one document.  Recorded so that it is not mistaken for
-  either of the others; it goes nowhere.
+  either of the others; it goes nowhere, and no issue is drafted from it.
+
+The test for `skill` is whether the same thing would trip the transcription of a
+different paper by different authors.  One publisher's styling, or one author's habit, is
+`document`: a rule made from it would mislead on the next ten papers.  When in doubt,
+`document`.
 
 <!-- Copy this block for each entry.
 

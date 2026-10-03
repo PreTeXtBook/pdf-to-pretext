@@ -44,6 +44,7 @@ lettered list near a caption for subcaptions.  Check a figure with more lettered
 on the contact sheet with particular care.
 """
 import argparse, json, math, os, re, subprocess, sys, xml.etree.ElementTree as ET
+import venv_python; venv_python.ensure("numpy", "PIL")
 import numpy as np
 from PIL import Image, ImageDraw
 

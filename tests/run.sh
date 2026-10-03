@@ -3,8 +3,9 @@
 #
 # Usage: tests/run.sh
 #
-#   1. skill/pdf-to-pretext/scripts/check-setup.sh: the tools are present, and the skill's
-#      template lays out, validates, and builds to HTML and PDF.
+#   1. skill/pdf-to-pretext/scripts/setup.sh: PreTeXt and its Python are there (it gets
+#      them if not), the tools are present, and the skill's template lays out, validates,
+#      and builds to HTML and PDF.
 #   2. Every round-trip case in corpus/round-trip: its pictures compile, its source
 #      validates with no message, it builds to HTML and to PDF with the glyph check, and
 #      the two comparison scripts find it identical to itself.
@@ -23,11 +24,12 @@ failures=0
 fail() { echo "  FAILED   $1"; failures=$((failures + 1)); }
 
 echo "== setup, and the template"
-if ! "$scripts/check-setup.sh"; then
-    fail "check-setup.sh"
+if ! "$scripts/setup.sh"; then
+    fail "setup.sh"
     echo "Nothing else can be checked until that passes."
     exit 1
 fi
+. "$scripts/pretext-location.sh"   # PRETEXT_PYTHON has lxml, which compare-transcriptions.py uses
 
 for case in "$root"/corpus/round-trip/*/; do
     case=${case%/}
@@ -68,7 +70,7 @@ for case in "$root"/corpus/round-trip/*/; do
         fail "PDF build: $log/pdf.txt"
         continue
     fi
-    python3 "$root/tests/compare-transcriptions.py" "$case/source/main.ptx" "$case/source/main.ptx" > "$log/self.txt" 2>&1
+    "$PRETEXT_PYTHON" "$root/tests/compare-transcriptions.py" "$case/source/main.ptx" "$case/source/main.ptx" > "$log/self.txt" 2>&1
     if grep -q '^STRUCTURE .*identical' "$log/self.txt" && grep -q '^WORDS .*identical' "$log/self.txt" \
         && grep -q 'still different: 0; in one document only: 0' "$log/self.txt"; then
         echo "  ok       compare-transcriptions.py: identical to itself ($(grep -o '^FORMULAS *[0-9]*' "$log/self.txt" | awk '{print $2}') formulas)"

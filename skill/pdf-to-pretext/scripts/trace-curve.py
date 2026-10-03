@@ -11,6 +11,7 @@ skeleton to the farthest endpoint, sampled by arc length, and simplified (Dougla
 the crop's lower-left corner, ready for a PreFigure spline with chord-length t-values; the
 overlay marks the simplified points (green), the start (blue), and the end (magenta) on
 the image, which is the check to make.  Needs numpy, scipy, Pillow."""
+import venv_python; venv_python.ensure("numpy", "scipy", "PIL")
 import sys, json, numpy as np
 from collections import deque
 from PIL import Image, ImageDraw

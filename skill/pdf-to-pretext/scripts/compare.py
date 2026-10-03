@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Compare an original PDF with a PDF built from the transcription, two ways.
 
-1. Words: a similarity ratio and the longest runs of original text absent from the
-   build.  Mathematics extracts as noise from both, so this measures prose, structure,
+1. Words: a similarity, and the longest runs of original text absent from the build.
+   The similarity is the share of the words of the two texts that pair up in order
+   (matched words, counted in both, over all words in both): 1.000 is identical, and
+   0.950 means 95 percent pair up.  Mathematics extracts as noise from both, so this measures prose, structure,
    and omissions -- not formulas.  A run that moved (a footnote, a floated caption)
    counts as absent; read the runs, do not trust the number alone.  A second ratio is
    for the text before the reference list (up to the last line that reads "References"
@@ -66,7 +68,8 @@ def main(original_path, built_path):
     original, built = words(original_text), words(built_text)
     matcher = difflib.SequenceMatcher(None, original, built, autojunk=False)
     print("original words: {}   built words: {}".format(len(original), len(built)))
-    print("similarity: {:.3f}".format(matcher.ratio()))
+    print("similarity: {:.3f}   ({:.1f} percent of the words of the two texts pair up, in order)".format(
+        matcher.ratio(), 100 * matcher.ratio()))
     original_body, built_body = before_references(original_text), before_references(built_text)
     if original_body is None or built_body is None:
         print("similarity before the reference list: no such heading found in {}".format(
@@ -74,8 +77,9 @@ def main(original_path, built_path):
                         if body is None)))
     else:
         a_words, b_words = words(original_body), words(built_body)
-        print("similarity before the reference list: {:.3f}   (original words: {}   built words: {})".format(
-            difflib.SequenceMatcher(None, a_words, b_words, autojunk=False).ratio(), len(a_words), len(b_words)))
+        before = difflib.SequenceMatcher(None, a_words, b_words, autojunk=False).ratio()
+        print("similarity before the reference list: {:.3f}   ({:.1f} percent; original words: {}   built words: {})".format(
+            before, 100 * before, len(a_words), len(b_words)))
     missing = []
     for tag, i1, i2, j1, j2 in matcher.get_opcodes():
         if tag in ("delete", "replace") and i2 - i1 >= 8:  # shorter runs are mostly mathematics
