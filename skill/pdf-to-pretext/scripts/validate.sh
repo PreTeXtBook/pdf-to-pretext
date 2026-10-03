@@ -8,8 +8,8 @@
 #        validate.sh <main.ptx> <publication.ptx> <output-directory>
 #
 # Writes <name>-validation.txt, and beside it the assembled source its line numbers
-# refer to.  The messages are printed.  Status 0 when all three examinations have no
-# message, 1 otherwise.
+# refer to.  Status 0 when all three examinations have no message; otherwise the
+# messages are printed and the status is 1.
 set -eu
 . "$(dirname "$0")/pretext-location.sh"
 require_pretext
@@ -28,11 +28,10 @@ pretext_script -V full -p "$publication" -d "$out" "$main" > "$out/validate.log"
     exit 2
 }
 report=$(ls "$out"/*-validation.txt)
-sed -n '/^Messages: RELAX-NG/,$p' "$report" | grep -v '^$'
-echo "report: $report"
 if [ "$(grep -c '^(no messages' "$report")" -eq 3 ]; then
-    echo "validation: clean"
+    echo "validation: clean   (report: $report)"
 else
-    echo "validation: MESSAGES ABOVE"
+    sed -n '/^Messages: RELAX-NG/,$p' "$report" | grep -v '^$'
+    echo "validation: MESSAGES ABOVE   (report: $report)"
     exit 1
 fi

@@ -1,0 +1,10 @@
+\documentclass[tikz,border=2pt]{standalone}
+\begin{document}
+\begin{tikzpicture}[x=0.8cm,y=0.2cm]
+  \draw[->] (-2.4,0) -- (2.6,0) node[right] {$n$};
+  \draw[->] (0,-9) -- (0,9.5) node[above] {$n^3$};
+  \draw[blue, thick, domain=-2:2, samples=60] plot (\x,{\x*\x*\x});
+  \foreach \n in {-2,...,2} \fill (\n,{\n*\n*\n}) circle (2pt);
+  \node[right] at (2,8) {$(2,8)$};
+\end{tikzpicture}
+\end{document}

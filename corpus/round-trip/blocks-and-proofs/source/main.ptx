@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A round-trip case: this source is built to PDF, the PDF is transcribed, and the     -->
+<!-- transcription is compared with this source.  Written for the purpose; nothing here -->
+<!-- is taken from any publication.  Exercises: theorem-like blocks on one counter      -->
+<!-- within sections, a remark, attached and detached proofs, numbered and unnumbered   -->
+<!-- displays, aligned rows, cases, cross-references of every kind, a footnote, lists.  -->
+<pretext xml:lang="en-US">
+    <docinfo>
+        <macros>
+        </macros>
+    </docinfo>
+
+    <article xml:id="article-parity">
+        <title>Parity of sums and products</title>
+
+        <frontmatter>
+            <bibinfo>
+                <author>
+                    <personname>Example Author</personname>
+                    <institution>Department of Examples, University of Somewhere</institution>
+                    <email>author@example.org</email>
+                </author>
+                <date>March 1, 2026</date>
+            </bibinfo>
+            <titlepage>
+                <titlepage-items/>
+            </titlepage>
+            <abstract>
+                <p>
+                    We record elementary facts about the parity of sums and products of integers.
+                    Nothing here is new; the article exists to exercise a transcription.
+                </p>
+            </abstract>
+        </frontmatter>
+
+        <section xml:id="section-introduction">
+            <title>Introduction</title>
+
+            <p>
+                The parity of an integer is the first invariant a student meets <xref ref="biblio-author-first-course"/>.
+                Throughout, <m>\mathbb{Z}</m> denotes the integers<fn>We count zero as an even integer.</fn> and <m>n</m>, <m>a</m>, <m>b</m> are integers.
+                In <xref ref="section-even-odd"/> we fix the definitions and prove <xref ref="theorem-parity-sum"/>, which a referee once called <q>the least surprising theorem in the subject.</q>
+                Products are treated in <xref ref="section-products"/>.
+            </p>
+
+            <p>
+                Two conventions are used without comment:
+                <ul>
+                    <li>
+                        <p>
+                            every variable is an integer unless we say otherwise;
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <q>iff</q> abbreviates <q>if and only if.</q>
+                        </p>
+                    </li>
+                </ul>
+            </p>
+        </section>
+
+        <section xml:id="section-even-odd">
+            <title>Even and odd integers</title>
+
+            <definition xml:id="definition-even-odd">
+                <statement>
+                    <p>
+                        An integer <m>n</m> is <term>even</term> if <m>n = 2k</m> for some integer <m>k</m>, and <term>odd</term> if <m>n = 2k + 1</m> for some integer <m>k</m>.
+                    </p>
+                </statement>
+            </definition>
+
+            <lemma xml:id="lemma-even-sum">
+                <statement>
+                    <p>
+                        The sum of two even integers is even.
+                    </p>
+                </statement>
+                <proof>
+                    <p>
+                        If <m>a = 2j</m> and <m>b = 2k</m> then <m>a + b = 2(j + k)</m>.
+                    </p>
+                </proof>
+            </lemma>
+
+            <theorem xml:id="theorem-parity-sum">
+                <title>Parity of a sum</title>
+                <statement>
+                    <p>
+                        For integers <m>a</m> and <m>b</m>, the sum <m>a + b</m> is even iff <m>a</m> and <m>b</m> have the same parity.
+                        Equivalently,
+                        <md xml:id="equation-sign-multiplicative" number="yes">
+                            (-1)^{a+b} = (-1)^a (-1)^b.
+                        </md>
+                    </p>
+                </statement>
+            </theorem>
+
+            <remark xml:id="remark-sign">
+                <p>
+                    The identity <xref ref="equation-sign-multiplicative"/> says that <m>n \mapsto (-1)^n</m> is a homomorphism from <m>(\mathbb{Z}, +)</m> to <m>(\{1, -1\}, \cdot)</m>.
+                </p>
+            </remark>
+
+            <p>
+                The lemma handles one of the four cases.
+                We give the whole argument, since it is short.
+            </p>
+
+            <proof ref="theorem-parity-sum">
+                <p>
+                    Write <m>a = 2j + r</m> and <m>b = 2k + s</m> with <m>r, s \in \{0, 1\}</m>.
+                    Then
+                    <md>
+                        a + b = 2(j + k) + (r + s),
+                    </md>
+                    and <m>r + s</m> is even exactly when <m>r = s</m>.
+                    The case <m>r = s = 0</m> is <xref ref="lemma-even-sum"/>.
+                </p>
+            </proof>
+
+            <corollary xml:id="corollary-odd-count">
+                <statement>
+                    <p>
+                        A sum of integers is odd iff an odd number of its terms are odd.
+                    </p>
+                </statement>
+            </corollary>
+
+            <example xml:id="example-three-terms">
+                <p>
+                    In <m>3 + 4 + 7 = 14</m> two terms are odd, and the sum is even, as <xref ref="corollary-odd-count"/> predicts.
+                </p>
+            </example>
+        </section>
+
+        <section xml:id="section-products">
+            <title>Products</title>
+
+            <proposition xml:id="proposition-product">
+                <statement>
+                    <p>
+                        Let <m>a</m> and <m>b</m> be integers.
+                        <ol marker="(a)">
+                            <li>
+                                <p>
+                                    If either is even, then <m>ab</m> is even.
+                                </p>
+                            </li>
+                            <li>
+                                <p>
+                                    If both are odd, then <m>ab</m> is odd.
+                                </p>
+                            </li>
+                        </ol>
+                    </p>
+                </statement>
+                <proof>
+                    <p>
+                        For the second part,
+                        <md>
+                            <mrow xml:id="equation-odd-product-expanded" number="yes">(2j + 1)(2k + 1) \amp = 4jk + 2j + 2k + 1</mrow>
+                            <mrow xml:id="equation-odd-product-factored" number="yes">\amp = 2(2jk + j + k) + 1.</mrow>
+                        </md>
+                        The first part is immediate from <xref ref="definition-even-odd"/>.
+                    </p>
+                </proof>
+            </proposition>
+
+            <p>
+                Combining <xref ref="equation-odd-product-factored"/> with <xref ref="theorem-parity-sum"/>, the parity <m>\pi(n) \in \{0, 1\}</m> of <m>n</m>, defined by
+                <md>
+                    \pi(n) = \begin{cases} 0 \amp n \text{ even} \\ 1 \amp n \text{ odd} \end{cases},
+                </md>
+                satisfies <m>\pi(a + b) \equiv \pi(a) + \pi(b)</m> and <m>\pi(ab) = \pi(a)\pi(b)</m>; see also <xref ref="biblio-writer-reader-parity"/>.
+            </p>
+
+            <paragraphs xml:id="paragraphs-acknowledgements">
+                <title>Acknowledgements</title>
+
+                <p>
+                    The author thanks nobody in particular.
+                </p>
+            </paragraphs>
+        </section>
+
+        <backmatter>
+            <references xml:id="references">
+                <title>References</title>
+
+                <biblio xml:id="biblio-author-first-course" type="book">
+                    <author>
+                        <name><family>Author</family><given>Example</given></name>
+                    </author>
+                    <title>A first course in examples</title>
+                    <issued><date year="2020"/></issued>
+                    <publisher>Somewhere University Press</publisher>
+                </biblio>
+
+                <biblio xml:id="biblio-writer-reader-parity" type="article-journal">
+                    <author>
+                        <name><family>Writer</family><given>Pat</given></name>
+                        <name><family>Reader</family><given>Sam Q.</given></name>
+                    </author>
+                    <title>Parity, once more</title>
+                    <container-title>Journal of Examples</container-title>
+                    <volume>12</volume>
+                    <issue>3</issue>
+                    <issued><date year="2021"/></issued>
+                    <page>100-104</page>
+                </biblio>
+            </references>
+        </backmatter>
+    </article>
+</pretext>

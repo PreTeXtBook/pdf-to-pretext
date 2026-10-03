@@ -1,0 +1,8 @@
+\documentclass[tikz,border=2pt]{standalone}
+\begin{document}
+\begin{tikzpicture}[x=0.6cm,y=0.6cm]
+  \foreach \i in {1,2} \foreach \j in {1,2} \fill (\i,\j) circle (3pt);
+  \draw[dashed] (0.5,0.5) rectangle (2.5,2.5);
+  \node[below] at (1.5,0.4) {$2^2 = 4$};
+\end{tikzpicture}
+\end{document}

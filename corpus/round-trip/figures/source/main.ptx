@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A round-trip case: this source is built to PDF, the PDF is transcribed, and the     -->
+<!-- transcription is compared with this source.  Written for the purpose; nothing here -->
+<!-- is taken from any publication.  The pictures are drawn by the files in ../figures, -->
+<!-- which tests/run.sh compiles into ../assets.  Exercises: a single figure, a figure  -->
+<!-- of two unlettered panels of different widths, and a figure of two lettered         -->
+<!-- subfigures, each referred to in the text.                                          -->
+<pretext xml:lang="en-US">
+    <docinfo>
+        <directories external="../assets"/>
+        <macros>
+        </macros>
+    </docinfo>
+
+    <article xml:id="article-pictures">
+        <title>Three pictures of small integers</title>
+
+        <frontmatter>
+            <bibinfo>
+                <author>
+                    <personname>Example Author</personname>
+                    <institution>Department of Examples, University of Somewhere</institution>
+                </author>
+            </bibinfo>
+            <titlepage>
+                <titlepage-items/>
+            </titlepage>
+            <abstract>
+                <p>
+                    Three figures, of three kinds, with enough text between them to hold them apart.
+                </p>
+            </abstract>
+        </frontmatter>
+
+        <section xml:id="section-line">
+            <title>A line</title>
+
+            <p>
+                The even integers between <m>-3</m> and <m>3</m> are marked in <xref ref="figure-number-line"/>.
+                They alternate with the odd ones, which is all that parity means.
+            </p>
+
+            <figure xml:id="figure-number-line">
+                <caption>The integers from <m>-3</m> to <m>3</m>, with the even ones marked</caption>
+                <image source="figure-number-line" width="70%">
+                    <description>
+                        <p>
+                            A horizontal axis labeled n with tick marks at the integers from minus three to three.
+                            Solid dots sit on minus two, zero, and two, and the word even is printed above zero.
+                        </p>
+                    </description>
+                </image>
+            </figure>
+        </section>
+
+        <section xml:id="section-squares">
+            <title>Squares</title>
+
+            <p>
+                A square number is a square of dots, as in <xref ref="figure-dot-squares"/>.
+                When the side is odd there is a dot in the middle, circled in the larger diagram.
+            </p>
+
+            <figure xml:id="figure-dot-squares">
+                <caption>Dot diagrams of <m>2^2</m> and <m>3^2</m></caption>
+                <sidebyside widths="12% 17%">
+                    <image source="figure-dots-two">
+                        <description>
+                            <p>
+                                Four dots in a two by two square inside a dashed outline, labeled two squared equals four.
+                            </p>
+                        </description>
+                    </image>
+                    <image source="figure-dots-three">
+                        <description>
+                            <p>
+                                Nine dots in a three by three square inside a dashed outline, the middle dot circled in red, labeled three squared equals nine.
+                            </p>
+                        </description>
+                    </image>
+                </sidebyside>
+            </figure>
+        </section>
+
+        <section xml:id="section-graphs">
+            <title>Graphs</title>
+
+            <p>
+                The squares lie on a parabola (<xref ref="figure-parabola"/>) and the cubes on a cubic (<xref ref="figure-cubic"/>); the two are set side by side in <xref ref="figure-graphs"/>.
+            </p>
+
+            <figure xml:id="figure-graphs">
+                <caption>Squares and cubes of small integers</caption>
+                <sidebyside widths="44% 33%" valign="bottom">
+                    <figure xml:id="figure-parabola">
+                        <caption>The squares</caption>
+                        <image source="figure-parabola">
+                            <description>
+                                <p>
+                                    A blue parabola through seven dots at the integers from minus three to three; the dot at three, nine is labeled.
+                                </p>
+                            </description>
+                        </image>
+                    </figure>
+                    <figure xml:id="figure-cubic">
+                        <caption>The cubes</caption>
+                        <image source="figure-cubic">
+                            <description>
+                                <p>
+                                    A blue cubic curve through five dots at the integers from minus two to two; the dot at two, eight is labeled.
+                                </p>
+                            </description>
+                        </image>
+                    </figure>
+                </sidebyside>
+            </figure>
+        </section>
+    </article>
+</pretext>

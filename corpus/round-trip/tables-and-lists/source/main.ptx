@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A round-trip case: this source is built to PDF, the PDF is transcribed, and the     -->
+<!-- transcription is compared with this source.  Written for the purpose; nothing here -->
+<!-- is taken from any publication.  Exercises: a table with a header row and aligned   -->
+<!-- columns, a table holding mathematics, nested lists, a description list, and        -->
+<!-- references to tables and to list items.                                            -->
+<pretext xml:lang="en-US">
+    <docinfo>
+        <macros>
+        </macros>
+    </docinfo>
+
+    <article xml:id="article-small-cases">
+        <title>Small cases, tabulated</title>
+
+        <frontmatter>
+            <bibinfo>
+                <author>
+                    <personname>Example Author</personname>
+                    <institution>Department of Examples, University of Somewhere</institution>
+                </author>
+            </bibinfo>
+            <titlepage>
+                <titlepage-items/>
+            </titlepage>
+            <abstract>
+                <p>
+                    We tabulate the first few squares and cubes and their residues, and we list what the tables show.
+                </p>
+            </abstract>
+        </frontmatter>
+
+        <section xml:id="section-tables">
+            <title>The tables</title>
+
+            <p>
+                <xref ref="table-powers"/> gives <m>n^2</m> and <m>n^3</m> for <m>1 \leq n \leq 5</m>, and <xref ref="table-residues"/> reduces them modulo <m>4</m>.
+            </p>
+
+            <table xml:id="table-powers">
+                <title>Squares and cubes</title>
+                <tabular halign="right" top="medium" bottom="medium">
+                    <row header="yes" bottom="minor">
+                        <cell><m>n</m></cell>
+                        <cell><m>n^2</m></cell>
+                        <cell><m>n^3</m></cell>
+                    </row>
+                    <row>
+                        <cell>1</cell>
+                        <cell>1</cell>
+                        <cell>1</cell>
+                    </row>
+                    <row>
+                        <cell>2</cell>
+                        <cell>4</cell>
+                        <cell>8</cell>
+                    </row>
+                    <row>
+                        <cell>3</cell>
+                        <cell>9</cell>
+                        <cell>27</cell>
+                    </row>
+                    <row>
+                        <cell>4</cell>
+                        <cell>16</cell>
+                        <cell>64</cell>
+                    </row>
+                    <row>
+                        <cell>5</cell>
+                        <cell>25</cell>
+                        <cell>125</cell>
+                    </row>
+                </tabular>
+            </table>
+
+            <table xml:id="table-residues">
+                <title>Residues modulo <m>4</m></title>
+                <tabular top="medium" bottom="medium">
+                    <col halign="left"/>
+                    <col halign="center"/>
+                    <col halign="center"/>
+                    <row header="yes" bottom="minor">
+                        <cell>parity of <m>n</m></cell>
+                        <cell><m>n^2 \bmod 4</m></cell>
+                        <cell><m>n^3 \bmod 4</m></cell>
+                    </row>
+                    <row>
+                        <cell>even</cell>
+                        <cell><m>0</m></cell>
+                        <cell><m>0</m></cell>
+                    </row>
+                    <row>
+                        <cell>odd, <m>n \equiv 1</m></cell>
+                        <cell><m>1</m></cell>
+                        <cell><m>1</m></cell>
+                    </row>
+                    <row>
+                        <cell>odd, <m>n \equiv 3</m></cell>
+                        <cell><m>1</m></cell>
+                        <cell><m>3</m></cell>
+                    </row>
+                </tabular>
+            </table>
+        </section>
+
+        <section xml:id="section-observations">
+            <title>What the tables show</title>
+
+            <p>
+                Three things can be read from <xref ref="table-residues"/>.
+                <ol>
+                    <li xml:id="item-square-residues">
+                        <p>
+                            A square is congruent to <m>0</m> or <m>1</m> modulo <m>4</m>.
+                        </p>
+                    </li>
+                    <li xml:id="item-cube-residues">
+                        <p>
+                            A cube takes three of the four residues:
+                            <ul>
+                                <li>
+                                    <p>
+                                        <m>0</m>, from the even integers;
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        <m>1</m> and <m>3</m>, from the odd ones.
+                                    </p>
+                                </li>
+                            </ul>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            No cube is congruent to <m>2</m> modulo <m>4</m>.
+                        </p>
+                    </li>
+                </ol>
+                The first of these, <xref ref="item-square-residues"/>, is the one used most often.
+            </p>
+
+            <p>
+                We use two words in a fixed sense.
+                <dl>
+                    <li>
+                        <title>Residue</title>
+                        <p>
+                            The remainder on division by the modulus, taken in <m>\{0, 1, \dots, m - 1\}</m>.
+                        </p>
+                    </li>
+                    <li>
+                        <title>Small case</title>
+                        <p>
+                            A value of <m>n</m> for which the computation fits in <xref ref="table-powers"/>.
+                        </p>
+                    </li>
+                </dl>
+            </p>
+        </section>
+    </article>
+</pretext>

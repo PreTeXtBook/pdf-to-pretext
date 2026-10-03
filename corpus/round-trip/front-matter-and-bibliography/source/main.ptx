@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A round-trip case: this source is built to PDF, the PDF is transcribed, and the     -->
+<!-- transcription is compared with this source.  Written for the purpose; the people,  -->
+<!-- places, and publications named are invented.  Exercises: several authors with      -->
+<!-- affiliations and emails, a date, keywords and subject codes, an abstract with      -->
+<!-- mathematics, and a bibliography of many kinds of entry, cited singly, several at   -->
+<!-- once, and with a pinpoint.                                                         -->
+<pretext xml:lang="en-US">
+    <docinfo>
+        <macros>
+        </macros>
+    </docinfo>
+
+    <article xml:id="article-citing">
+        <title>A note that cites everything it can</title>
+
+        <frontmatter>
+            <bibinfo>
+                <author>
+                    <personname>Pat Writer</personname>
+                    <institution>
+                        <line>Institute for Worked Examples</line>
+                        <line>University of Somewhere</line>
+                    </institution>
+                    <email>writer@example.org</email>
+                </author>
+                <author>
+                    <personname>Sam Q. Reader</personname>
+                    <institution>Department of Examples, Elsewhere College</institution>
+                    <email>reader@example.org</email>
+                </author>
+                <author>
+                    <personname>Lee de la Marge</personname>
+                    <institution>Department of Examples, Elsewhere College</institution>
+                    <email>marge@example.org</email>
+                </author>
+                <date>April 15, 2026</date>
+                <keywords>
+                    <keyword>parity</keyword>
+                    <keyword>bibliographies</keyword>
+                    <keyword>test documents</keyword>
+                </keywords>
+                <keywords authority="msc" variant="2020">
+                    <keyword primary="yes">11A99</keyword>
+                    <keyword>00A99</keyword>
+                </keywords>
+            </bibinfo>
+            <titlepage>
+                <titlepage-items/>
+            </titlepage>
+            <abstract>
+                <p>
+                    We show that <m>n^2 \equiv n \pmod{2}</m> for every integer <m>n</m>, and we cite a work of every kind we could think of along the way.
+                    The result is classical; the citations are the point.
+                </p>
+            </abstract>
+        </frontmatter>
+
+        <section xml:id="section-result">
+            <title>The result</title>
+
+            <p>
+                That a square has the parity of its root is in every textbook <xref ref="biblio-author-first-course"/>, and several surveys repeat it <xref ref="biblio-writer-reader-parity biblio-marge-squares biblio-reader-thesis"/>.
+                The proof we give follows <xref ref="biblio-author-first-course" detail="Theorem 2.3"/>.
+            </p>
+
+            <theorem xml:id="theorem-square-parity">
+                <statement>
+                    <p>
+                        For every integer <m>n</m>,
+                        <md>
+                            n^2 \equiv n \pmod{2}.
+                        </md>
+                    </p>
+                </statement>
+                <proof>
+                    <p>
+                        The product <m>n(n - 1) = n^2 - n</m> has two consecutive factors, one of which is even.
+                    </p>
+                </proof>
+            </theorem>
+
+            <p>
+                A machine-checked version of <xref ref="theorem-square-parity"/> was announced at a meeting <xref ref="biblio-writer-formal"/>, a longer account is a preprint <xref ref="biblio-marge-preprint"/>, and the folklore around it is collected in a handbook chapter <xref ref="biblio-reader-folklore"/>.
+            </p>
+        </section>
+
+        <backmatter>
+            <references xml:id="references">
+                <title>References</title>
+
+                <biblio xml:id="biblio-author-first-course" type="book">
+                    <author>
+                        <name><family>Author</family><given>Example</given></name>
+                    </author>
+                    <title>A first course in examples</title>
+                    <collection-title>Texts in Exemplary Mathematics</collection-title>
+                    <edition>2</edition>
+                    <volume>7</volume>
+                    <issued><date year="2020"/></issued>
+                    <publisher>Somewhere University Press</publisher>
+                    <publisher-place>Somewhere</publisher-place>
+                </biblio>
+
+                <biblio xml:id="biblio-marge-squares" type="article-journal">
+                    <author>
+                        <name><family>de la Marge</family><given>Lee</given></name>
+                    </author>
+                    <title>Squares and their roots: a second look</title>
+                    <container-title>Journal of Examples</container-title>
+                    <volume>14</volume>
+                    <issue>1</issue>
+                    <issued><date year="2023"/></issued>
+                    <page>1-9</page>
+                    <DOI>10.0000/joe.2023.14.1</DOI>
+                </biblio>
+
+                <biblio xml:id="biblio-marge-preprint" type="article">
+                    <author>
+                        <name><family>de la Marge</family><given>Lee</given></name>
+                        <name><family>Writer</family><given>Pat</given></name>
+                    </author>
+                    <title>Parity at length</title>
+                    <container-title>Preprint, Elsewhere College</container-title>
+                    <issued><date year="2025"/></issued>
+                </biblio>
+
+                <biblio xml:id="biblio-reader-folklore" type="chapter">
+                    <author>
+                        <name><family>Reader</family><given>Sam Q.</given></name>
+                    </author>
+                    <editor>
+                        <name><family>Author</family><given>Example</given></name>
+                    </editor>
+                    <title>Folklore of the even and the odd</title>
+                    <container-title>Handbook of examples</container-title>
+                    <issued><date year="2019"/></issued>
+                    <page>211-240</page>
+                    <publisher>Somewhere University Press</publisher>
+                </biblio>
+
+                <biblio xml:id="biblio-reader-thesis" type="thesis">
+                    <author>
+                        <name><family>Reader</family><given>Sam Q.</given></name>
+                    </author>
+                    <title>Parity in small cases</title>
+                    <genre>Ph.D. thesis</genre>
+                    <issued><date year="2012"/></issued>
+                    <publisher>Elsewhere College</publisher>
+                </biblio>
+
+                <biblio xml:id="biblio-writer-formal" type="paper-conference">
+                    <author>
+                        <name><family>Writer</family><given>Pat</given></name>
+                    </author>
+                    <title>A formal proof that squares keep their parity</title>
+                    <container-title>Proceedings of the 3rd Meeting on Examples</container-title>
+                    <issued><date year="2024"/></issued>
+                    <page>45-52</page>
+                </biblio>
+
+                <biblio xml:id="biblio-writer-reader-parity" type="article-journal">
+                    <author>
+                        <name><family>Writer</family><given>Pat</given></name>
+                        <name><family>Reader</family><given>Sam Q.</given></name>
+                    </author>
+                    <title>Parity, once more</title>
+                    <container-title>Journal of Examples</container-title>
+                    <volume>12</volume>
+                    <issue>3</issue>
+                    <issued><date year="2021"/></issued>
+                    <page>100-104</page>
+                </biblio>
+            </references>
+        </backmatter>
+    </article>
+</pretext>

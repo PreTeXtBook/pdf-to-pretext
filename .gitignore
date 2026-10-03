@@ -11,6 +11,7 @@
 # the round-trip cases are written here, so their sources are kept; their builds are not
 !/corpus/round-trip/*/source/
 /corpus/round-trip/*/output/
+/corpus/round-trip/*/assets/
 # where PreTeXt is on one machine (see skill/pdf-to-pretext/scripts/check-setup.sh)
 /skill/pdf-to-pretext/config.local
 # build and tool residue
