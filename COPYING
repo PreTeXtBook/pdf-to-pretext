@@ -1,0 +1,27 @@
+Copyright (C) 2026  Robert A. Beezer
+
+This file is part of pdf-to-pretext, a skill for transcribing research
+articles from PDF into PreTeXt.
+
+pdf-to-pretext is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 2 or version 3 of the
+License (at your option).
+
+pdf-to-pretext is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with pdf-to-pretext.  If not, see <http://www.gnu.org/licenses/>.
+
+The texts of both versions of the license are in the directory "legal".
+
+This is the license of PreTeXt itself (https://github.com/PreTeXtBook/pretext),
+whose script this skill runs.
+
+The license covers the skill, its scripts, and the test documents in
+corpus/round-trip, which were written for the purpose.  It does not cover
+the documents a user transcribes with the skill: each of those, and each
+transcription made from it, stays under the license of its original.
