@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Transcribed from: <origin, identifier, version, license> -->
-<!-- Transcription run: runs/<date>-<name>; see its manifest.md and notes.md -->
-<pretext xml:lang="en-US">
+<!-- Transcribed from: ORIGIN (identifier, version), LICENSE OF THE ORIGINAL -->
+<!-- The working papers of the transcription are in ../transcription: manifest.md, notes.md -->
+<pretext xml:lang="en-US" xmlns:xi="http://www.w3.org/2001/XInclude">
     <docinfo>
-        <!-- Cropped figures and other files go in external/ beside main.ptx -->
-        <directories external="external"/>
-        <!-- Only semantic author macros, in forms MathJax accepts; see CLAUDE.md -->
+        <!-- Cropped figures and other files the source names go in ../assets -->
+        <directories external="../assets"/>
+        <!-- Only the author's macros that carry meaning, in forms MathJax accepts; -->
+        <!-- see references/macros.md.  Empty when only the PDF is at hand.        -->
         <macros>
         </macros>
     </docinfo>
@@ -20,6 +21,7 @@
                     <institution>INSTITUTION</institution>
                     <email>EMAIL</email>
                 </author>
+                <!-- A date, keywords, and subject codes only when the document prints them -->
                 <date>DATE</date>
                 <keywords authority="msc" variant="2020">
                     <keyword>CODE</keyword>
@@ -34,17 +36,11 @@
             </abstract>
         </frontmatter>
 
-        <!-- Original: Section 1 -->
-        <section xml:id="section-introduction">
-            <title>Introduction</title>
-            <p>TEXT</p>
-        </section>
+        <!-- One file for each section of the original, in the original's order -->
+        <xi:include href="sections/section-introduction.ptx"/>
 
         <backmatter>
-            <references xml:id="references">
-                <title>References</title>
-                <!-- CSL-style entries in the canonical field order; see references/csl-bibliography.md -->
-            </references>
+            <xi:include href="sections/references.ptx"/>
         </backmatter>
     </article>
 </pretext>

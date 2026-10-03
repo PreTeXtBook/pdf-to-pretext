@@ -1,12 +1,14 @@
 #!/bin/bash
-# Fetch one arXiv paper into corpus/arxiv/<identifier>: metadata (with license),
-# the PDF, and the e-print source, unpacked.
-# Usage: fetch-arxiv.sh <identifier>          e.g. 2010.15608
+# Fetch one arXiv paper: its record (with the license), the PDF, and the e-print source.
+# Usage: fetch-arxiv.sh <identifier> <directory>        e.g. 2010.15608 papers/2010.15608
+# Writes into the directory: metadata-oai.xml, paper.pdf, eprint.bin, source/ (unpacked).
+# The license line it prints decides what may be done with a transcription: say it to
+# the person you are working for before anything else.  The record is read for the
+# license only; nothing else in it belongs in a transcription.
 set -eu
 identifier=$1
-project=$(cd "$(dirname "$0")/../../.." && pwd)
-target=$project/corpus/arxiv/$identifier
-agent='pdf-to-pretext corpus fetch'
+target=$2
+agent='pdf-to-pretext fetch'
 mkdir -p "$target/source"
 cd "$target"
 curl -s -L -A "$agent" -o metadata-oai.xml \

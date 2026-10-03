@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Original: Section 1 -->
+<section xml:id="section-introduction">
+    <title>Introduction</title>
+
+    <p>
+        TEXT, with a citation <xref ref="biblio-AUTHOR-WORDS"/>.
+    </p>
+</section>

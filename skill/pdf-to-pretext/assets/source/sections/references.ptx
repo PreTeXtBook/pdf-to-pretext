@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Original: References; entries in the original's order -->
+<!-- CSL-style entries, fields in the order of references/csl-bibliography.md -->
+<references xml:id="references">
+    <title>References</title>
+
+    <!-- Original: [1] -->
+    <biblio xml:id="biblio-AUTHOR-WORDS" type="article-journal">
+        <author>
+            <name><family>FAMILY</family><given>GIVEN</given></name>
+        </author>
+        <title>TITLE</title>
+        <container-title>JOURNAL</container-title>
+        <volume>1</volume>
+        <issued><date year="2000"/></issued>
+        <page>1-2</page>
+    </biblio>
+</references>

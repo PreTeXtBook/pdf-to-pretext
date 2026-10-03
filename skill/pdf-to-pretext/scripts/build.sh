@@ -1,26 +1,48 @@
 #!/bin/bash
-# Build a transcription with the pretext/pretext script from the project's clone, then
-# check a PDF for lost glyphs.
-# Usage: build.sh <main.ptx> <publication.ptx> <format> <output-directory>
-#   format: html, latex, pdf, ...   output-directory is created (use a new name if dirty)
-# The build log is kept as <output-directory>/build.log.  For a PDF, two checks follow:
-# the engine's "Missing character" warnings in the log, and U+FFFD (a glyph the text
-# layer could not name) in the PDF.  Either one means a character of the source did not
-# reach the page, and the script exits with status 1.  The overfull boxes of the last
+# Build a transcription with PreTeXt's own script (pretext/pretext in a clone of
+# PreTeXtBook/pretext), then check a PDF for lost glyphs and overfull boxes.
+#
+# Usage: build.sh <project-directory> <format> [<output-directory>]
+#   format: html, pdf, latex, epub, ...
+#   The output goes to <project-directory>/output/web for html, output/print for pdf,
+#   output/<format> otherwise, unless an output directory is named.  The directory is
+#   created; the script does not empty it, so name a new one for a build from nothing.
+# For a source not laid out as a project:
+#        build.sh <main.ptx> <publication.ptx> <format> <output-directory>
+#
+# The build log is kept as build.log in the output directory.  For a PDF, two checks
+# follow: the engine's "Missing character" warnings in the log, and U+FFFD (a glyph the
+# text layer could not name) in the PDF.  Either one means a character of the source did
+# not reach the page, and the script exits with status 1.  The overfull boxes of the last
 # LaTeX pass are then counted, and those wider than 20 points listed, widest first, each
 # with the start of its text: look at those on the page.  They do not change the status.
 set -eu
-project=$(cd "$(dirname "$0")/../../.." && pwd)
-mkdir -p "$4"
-log=$4/build.log
-/home/rob/.claude/pretext-venv/bin/python3 "$project/pretext/pretext/pretext" -vv -c doc \
-    -f "$3" -p "$2" -d "$4" "$1" 2>&1 | tee "$log"
+. "$(dirname "$0")/pretext-location.sh"
+require_pretext
+if [ -d "$1" ]; then
+    project_files "$1"
+    format=$2
+    case "$format" in
+        html) default=web ;;
+        pdf) default=print ;;
+        *) default=$format ;;
+    esac
+    out=${3:-$1/output/$default}
+else
+    main=$1
+    publication=$2
+    format=$3
+    out=$4
+fi
+mkdir -p "$out"
+log=$out/build.log
+pretext_script -vv -c doc -f "$format" -p "$publication" -d "$out" "$main" 2>&1 | tee "$log"
 status=${PIPESTATUS[0]}
 if [ "$status" -ne 0 ]; then
     echo "build failed with status $status; log: $log"
     exit "$status"
 fi
-if [ "$3" = "pdf" ]; then
+if [ "$format" = "pdf" ]; then
     failed=0
     missing=$(grep -c 'Missing character' "$log" || true)
     if [ "$missing" -gt 0 ]; then
@@ -28,7 +50,7 @@ if [ "$3" = "pdf" ]; then
         grep 'Missing character' "$log" | sort | uniq -c
         failed=1
     fi
-    for pdf in "$4"/*.pdf; do
+    for pdf in "$out"/*.pdf; do
         [ -f "$pdf" ] || continue
         bad=$(pdftotext "$pdf" - | grep -o $'\xef\xbf\xbd' | wc -l)
         if [ "$bad" -gt 0 ]; then
@@ -56,3 +78,4 @@ if [ "$3" = "pdf" ]; then
     fi
     echo "glyph check: no missing characters in the log, no replacement characters in the PDF"
 fi
+echo "built: $out"

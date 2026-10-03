@@ -1,0 +1,9 @@
+# builds, reproduced by the skill's scripts or by the PreTeXt-CLI
+output/
+.cache/
+# The original and its renderings.  They are not yours to redistribute unless the
+# original's license says so; remove these lines only when it does.
+transcription/original.pdf
+transcription/original.txt
+transcription/pages/
+transcription/zoom/
