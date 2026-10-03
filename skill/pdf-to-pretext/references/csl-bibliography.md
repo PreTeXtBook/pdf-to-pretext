@@ -32,5 +32,13 @@ Example (journal article):
 </biblio>
 ```
 
+DOIs: `scripts/lookup-dois.py` takes the entries as printed and lists candidates.  Crossref
+does not hold every DOI.  arXiv preprints (`10.48550/arXiv.<identifier>`, one for every
+preprint) and the Dagstuhl proceedings (LIPIcs, `10.4230/...`) are registered with DataCite,
+which the script asks when Crossref has no candidate with the entry's title.  A title that
+agrees is a candidate only: compare authors, volume, and pages, and say in a comment where
+the record and the printed entry disagree (a year, a volume).  In a `DOI` element `<` and
+`>` are written `&lt;` and `&gt;` (the old Wiley identifiers contain them).
+
 Citations in the text are `<xref ref="biblio-farmer-zeros"/>`; a pinpoint ("[3, Theorem 2]")
 uses `@detail`.  Verify against the schema before relying on any field name here.

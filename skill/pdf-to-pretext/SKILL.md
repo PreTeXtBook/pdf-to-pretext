@@ -36,7 +36,9 @@ Read every page. Write `manifest.md` with:
    and its identifier. Unnumbered environments too, marked as such.
 4. The numbering scheme, and the `numbering` element that mimics it (`references/numbering.md`).
 5. Macros, each marked keep or expand, with the reason (`references/macros.md`).
-6. Bibliography entries with identifiers and CSL types (`references/csl-bibliography.md`).
+6. Bibliography entries with identifiers and CSL types (`references/csl-bibliography.md`),
+   and their DOIs (`scripts/lookup-dois.py`: Crossref first, then DataCite, which holds
+   what Crossref lacks, arXiv preprints and the Dagstuhl proceedings among them).
 7. Figures: which are composite and how they split; tables and their shapes.
 8. Anything unreadable, with page numbers.
 
@@ -53,6 +55,11 @@ the page images open:
   numbers removed; never paraphrase.
 - Mathematics from the page image (or the LaTeX source). Never guess: an unclear formula
   becomes `<!-- UNREADABLE: page N, ... -->` and a line in `notes.md`.
+- Look-alikes are settled by the PDF, not by eye.  `pdftohtml -xml -i -f N -l N -stdout paper.pdf`
+  names the font of every run of text on page N: text italic or math italic (is the "n"
+  of "n-dimensional" mathematics?), a bold digit or a plain one.  The text layer's code
+  points tell three typed periods (`...`) from `\dots` (". . ."), and a star (U+22C6)
+  from an asterisk (U+2217).
 - Every block preceded by its original-number comment; every reference an `xref`; every
   citation an `xref` to a `biblio`.
 - Element names verified against the schema (`references/article-elements.md`).
@@ -103,6 +110,10 @@ glyph check.
 Two-column layouts interleave in extraction; footnotes float; ligatures (`fi`, `fl`)
 come out as single characters; end-of-line hyphens split words; `--` and quotation marks
 need their PreTeXt elements; a "Notation" or "Remark" environment is often unnumbered;
+a remark set upright ends only where the vertical space says so: decide from the spacing
+and the sense, and record the decision in the manifest as a judgment;
+an article has no `acknowledgement` element, so an unnumbered Acknowledgements section is
+a titled `paragraphs` closing the last section;
 a named theorem keeps its name as a `title`; "Proof of Theorem 3" is a titled `proof`;
 lettered main theorems ("Theorem A") cannot be lettered by PreTeXt — keep the letter in
 the title and the comment; a lost glyph leaves only two traces, the engine's "Missing
