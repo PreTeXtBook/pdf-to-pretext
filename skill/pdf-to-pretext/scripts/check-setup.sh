@@ -43,7 +43,8 @@ for module in numpy scipy PIL; do
     if python3 -c "import $module" 2>/dev/null; then ok "python3 module $module"; else note "python3 module $module" "pip install numpy scipy pillow; the figure scripts use them"; fi
 done
 
-echo "For looking up DOIs: network access to api.crossref.org and api.datacite.org."
+echo "Network: api.crossref.org and api.datacite.org for looking up DOIs; PreTeXt's HTML"
+echo "build downloads some of its static files."
 
 if [ "$missing" -ne 0 ]; then
     echo "Not ready: see MISSING above."

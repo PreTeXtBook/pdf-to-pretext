@@ -28,8 +28,20 @@ panel is also rendered to PNG in <work>/panels/, and contact sheets sheet-N.png 
 written there for a visual check, which is the check to make before authoring.
 
 Needs: mutool, pdftoppm, pdftocairo (poppler), Python with Pillow and numpy.
-The margin constants below suit letter paper with a one-inch text margin; adjust
---left and --right for another layout.
+The constants suit letter paper with a text block from about 72 to 540 points.  For
+another layout give the block's edges as --left and --right (a little outside the text),
+and --margin, a little right of where body lines begin: a line that starts left of
+--margin is taken for body text, not for a label in the picture.  `pdftotext -bbox` or
+the contact sheets show whether they fit.
+
+Two limits, each kept because loosening it moved boxes that were right (the 58 panels
+of arXiv 2607.05283 are the regression test: change a rule only if they all stay put).
+A caption is "Figure N:" or "Figure N" alone on its line, N being the number in the
+specification, and only when neither exists a line that goes on after a space; "Figure
+N." is not taken, since a paragraph can end with those words on a line of their own.
+Subcaptions are recognized for (a), (b), (c) only; a wider range took the items of a
+lettered list near a caption for subcaptions.  Check a figure with more lettered panels
+on the contact sheet with particular care.
 """
 import argparse, json, math, os, re, subprocess, sys, xml.etree.ElementTree as ET
 import numpy as np

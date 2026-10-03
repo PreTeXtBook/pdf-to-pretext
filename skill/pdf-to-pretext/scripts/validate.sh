@@ -10,6 +10,10 @@
 # Writes <name>-validation.txt, and beside it the assembled source its line numbers
 # refer to.  Status 0 when all three examinations have no message; otherwise the
 # messages are printed and the status is 1.
+#
+# Validation does not look at whether a cross-reference has a target.  The references
+# that have none are listed after it, by count-items.py; they do not change the status,
+# since a reference to a section not yet written is expected while authoring.
 set -eu
 . "$(dirname "$0")/pretext-location.sh"
 require_pretext
@@ -28,10 +32,13 @@ pretext_script -V full -p "$publication" -d "$out" "$main" > "$out/validate.log"
     exit 2
 }
 report=$(ls "$out"/*-validation.txt)
+status=0
 if [ "$(grep -c '^(no messages' "$report")" -eq 3 ]; then
     echo "validation: clean   (report: $report)"
 else
     sed -n '/^Messages: RELAX-NG/,$p' "$report" | grep -v '^$'
     echo "validation: MESSAGES ABOVE   (report: $report)"
-    exit 1
+    status=1
 fi
+python3 "$skill/scripts/count-items.py" --references "${report%-validation.txt}-assembled.xml" || true
+exit "$status"

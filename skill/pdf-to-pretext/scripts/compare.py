@@ -78,12 +78,19 @@ def main(original_path, built_path):
             difflib.SequenceMatcher(None, a_words, b_words, autojunk=False).ratio(), len(a_words), len(b_words)))
     missing = []
     for tag, i1, i2, j1, j2 in matcher.get_opcodes():
-        if tag in ("delete", "replace") and i2 - i1 >= 8:
+        if tag in ("delete", "replace") and i2 - i1 >= 8:  # shorter runs are mostly mathematics
             missing.append((i2 - i1, " ".join(original[i1:i2])))
     missing.sort(reverse=True)
     print("longest runs of original words absent from the build:")
     for length, run in missing[:10]:
         print("  [{} words] {}".format(length, run[:160]))
+    if not missing and matcher.ratio() < 1:
+        # nothing long is absent, yet the texts differ: show where, however short
+        short = sorted(((i2 - i1, " ".join(original[i1:i2]), " ".join(built[j1:j2]))
+                        for tag, i1, i2, j1, j2 in matcher.get_opcodes() if tag != "equal"), reverse=True)
+        print("  none of eight words or more; the longest differences:")
+        for length, was, now in short[:10]:
+            print("  original: {!r}   build: {!r}".format(was[:80], now[:80]))
     a, b = symbols(original_text), symbols(built_text)
     lost = sorted(((c, a[c], b[c]) for c in a if b[c] < a[c]), key=lambda r: r[2] - r[1])
     print("symbols with a lower count in the build ({}):".format(len(lost)))

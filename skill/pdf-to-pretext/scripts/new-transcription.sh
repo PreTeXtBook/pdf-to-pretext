@@ -49,4 +49,11 @@ echo "project: $project"
 pdfinfo "$work/original.pdf" | grep -E '^(Title|Author|Creator|Producer|Pages|Page size):' || true
 echo "fonts:   $(pdffonts "$work/original.pdf" 2>/dev/null | tail -n +3 | wc -l)"
 echo "images:  $(pdfimages -list "$work/original.pdf" 2>/dev/null | tail -n +3 | wc -l) (embedded pictures; vector drawings are not counted)"
-echo "A text layer of few words for many pages means a scan: this skill needs a text layer."
+pages=$(pdfinfo "$work/original.pdf" | awk '/^Pages:/ {print $2}')
+words=$(wc -w < "$work/original.txt")
+echo "text:    $words words on $pages page(s)"
+if [ "$words" -lt $((pages * 50)) ]; then
+    echo "WARNING: fewer than 50 words a page.  This looks like a scan with no text layer,"
+    echo "         which this skill cannot transcribe."
+fi
+echo "page images: $(ls "$work/pages" | head -1) ... $(ls "$work/pages" | tail -1)"

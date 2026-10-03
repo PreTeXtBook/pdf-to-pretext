@@ -10,7 +10,13 @@
 # For a source not laid out as a project:
 #        build.sh <main.ptx> <publication.ptx> <format> <output-directory>
 #
-# The build log is kept as build.log in the output directory.  For a PDF, two checks
+# The build log is kept as build.log in the output directory.  PreTeXt reports some
+# faults of the source only there, and exits with status 0: a cross-reference with no
+# target is one.  So every line of the log that PreTeXt marks as an error or a warning is
+# printed, and an error gives status 1.  PreTeXt's working directories (for a PDF, the
+# LaTeX source and its log) are kept beside the output, in <output-directory>-work.
+#
+# For a PDF, two more checks
 # follow: the engine's "Missing character" warnings in the log, and U+FFFD (a glyph the
 # text layer could not name) in the PDF.  Either one means a character of the source did
 # not reach the page, and the script exits with status 1.  The overfull boxes of the last
@@ -35,12 +41,26 @@ else
     out=$4
 fi
 mkdir -p "$out"
+out=$(cd "$out" && pwd)
+work=$out-work
+mkdir -p "$work"
 log=$out/build.log
-pretext_script -vv -c doc -f "$format" -p "$publication" -d "$out" "$main" 2>&1 | tee "$log"
+# -vv puts the LaTeX engine's messages in the log, which the checks below read; it also
+# makes PreTeXt keep its working directories, so they are sent beside the output
+TMPDIR=$work pretext_script -vv -c doc -f "$format" -p "$publication" -d "$out" "$main" 2>&1 | tee "$log"
 status=${PIPESTATUS[0]}
 if [ "$status" -ne 0 ]; then
     echo "build failed with status $status; log: $log"
     exit "$status"
+fi
+reported=$(grep -E 'PTX:(ERROR|WARNING|BUG)' "$log" | sed -E 's/^PTX:(ERROR|WARNING|BUG) *: \* //' | sort -u || true)
+if [ -n "$reported" ]; then
+    echo "PreTeXt reported:"
+    printf '%s\n' "$reported" | cut -c1-400
+fi
+if grep -q -E 'PTX:(ERROR|BUG)' "$log"; then
+    echo "BUILD NOT ACCEPTED: PreTeXt reported an error; log: $log"
+    exit 1
 fi
 if [ "$format" = "pdf" ]; then
     failed=0
