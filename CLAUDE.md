@@ -50,7 +50,8 @@ Words, mathematics, and structure are never such differences.
    Much of PreTeXt is global — the manifest is what keeps section-by-section work consistent.
 2. Author section by section against the manifest.
 3. Whole-document passes: resolve every `xref`, validate, build HTML and PDF, compare with
-   the original (`scripts/compare.py`), read sample pages side by side, record the score.
+   the original (`skill/pdf-to-pretext/scripts/compare.py`), read sample pages side by
+   side, record the score.
 
 ## Building and validating
 
@@ -69,9 +70,9 @@ mkdir -p /tmp/pdf-to-pretext/<name>-html && \
 ```
 
 Validation: the same script with `-V full` in place of `-c doc -f html`; it writes
-`<name>-validation.txt` (line numbers refer to the assembled file).  `scripts/build.sh` and
-`scripts/validate.sh` wrap both.  Verify every element name against
-`pretext/schema/pretext.rnc` before using it; `me`, `men`, `mdn` no longer exist —
+`<name>-validation.txt` (line numbers refer to the assembled file).  `build.sh` and
+`validate.sh` in `skill/pdf-to-pretext/scripts/` wrap both.  Verify every element name
+against `pretext/schema/pretext.rnc` before using it; `me`, `men`, `mdn` no longer exist —
 display math is `md` (with `@number` for a single numbered line, `mrow`s for several).
 
 ## Working style
