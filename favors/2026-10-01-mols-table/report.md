@@ -16,6 +16,10 @@ A one-off conversion, not a transcription run.
 | `mols_table.py` | The result: one list, `MOLS`, of 10,000 integers. |
 | `report.md` | This report. |
 
+2026-10-03: `MOLS_table.pdf` and `mols_table.py` were deleted at Rob's word, because he
+judges we have no rights to the data.  Neither was ever in the repository.  The rest of
+this report describes them as they were.
+
 ## The result
 
 `MOLS[n]` is the table entry for side `n`, for 0 ≤ n < 10000.  The table prints ∞ for
