@@ -27,11 +27,12 @@ not a `file:` URL.
   generated from the clone's `entities.ent`, `identifiers`, `numbering`, `macros`,
   `csl-bibliography`, `figures`); `assets/` (the templates, laid out as a project:
   `source/`, `publication/`, `project.ptx`, `transcription/manifest.md` and
-  `upstream-notes.md`); and scripts (`check-setup.sh`, `new-transcription.sh`,
-  `validate.sh`, `build.sh`, `compare.py`, `lookup-dois.py`, `fetch-arxiv.sh`,
-  `render-pages.sh`, `extract-text.sh`, `run-header.sh`, `block-classes.py`, the figure
-  scripts `crop-figures.py`, `trace-curve.py`, `trace-figure.py`, and
-  `pretext-location.sh`, which the others source).
+  `upstream-notes.md`); and scripts (`setup.sh`, `check-setup.sh`, `new-transcription.sh`,
+  `validate.sh`, `build.sh`, `count-items.py`, `html-outline.py`, `compare.py`,
+  `lookup-dois.py`, `fetch-arxiv.sh`, `render-pages.sh`, `extract-text.sh`,
+  `run-header.sh`, `block-classes.py`, the figure scripts `crop-figures.py`,
+  `trace-curve.py`, `trace-figure.py`, and two the others use, `pretext-location.sh` and
+  `venv_python.py`).
 - `skill/pdf-to-pretext/config.local` — not tracked: where PreTeXt's Python is on this
   machine (`PRETEXT_PYTHON`; `PRETEXT_HOME` defaults to the clone below).
 - `pretext/` — a clone of PreTeXtBook/pretext at `bf795ab1` (master, 2026-10-02), not
@@ -137,6 +138,25 @@ section on transcribing from LaTeX.
   paper and were taken back: its rules are narrow on purpose, and its header now says so.
 - **Checked as a newcomer would have it**: a fresh clone, linked into a skills directory,
   passes `check-setup.sh` and `tests/run.sh`.
+- **Low friction** (Rob, on a draft of his post to pretext-dev: "I want the skill to build
+  a venv if necessary - you do this all the time for me.  LOW FRICTION!", and "not
+  everybody will symlink").  `setup.sh` asks nothing: with no PreTeXt named, it clones
+  PreTeXtBook/pretext and builds a Python environment with PreTeXt's requirements and the
+  figure scripts' packages, both in `~/.local/share/pdf-to-pretext`, and updates them on
+  every later run; the skill tells Claude to run it unasked.  A clone or Python that is
+  named (the environment, `config.local`) is used and left alone, as here.  `jing` is no
+  longer required: without it validation goes through PreTeXt's server.  What remains
+  for the person is the system's programs (poppler, a TeX distribution), for which the
+  check prints one install command.  The README gives the copy and the link side by
+  side.  Tested from a plain copy of the skill with nothing configured, into a scratch
+  data directory: clone, environment (465 MB), trial build, "Ready"; the clone in that
+  test came from this machine's clone, not from GitHub, whose address was only checked
+  for reachability.
+- **Notes that are one paper's own.**  Rob asked whether the skill would refrain from
+  drafting issues about idiosyncrasies.  It drafts only from entries sorted as the
+  skill's or PreTeXt's; the rule for sorting now has a test (would it trip a different
+  paper by different authors; when in doubt it is the document's).  It is still the
+  model's judgment, so the person reads the draft before sending it.
 
 **Before the repository is made public** (Rob's to do or to rule on):
 
