@@ -47,7 +47,8 @@ Three rules follow from it.
    PreTeXt changes from week to week, which is why the script is run each time; the
    notes' header records the commit that was used.
 3. **Inputs.** The PDF, always, and it must have a text layer: a scan without one is
-   outside this skill. The LaTeX source when it exists, as the primary text. Never an HTML
+   outside this skill. `scripts/pdftool.py` does everything the skill asks of a PDF
+   (text, page images, fonts, pictures, crops); run it with no arguments for the list. The LaTeX source when it exists, as the primary text. Never an HTML
    rendering of the paper (arXiv's, a journal's): that is another party's conversion, with
    its own errors.
 4. **The project.** `scripts/new-transcription.sh <paper.pdf> <directory> <model-id>`
@@ -103,13 +104,14 @@ once. Then, one file per section in `source/sections/`, with the page images ope
   numbers removed. Never paraphrase.
 - Mathematics from the page image (or the LaTeX source). Where a formula is dense, render
   that part of the page again at 300 dpi before trusting a subscript:
-  `pdftoppm -r 300 -f N -l N -x X -y Y -W W -H H -png transcription/original.pdf transcription/zoom/NAME`,
-  the box in pixels at 300 dpi (twice its coordinates in the 150-dpi page image).
+  `scripts/pdftool.py zoom transcription/original.pdf N LEFT TOP WIDTH HEIGHT transcription/zoom/NAME.png`,
+  the box in the pixels of the 150-dpi page image, where you read it off.
 - Symbols that look alike are settled by the PDF, not by eye.
-  `pdftohtml -xml -i -f N -l N -stdout original.pdf` names the font of every run of text on
-  page N: text italic or math italic (is the "n" of "n-dimensional" mathematics?), a bold
-  digit or a plain one. The text layer's code points tell three typed periods (`...`) from
-  `\dots` (". . ."), and a star (U+22C6) from an asterisk (U+2217).
+  `scripts/pdftool.py fonts transcription/original.pdf N` prints every line of page N with
+  the font of each run of text: text italic or math italic (is the "n" of "n-dimensional"
+  mathematics?), a bold digit or a plain one. The text layer's code points tell three
+  typed periods (`...`) from `\dots` (". . ."), and a star (U+22C6) from an asterisk
+  (U+2217).
 - Every block is preceded by a comment with its original number
   (`<!-- Original: Theorem 2.3 -->`); every reference is an `xref`; every citation is an
   `xref` to a `biblio`.
@@ -133,8 +135,9 @@ once. Then, one file per section in `source/sections/`, with the page images ope
    tables, not with the manifest's own tallies.
 2. `scripts/validate.sh <project>` is clean. `scripts/build.sh <project> html` and
    `scripts/build.sh <project> pdf` succeed, including the glyph check that follows a PDF
-   build: no "Missing character" in the build log, no U+FFFD in the PDF's text layer.
-   Either one is a character of the source that did not reach the page, and a failure.
+   build: no "Missing character" in the build log, no glyph without a character in the
+   PDF's text layer. Either one is a character of the source that did not reach the page,
+   and a failure.
    The script then lists the overfull boxes of the last LaTeX pass wider than twenty
    points: find each on the page. A build is also refused when PreTeXt's log reports an
    error, which is where a reference with no target shows; PreTeXt itself still exits as

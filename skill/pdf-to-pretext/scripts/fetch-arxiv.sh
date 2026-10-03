@@ -6,6 +6,7 @@
 # the person you are working for before anything else.  The record is read for the
 # license only; nothing else in it belongs in a transcription.
 set -eu
+. "$(dirname "$0")/pretext-location.sh"
 identifier=$1
 target=$2
 agent='pdf-to-pretext fetch'
@@ -25,5 +26,5 @@ else
 fi
 cd ..
 echo "license: $(grep -o '<license>[^<]*</license>' metadata-oai.xml | sed 's/<[^>]*>//g')"
-echo "pages:   $(pdfinfo paper.pdf | awk '/^Pages/ {print $2}')"
+echo "pages:   $("$PRETEXT_PYTHON" "$skill/scripts/pdftool.py" pages paper.pdf)"
 echo "source:  $(ls source | tr '\n' ' ')"

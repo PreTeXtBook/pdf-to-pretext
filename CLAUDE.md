@@ -16,9 +16,10 @@ Words, mathematics, and structure are never such differences.
 - The PDF is always an input.  When LaTeX source exists (arXiv e-print), it is the primary
   text for words and mathematics and the PDF is the visual check.  Every PDF+LaTeX document
   is ALSO transcribed once from the PDF alone, so the hard path is scored against a key.
-- The words of a PDF-only document come from `pdftotext`; the mathematics and the structure
-  come from reading the rendered page images.  Never guess a formula: an unreadable spot
-  gets an XML comment `<!-- UNREADABLE: page N, ... -->` and a line in the run notes.
+- The words of a PDF-only document come from its text layer (`pdftool.py text`); the
+  mathematics and the structure come from reading the rendered page images.  Never guess
+  a formula: an unreadable spot gets an XML comment `<!-- UNREADABLE: page N, ... -->` and
+  a line in the run notes.
 - Never consult an HTML rendering of a paper (arXiv HTML, ar5iv, a journal's HTML view).
 
 ## Decisions already made (Rob, 2026-09-03)
@@ -37,7 +38,7 @@ Words, mathematics, and structure are never such differences.
 - Bibliographies use the CSL-style `biblio` (`@type` from the CSL vocabulary, fields in the
   canonical order); citations are `xref`s; DOIs recovered when findable.
 - Figures: a composite graphic is split into `sidebyside` panels; each image is cropped
-  from the PDF page with `pdftocairo` to SVG and gets a description written from the image.
+  from the PDF page to SVG and PDF (`crop-figures.py`) and gets a description written from the image.
   Recreation in PreFigure is a later bonus.  Tables become `tabular`; Claude does them.
 - Every run records, at the top of its notes: date, model id, Claude Code version, and
   the commit of `pretext/` used to build.

@@ -19,13 +19,6 @@ package() {  # arguments: apt name, dnf name, brew name
     if have apt-get; then packages="$packages $1"; elif have dnf; then packages="$packages $2"; else packages="$packages $3"; fi
 }
 
-echo "The PDF tools (poppler):"
-poppler=1
-for tool in pdftotext pdftoppm pdftocairo pdfinfo pdffonts pdfimages pdftohtml; do
-    if have "$tool"; then ok "$tool"; else bad "$tool"; poppler=0; fi
-done
-[ "$poppler" -eq 1 ] || package poppler-utils poppler-utils poppler
-
 echo "PreTeXt (its own script, pretext/pretext):"
 if [ -n "$PRETEXT_HOME" ] && [ -f "$PRETEXT_HOME/pretext/pretext" ]; then
     ok "clone at $PRETEXT_HOME, commit $(git -C "$PRETEXT_HOME" rev-parse --short HEAD 2>/dev/null || echo unknown)"
@@ -49,15 +42,16 @@ else
     package texlive-xetex texlive-xetex mactex-no-gui
 fi
 
-echo "For papers with figures:"
-if have mutool; then
-    ok "mutool"
+echo "Reading PDFs (PyMuPDF, which comes with PreTeXt's requirements):"
+if "$PRETEXT_PYTHON" -c "import pymupdf" 2>/dev/null || "$PRETEXT_PYTHON" -c "import fitz" 2>/dev/null; then
+    ok "PyMuPDF $("$PRETEXT_PYTHON" -c 'import pymupdf; print(pymupdf.__version__)' 2>/dev/null)"
 else
-    note "mutool" "crop-figures.py reads text positions with it"
-    package mupdf-tools mupdf mupdf-tools
+    bad "PyMuPDF in $PRETEXT_PYTHON: run $skill/scripts/setup.sh, which installs it"
 fi
+
+echo "For papers with figures:"
 for module in numpy scipy PIL; do
-    if "$PRETEXT_PYTHON" -c "import $module" 2>/dev/null || python3 -c "import $module" 2>/dev/null; then
+    if "$PRETEXT_PYTHON" -c "import $module" 2>/dev/null; then
         ok "Python module $module"
     else
         note "Python module $module" "run $skill/scripts/setup.sh, which installs it"
@@ -69,8 +63,8 @@ echo "build downloads some of its static files."
 
 if [ -n "$packages" ]; then
     echo
-    echo "Programs for the whole machine cannot be installed from here.  The person whose"
-    echo "machine this is can install what is listed above with one command:"
+    echo "A TeX distribution is a program for the whole machine and cannot be installed from"
+    echo "here.  The person whose machine this is can install it with one command:"
     if have apt-get; then echo "    sudo apt-get install$packages"
     elif have dnf; then echo "    sudo dnf install$packages"
     elif have brew; then echo "    brew install$packages"

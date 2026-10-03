@@ -27,7 +27,8 @@ def skill_python():
 
 
 def ensure(*modules):
-    if all(importlib.util.find_spec(m) is not None for m in modules):
+    """Each argument is a module's name, or alternatives separated by "|"."""
+    if all(any(importlib.util.find_spec(m) is not None for m in alternatives.split("|")) for alternatives in modules):
         return
     python = skill_python()
     # the Python of an environment is a link to the system's, so compare the names as
@@ -37,4 +38,4 @@ def ensure(*modules):
         os.environ["PDF_TO_PRETEXT_RESTARTED"] = "1"
         os.execv(python, [python] + sys.argv)
     sys.exit("This script needs the Python modules {}.  Run scripts/setup.sh, which installs them.".format(
-        ", ".join(modules)))
+        ", ".join(m.split("|")[0] for m in modules)))

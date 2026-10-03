@@ -6,9 +6,9 @@ as a PreFigure diagram is a further step, worth taking only when asked.
 
 ## How the figure is stored decides how it is taken
 
-`pdfimages -list transcription/original.pdf` lists the raster pictures embedded in the
-PDF, with the page and the natural size of each.  A figure that is not listed is a vector
-drawing.  Either way the labels are usually typeset over the picture by LaTeX, so pulling
+`scripts/pdftool.py images transcription/original.pdf` lists the raster pictures embedded
+in the PDF, with the page, the place, and the size of each on the page, in points.  A
+figure that is not listed is a vector drawing.  Either way the labels are usually typeset over the picture by LaTeX, so pulling
 the embedded picture out loses every label.  Crop the region of the page instead: that
 keeps picture and labels together, raster and vector alike.
 
@@ -39,9 +39,11 @@ rules it applies and for the options that fit another page layout.
   gets wrong is cropped by hand, as below.
 - **Page numbers.**  The specification wants PDF page numbers, which can differ from the
   printed ones.
-- **By hand**, one crop is `pdftocairo -svg -f P -l P -x X -y Y -W W -H H -paperw W -paperh H`
-  (and again with `-pdf`), in points.  Without `-paperw` and `-paperh` the output keeps
-  the whole page with the crop in place.
+- **By hand**, one crop is
+  `scripts/pdftool.py crop transcription/original.pdf P X Y WIDTH HEIGHT assets/NAME`,
+  the box in points from the page's top left.  It writes `NAME.pdf` and `NAME.svg`, and
+  what lies outside the box (the rest of the page's text, the rest of a picture that
+  holds several drawings) is removed from them, not merely hidden.
 
 ## Composite figures
 

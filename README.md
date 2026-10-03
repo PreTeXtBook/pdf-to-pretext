@@ -9,13 +9,13 @@ HTML, EPUB, braille, and print.
 ## What you need
 
 - Claude Code: you can type `claude` at a terminal.
-- The poppler tools (`pdftotext` and its relatives) and a TeX distribution with `xelatex`;
-  for papers with figures, MuPDF's `mutool` as well.  These are programs for the whole
-  machine.  If one is missing, the skill gives you the one command that installs them.
+- A TeX distribution with `xelatex`.  If it is missing, the skill gives you the one
+  command that installs it.
 
 That is all.  The first time it is used, the skill gets PreTeXt itself and builds a
 Python environment for it, in `~/.local/share/pdf-to-pretext`, and it keeps both up to
-date.  It runs PreTeXt's own script, `pretext/pretext`.
+date.  It runs PreTeXt's own script, `pretext/pretext`, and it reads PDFs with PyMuPDF,
+which is among PreTeXt's own requirements.
 
 ## Installing
 
@@ -50,8 +50,8 @@ instead.
 
 There is nothing more to install by hand.  If you would like to see it get ready before
 you give it a paper, run `~/.claude/skills/pdf-to-pretext/scripts/setup.sh`: it gets
-PreTeXt, builds the Python environment, checks for the programs above, and builds a
-small trial article.  When it says "Ready", it is.
+PreTeXt, builds the Python environment, checks for TeX, and builds a small trial
+article.  When it says "Ready", it is.
 
 If you already keep a clone of PreTeXt and want the skill to use it, name it and its
 Python in a file `config.local` in the skill's directory (`PRETEXT_HOME=...` and

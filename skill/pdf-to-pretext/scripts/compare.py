@@ -22,12 +22,13 @@ Usage: compare.py <original.pdf> <built.pdf>
 import collections
 import difflib
 import re
-import subprocess
 import sys
 import unicodedata
 
+import pdftool
+
 LIGATURES = {"ﬁ": "fi", "ﬂ": "fl", "ﬀ": "ff", "ﬃ": "ffi", "ﬄ": "ffl"}
-PUNCTUATION = {"’": "'", "‘": "'", "“": '"', "”": '"',
+PUNCTUATION = {"’": "'", "‘": "'", "“": '"', "”": '"', "\u25a1": "\u25a0",  # hollow and filled end-of-proof marks
                "–": "-", "—": "-", "˜": "~", " ": " "}
 
 
@@ -41,8 +42,7 @@ def before_references(t):
 
 
 def text(pdf_path):
-    return subprocess.run(["pdftotext", pdf_path, "-"], capture_output=True,
-                          text=True, check=True).stdout
+    return pdftool.plain_text(pdf_path)
 
 
 def words(t):

@@ -10,7 +10,8 @@
 #      validates with no message, it builds to HTML and to PDF with the glyph check, and
 #      the two comparison scripts find it identical to itself.
 #   3. Every worked example in examples/ validates and builds.
-#   4. crop-figures.py puts the 58 figure panels of arXiv 2607.05283 where they were, if
+#   4. crop-figures.py puts the 58 figure panels of arXiv 2607.05283 where they were (to
+#      within a point: the boxes on record were measured with another PDF library), if
 #      that paper has been fetched into corpus/arxiv/2607.05283 (it is not in the
 #      repository; the specification and the boxes, in tests/crop-figures, are).
 #
@@ -45,7 +46,7 @@ for case in "$root"/corpus/round-trip/*/; do
             stem=$(basename "$picture" .tex)
             if pdflatex -interaction=batchmode -output-directory "$work" "$picture" > /dev/null 2>&1 \
                 && cp "$work/$stem.pdf" "$case/assets/$stem.pdf" \
-                && pdftocairo -svg "$case/assets/$stem.pdf" "$case/assets/$stem.svg"; then
+                && "$PRETEXT_PYTHON" "$scripts/pdftool.py" svg "$case/assets/$stem.pdf" "$case/assets/$stem.svg"; then
                 :
             else
                 fail "picture $stem did not compile (log in $work)"
@@ -65,7 +66,7 @@ for case in "$root"/corpus/round-trip/*/; do
         fail "HTML build: $log/html.txt"
     fi
     if "$scripts/build.sh" "$case" pdf > "$log/pdf.txt" 2>&1; then
-        echo "  ok       builds to PDF, $(pdfinfo "$case/output/print/main.pdf" | awk '/^Pages/ {print $2}') page(s), glyph check clean; $(grep '^overfull boxes' "$log/pdf.txt")"
+        echo "  ok       builds to PDF, $("$PRETEXT_PYTHON" "$scripts/pdftool.py" pages "$case/output/print/main.pdf") page(s), glyph check clean; $(grep '^overfull boxes' "$log/pdf.txt")"
     else
         fail "PDF build: $log/pdf.txt"
         continue
@@ -93,7 +94,7 @@ for example in "$root"/examples/*/; do
     if "$scripts/validate.sh" "$example" > "$log/validate.txt" 2>&1 \
         && "$scripts/build.sh" "$example" html > "$log/html.txt" 2>&1 \
         && "$scripts/build.sh" "$example" pdf > "$log/pdf.txt" 2>&1; then
-        echo "  ok       validates, builds to HTML and to PDF ($(pdfinfo "$example/output/print/main.pdf" | awk '/^Pages/ {print $2}') pages), glyph check clean"
+        echo "  ok       validates, builds to HTML and to PDF ($("$PRETEXT_PYTHON" "$scripts/pdftool.py" pages "$example/output/print/main.pdf") pages), glyph check clean"
     else
         fail "example: $log"
     fi
@@ -105,9 +106,13 @@ if [ -f "$paper" ]; then
     work=$(mktemp -d)
     cp "$root/tests/crop-figures/2607.05283-figure-spec.json" "$work/figure-spec.json"
     if python3 "$scripts/crop-figures.py" "$paper" "$work/figure-spec.json" "$work/assets" > "$work/crop.log" 2>&1 \
-        && python3 -c 'import json, sys; sys.exit(0 if json.load(open(sys.argv[1])) == json.load(open(sys.argv[2])) else 1)' \
+        && python3 -c '
+import json, sys
+new, old = json.load(open(sys.argv[1])), json.load(open(sys.argv[2]))
+same = len(new) == len(old) and all(a["name"] == b["name"] and max(abs(a[k] - b[k]) for k in "xywh") <= 1.0 for a, b in zip(old, new))
+sys.exit(0 if same else 1)' \
             "$work/crop-work/figure-boxes.json" "$root/tests/crop-figures/2607.05283-figure-boxes.json"; then
-        echo "  ok       every box where it was"
+        echo "  ok       every box within a point of where it was"
     else
         fail "crop-figures.py: boxes moved, or the script failed ($work)"
     fi

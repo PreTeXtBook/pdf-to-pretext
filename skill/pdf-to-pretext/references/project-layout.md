@@ -24,8 +24,7 @@
     transcription/
         original.pdf              the document being transcribed
         original.txt              its text layer, layout kept
-        pages/                    page-1.png, page-2.png, ... at 150 dpi (page-01.png
-                                  and so on when there are ten pages or more)
+        pages/                    page-01.png, page-02.png, ... at 150 dpi
         manifest.md               pass 1
         notes.md                  header, effort, what was done, what remains
         upstream-notes.md         what the skill should learn from this document

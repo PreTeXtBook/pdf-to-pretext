@@ -7,6 +7,12 @@ New entries go under the heading they fit, one entry to a paragraph.
 
 - **Hyphens and ligatures.**  End-of-line hyphens split words, and ligatures (`fi`, `fl`)
   come out as single characters.  Repair both.
+- **Accents.**  Older LaTeX sets an accent as a glyph of its own beside its letter.  The
+  extraction joins the two, but check every accented name against the page image.
+- **A glyph with no character.**  A symbol the PDF's fonts give no Unicode for extracts
+  as a control character or as nothing readable.  That is the original's doing and tells
+  you to read the symbol from the image; in a PDF you built, `scripts/build.sh` checks
+  for the kind that means a glyph was lost.
 - **Columns and floats.**  A two-column layout interleaves in extraction; footnotes and
   floated captions land away from where they are read.
 - **Wide accents and stacked scripts.**  A wide tilde over a subscripted letter, or a
@@ -70,7 +76,7 @@ New entries go under the heading they fit, one entry to a paragraph.
   clipped at the page edge by the LaTeX conversion, losing terms; HTML scrolls instead.
   Break it into `mrow`s (a typographic change) rather than lose terms.
 - **A lost glyph leaves only two traces**: the engine's "Missing character" warning in the
-  build log, and a U+FFFD in the PDF's text layer.  The comparison of words cannot see it.
+  build log, and a glyph with no character in the PDF's text layer.  The comparison of words cannot see it.
   `scripts/build.sh` checks both after a PDF build.
 - **Font-dependent constructs.**  A bold Greek capital written with `\mathbf` vanishes
   under xelatex.  Do not copy a typographic detail the fidelity principle does not

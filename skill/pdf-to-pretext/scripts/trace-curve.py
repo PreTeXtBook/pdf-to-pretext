@@ -4,7 +4,7 @@ recreating a hand-drawn arc in PreFigure.
 
 Usage: trace-curve.py <crop.png> red|black <out.json> <overlay.png>
 
-The PNG is a 600-dpi render of the figure's crop (pdftoppm -r 600 -x -y -W -H).  The curve's
+The PNG is a 600-dpi render of the figure's crop (pdftool.py zoom ... 600).  The curve's
 pixels are thinned to a skeleton, ordered from the endpoint lowest on the page along the
 skeleton to the farthest endpoint, sampled by arc length, and simplified (Douglas-Peucker,
 1.5 px).  The JSON holds "dense" (every 10 px) and "simple" point lists in PDF points from

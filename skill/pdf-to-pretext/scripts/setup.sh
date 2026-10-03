@@ -12,9 +12,10 @@
 # A clone or a Python you named yourself (the environment, or config.local in the
 # skill's directory) is used as it is and never changed.
 #
-# What it cannot do is install programs for the whole machine: the poppler tools, a TeX
-# distribution, MuPDF's tools.  It ends with check-setup.sh, which names any of those
-# that are missing and the command that installs them.
+# What it cannot do is install a program for the whole machine, and one is needed: a TeX
+# distribution with xelatex.  It ends with check-setup.sh, which says so when that is
+# missing and gives the command that installs it.  PDFs are read with PyMuPDF, which is
+# among PreTeXt's requirements, so no other PDF program is needed.
 set -u
 . "$(dirname "$0")/pretext-location.sh"
 repository=${PRETEXT_REPOSITORY:-https://github.com/PreTeXtBook/pretext}

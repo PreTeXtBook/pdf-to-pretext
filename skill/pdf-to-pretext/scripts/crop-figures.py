@@ -3,7 +3,7 @@
 
 Meant for papers whose figures are pictures on the page with labels typeset over them
 (raster PNGs under LaTeX overlays, or vector drawings): a page-region crop keeps picture
-and labels together, where `pdfimages` would drop the labels.
+and labels together, where pulling the embedded picture out would drop the labels.
 
 Usage:
     crop-figures.py <paper.pdf> <spec.json> <external-dir> [--work DIR] [--dpi N] [--pad PT]
@@ -16,8 +16,8 @@ gaps), or ["grid", [n1, n2, ...]] (rows of n1, n2, ... panels, rows split first)
 Panel names become <external-dir>/<name>.svg and .pdf (so `image/@source` needs no
 extension: HTML takes the SVG, LaTeX the PDF).
 
-How a figure is found on its page: MuPDF's structured text (`mutool draw -F stext`)
-gives every text line's box in points.  The caption is the line beginning "Figure N.M";
+How a figure is found on its page: the text layer gives every line's box in points
+(pdftool.py, with PyMuPDF).  The caption is the line beginning "Figure N.M";
 subcaptions are the "(a) ...", "(b) ..." lines within 60 points above it, with their
 continuation lines; the figure region runs from the last body-text line above (any line
 wider than a label, or a line at the left margin with a letter in it) down to the
@@ -27,12 +27,12 @@ gaps.  Boxes are padded by --pad points and written to <work>/figure-boxes.json;
 panel is also rendered to PNG in <work>/panels/, and contact sheets sheet-N.png are
 written there for a visual check, which is the check to make before authoring.
 
-Needs: mutool, pdftoppm, pdftocairo (poppler), Python with Pillow and numpy.
+Needs: Python with PyMuPDF, Pillow, and numpy (setup.sh installs all three).
 The constants suit letter paper with a text block from about 72 to 540 points.  For
 another layout give the block's edges as --left and --right (a little outside the text),
 and --margin, a little right of where body lines begin: a line that starts left of
---margin is taken for body text, not for a label in the picture.  `pdftotext -bbox` or
-the contact sheets show whether they fit.
+--margin is taken for body text, not for a label in the picture.  The contact sheets
+show whether they fit.
 
 Two limits, each kept because loosening it moved boxes that were right (the 58 panels
 of arXiv 2607.05283 are the regression test: change a rule only if they all stay put).
@@ -43,10 +43,11 @@ Subcaptions are recognized for (a), (b), (c) only; a wider range took the items 
 lettered list near a caption for subcaptions.  Check a figure with more lettered panels
 on the contact sheet with particular care.
 """
-import argparse, json, math, os, re, subprocess, sys, xml.etree.ElementTree as ET
-import venv_python; venv_python.ensure("numpy", "PIL")
+import argparse, json, math, os, re, sys
+import venv_python; venv_python.ensure("numpy", "PIL", "pymupdf|fitz")
 import numpy as np
 from PIL import Image, ImageDraw
+import pdftool
 
 ap = argparse.ArgumentParser()
 ap.add_argument("pdf"); ap.add_argument("spec"); ap.add_argument("external")
@@ -57,36 +58,23 @@ ap.add_argument("--right", type=float, default=552.0, help="right edge of the te
 ap.add_argument("--margin", type=float, default=110.0, help="a line starting left of this is at the margin")
 args = ap.parse_args()
 WORK = args.work or os.path.join(os.path.dirname(os.path.abspath(args.spec)), "crop-work")
-os.makedirs(WORK, exist_ok=True); os.makedirs(os.path.join(WORK, "stext"), exist_ok=True)
+os.makedirs(WORK, exist_ok=True)
 os.makedirs(os.path.join(WORK, "panels"), exist_ok=True); os.makedirs(args.external, exist_ok=True)
 K = args.dpi / 72.0
 spec = json.load(open(args.spec))
-pages_needed = sorted({f["page"] for f in spec})
+DOC = pdftool.document(args.pdf)
 
-# 1. text positions
-for pg in pages_needed:
-    out = os.path.join(WORK, "stext", f"page-{pg}.xml")
-    if not os.path.exists(out):
-        subprocess.run(["mutool", "draw", "-q", "-F", "stext", "-o", out, args.pdf, str(pg)], check=True, stderr=subprocess.DEVNULL)
-
+# 1. text positions: every line of a page as (top, bottom, left, right, text), in points
 def lines(page):
-    root = ET.parse(os.path.join(WORK, "stext", f"page-{page}.xml")).getroot()
-    out = []
-    for ln in root.iter("line"):
-        x0, y0, x1, y1 = map(float, ln.get("bbox").split())
-        out.append((y0, y1, x0, x1, "".join(c.get("c") for c in ln.iter("char"))))
-    return sorted(out)
+    return pdftool.page_lines(DOC, page)
 
-# 2. ink
+# 2. ink: where a render of the page at --dpi is not white
 _pages = {}
 def ink(page):
     if page not in _pages:
-        base = os.path.join(WORK, f"render-{page}")
-        cands = [base + f"-{page:02d}.png", base + f"-{page:03d}.png", base + f"-{page}.png"]
-        if not any(os.path.exists(c) for c in cands):
-            subprocess.run(["pdftoppm", "-r", str(args.dpi), "-f", str(page), "-l", str(page), "-png", args.pdf, base], check=True, stderr=subprocess.DEVNULL)
-        f = next(c for c in cands if os.path.exists(c))
-        _pages[page] = (np.asarray(Image.open(f).convert("RGB")).min(axis=2) < 235)
+        pix = pdftool.page_pixels(DOC, page, args.dpi)
+        rgb = np.frombuffer(pix.samples, dtype=np.uint8).reshape(pix.height, pix.width, pix.n)[:, :, :3]
+        _pages[page] = rgb.min(axis=2) < 235
     return _pages[page]
 
 def ink_box(mask, y0, y1, x0, x1):
@@ -165,10 +153,9 @@ json.dump(result, open(os.path.join(WORK, "figure-boxes.json"), "w"), indent=1)
 for b in result:
     x, y = math.floor(b["x"]), math.floor(b["y"])
     w, h = math.ceil(b["x"] + b["w"]) - x, math.ceil(b["y"] + b["h"]) - y
-    common = ["-r", "72", "-f", str(b["page"]), "-l", str(b["page"]), "-x", str(x), "-y", str(y), "-W", str(w), "-H", str(h), "-paperw", str(w), "-paperh", str(h)]
-    for fmt in ("svg", "pdf"):
-        subprocess.run(["pdftocairo", "-" + fmt] + common + [args.pdf, os.path.join(args.external, b["name"] + "." + fmt)], check=True, stderr=subprocess.DEVNULL)
-    subprocess.run(["pdftocairo", "-png", "-singlefile", "-r", "110", os.path.join(args.external, b["name"] + ".pdf"), os.path.join(WORK, "panels", b["name"])], check=True, stderr=subprocess.DEVNULL)
+    stem = os.path.join(args.external, b["name"])
+    pdftool.crop(DOC, b["page"], x, y, w, h, stem)
+    pdftool.page_pixels(pdftool.document(stem + ".pdf"), 1, 110).save(os.path.join(WORK, "panels", b["name"] + ".png"))
 
 # 5. contact sheets
 sheet_w, x, y, row_h, sheets = 1400, 10, 10, 0, []

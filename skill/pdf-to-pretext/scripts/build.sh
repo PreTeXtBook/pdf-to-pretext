@@ -17,9 +17,9 @@
 # LaTeX source and its log) are kept beside the output, in <output-directory>-work.
 #
 # For a PDF, two more checks
-# follow: the engine's "Missing character" warnings in the log, and U+FFFD (a glyph the
-# text layer could not name) in the PDF.  Either one means a character of the source did
-# not reach the page, and the script exits with status 1.  The overfull boxes of the last
+# follow: the engine's "Missing character" warnings in the log, and a glyph the text layer
+# of the PDF cannot name (pdftool.py lost).  Either one means a character of the source
+# did not reach the page, and the script exits with status 1.  The overfull boxes of the last
 # LaTeX pass are then counted, and those wider than 20 points listed, widest first, each
 # with the start of its text: look at those on the page.  They do not change the status.
 set -eu
@@ -72,9 +72,9 @@ if [ "$format" = "pdf" ]; then
     fi
     for pdf in "$out"/*.pdf; do
         [ -f "$pdf" ] || continue
-        bad=$(pdftotext "$pdf" - | grep -o $'\xef\xbf\xbd' | wc -l)
+        bad=$("$PRETEXT_PYTHON" "$skill/scripts/pdftool.py" lost "$pdf")
         if [ "$bad" -gt 0 ]; then
-            echo "GLYPH CHECK FAILED: $bad replacement character(s) U+FFFD in the text layer of $pdf"
+            echo "GLYPH CHECK FAILED: $bad glyph(s) with no character in the text layer of $pdf"
             failed=1
         fi
     done
@@ -96,6 +96,6 @@ if [ "$format" = "pdf" ]; then
     if [ "$failed" -ne 0 ]; then
         exit 1
     fi
-    echo "glyph check: no missing characters in the log, no replacement characters in the PDF"
+    echo "glyph check: no missing characters in the log, none in the PDF's text layer"
 fi
 echo "built: $out"
