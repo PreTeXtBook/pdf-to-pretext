@@ -64,9 +64,10 @@ wanted.
 tests/run.sh
 ```
 
-It checks the setup, the skill's template, and every case: validation, the HTML and PDF
-builds, the glyph check, and both comparison scripts.  It needs no model and takes a few
-minutes.  Run it too when PreTeXt has moved: the schema changes, and a template that was
+It checks the setup, the skill's template, every case (validation, the HTML and PDF
+builds, the glyph check, both comparison scripts), the worked example, and the figure
+cropping script against 58 boxes it has to leave where they are.  It needs no model and
+takes a few minutes.  Run it too when PreTeXt has moved: the schema changes, and a template that was
 valid last month may not be now.
 
 ## Scoring the skill on a case

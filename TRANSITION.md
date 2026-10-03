@@ -1,8 +1,10 @@
 # Transition — state of the project for the next session
 
-Updated 2026-10-03: an experiment, one paper transcribed from the PDF alone and again from
-its LaTeX, with corrections and additions to the skill that came of it (the section after
-"What exists").  Before that, 2026-09-26: every output of the third document rebuilt on the
+Updated 2026-10-03, twice.  First an experiment, one paper transcribed from the PDF alone
+and again from its LaTeX, with corrections to the skill that came of it.  Then the skill
+was organized for others in the PreTeXt community: rewritten, made self-contained, given a
+README, a license, test cases, and a worked example (the two sections after "What
+exists").  The repository is to become public; it is not yet.  Before that, 2026-09-26: every output of the third document rebuilt on the
 clone at `20d10545` for Rob to publicize (below).  Three documents transcribed from their PDFs
 alone (Farmer, arXiv 2010.15608; Beezer, the Sylow subgraphs preprint; Bharathram, Birman,
 Brendle, arXiv 2607.05283), each built into every PreTeXt output and packaged as a
@@ -17,16 +19,29 @@ not a `file:` URL.
 ## What exists
 
 - `CLAUDE.md` — the rules and every decision Rob made on 2026-09-03; read it first.
-- `skill/pdf-to-pretext/` — `SKILL.md` (three-pass procedure), six reference files
-  (`article-elements`, `block-classes` generated from the clone's `entities.ent`,
-  `csl-bibliography`, `numbering`, `identifiers`, `macros`), and scripts
-  (`fetch-arxiv.sh`, `render-pages.sh`, `extract-text.sh`, `build.sh`, `validate.sh`,
-  `compare.py`, `run-header.sh`, `block-classes.py`, `lookup-dois.py`, and the figure
-  scripts under Open items).  All scripts smoke-tested.
+- `README.md` (for a first-time user), `CONTRIBUTING.md`, `COPYING` and `legal/` (the GNU
+  General Public License, version 2 or 3, as for PreTeXt).
+- `skill/pdf-to-pretext/` — the skill, complete in itself: `SKILL.md` (the fidelity
+  principle and its three rules, the three passes, finishing, notes for upstream); nine
+  reference files (`project-layout`, `pitfalls`, `article-elements`, `block-classes`
+  generated from the clone's `entities.ent`, `identifiers`, `numbering`, `macros`,
+  `csl-bibliography`, `figures`); `assets/` (the templates, laid out as a project:
+  `source/`, `publication/`, `project.ptx`, `transcription/manifest.md` and
+  `upstream-notes.md`); and scripts (`check-setup.sh`, `new-transcription.sh`,
+  `validate.sh`, `build.sh`, `compare.py`, `lookup-dois.py`, `fetch-arxiv.sh`,
+  `render-pages.sh`, `extract-text.sh`, `run-header.sh`, `block-classes.py`, the figure
+  scripts `crop-figures.py`, `trace-curve.py`, `trace-figure.py`, and
+  `pretext-location.sh`, which the others source).
+- `skill/pdf-to-pretext/config.local` — not tracked: where PreTeXt's Python is on this
+  machine (`PRETEXT_PYTHON`; `PRETEXT_HOME` defaults to the clone below).
 - `pretext/` — a clone of PreTeXtBook/pretext at `bf795ab1` (master, 2026-10-02), not
-  committed; `git -C pretext pull --ff-only` before every new task (CLAUDE.md).  Building
-  and validating the minimal example through `~/.claude/pretext-venv` from this clone works.
-- `templates/main.ptx`, `templates/publication.ptx` — starting points.
+  committed; `git -C pretext pull --ff-only` before every new task (CLAUDE.md).
+- `tests/run.sh` (the checks that need no model: setup, the template, every round-trip
+  case) and `tests/compare-transcriptions.py` (a transcription against its key: structure,
+  words, formulas after eight equivalences).
+- `corpus/round-trip/` — four cases written for the purpose; `corpus/MANIFEST.md` lists them.
+- `examples/sylow-subgraphs/` — the scvt transcription as a worked example, in the new
+  layout, with its manifest and notes as written.
 - `corpus/arxiv/2010.15608/` — the first document, fetched: `paper.pdf` (18 pages, dvips +
   Ghostscript, text layer present, 8,203 words), `pages/` (150 dpi PNG renderings),
   `paper.txt` (layout text), `source/` (the e-print: `whenpolyrealzeros1g.tex`, six EPS
@@ -68,9 +83,82 @@ they hold the session's transcript file name, which is a session identifier.
   overfull boxes of the last LaTeX pass wider than 20 points.  `compare.py` prints a second
   similarity, for the text before the reference list.
 
+## The skill organized for others (2026-10-03)
+
+Rob asked for the skill to be put in order for the PreTeXt community, after reading
+another session's note on how a skill's users might send improvements back (make the
+skill harvest its own failures; lower the bar for good pull requests).  His rulings:
+"Use the pretext/pretext script, only.  You can produce the output in a CLI-style format
+for directories and associated files, but do not process with the CLI."  The license is
+that of the main PreTeXt repository.  "This will become a public repository - we will do
+that after all of this."  Earlier the same day: no step that needs a browser, and no
+section on transcribing from LaTeX.
+
+- **Self-contained.**  The templates are inside the skill (`assets/`), laid out as the
+  PreTeXt-CLI lays out a project: `source/main.ptx` and `source/sections/`,
+  `publication/publication.ptx`, `assets/`, `generated-assets/`, `output/web` and
+  `output/print`, `project.ptx`, with the skill's working papers in `transcription/`.
+  The scripts no longer hold this machine's paths; they find PreTeXt from the environment,
+  from `config.local` in the skill's directory, or beside the repository, and they work
+  through a symbolic link.  `check-setup.sh` tests every prerequisite and ends with a
+  trial build; `new-transcription.sh` makes a project.  `build.sh` and `validate.sh` take
+  a project directory, and still take the two files of a run in the old layout.
+- **`SKILL.md` rewritten** from the three runs' notes: the fidelity principle and three
+  rules that had lived only in `CLAUDE.md` and in memory (do not correct the author, do
+  not guess, only what the document prints), rights before anything else, the passes, and
+  "Finishing".  The pitfalls are a reference file, one entry each; figures and the
+  project layout have reference files of their own.
+- **Notes for upstream.**  Every project has `transcription/upstream-notes.md`: what the
+  skill failed to say, sorted into gaps in the skill, defects in PreTeXt, and
+  peculiarities of the one document, never quoting the document.  At the end the skill
+  offers to draft an issue and leaves the filing to the person.
+- **Cases and checks.**  Four round-trip cases in `corpus/round-trip` (written for the
+  purpose; `corpus/MANIFEST.md`).  `tests/run.sh` needs no model: setup and template,
+  every case (validation, HTML, PDF, glyph check, both comparisons against itself), the
+  worked example, and the crop script against the 58 boxes of the Burau paper
+  (`tests/crop-figures/`).  `tests/compare-transcriptions.py` scores a transcription
+  against a key.
+- **For people.**  `README.md` (install by clone and symbolic link, the setup check, a
+  first transcription, rights, what it has been tried on), `CONTRIBUTING.md`, `COPYING`
+  and `legal/`, and `examples/sylow-subgraphs`.
+- **Tested by two fresh sessions**, each given only the skill and the PDF of one case
+  (blocks and proofs; figures).  Both transcriptions matched their keys: structure,
+  words, every formula, and for the figures the same panels with widths within a point.
+  About 8 and 10 minutes, 164,000 and 179,000 tokens.  Their notes for upstream (22
+  entries) were all acted on.  The largest: a reference with no target passes PreTeXt's
+  validation and both builds exit with status 0, so `build.sh` now refuses a build whose
+  log has a `PTX:ERROR`, `validate.sh` lists such references, and `count-items.py` counts
+  the assembled source.  Others: `\amp`, `\lt`, `\gt` were nowhere in the skill; the
+  comment with a section's original number was lost on assembly (it now goes in
+  `main.ptx`); the HTML could not be checked without a browser (`html-outline.py` lists
+  what its files show); PreTeXt's working directories were left in `/tmp` (now beside the
+  output); what a panel's width is a percentage of.  Two changes I made to
+  `crop-figures.py` on one agent's reading of its code moved three boxes of the Burau
+  paper and were taken back: its rules are narrow on purpose, and its header now says so.
+- **Checked as a newcomer would have it**: a fresh clone, linked into a skills directory,
+  passes `check-setup.sh` and `tests/run.sh`.
+
+**Before the repository is made public** (Rob's to do or to rule on):
+
+1. `README.md` says `REPOSITORY-URL` where the address of the repository belongs.
+2. `COPYING` names Robert A. Beezer as the copyright holder, 2026, in PreTeXt's wording.
+3. `examples/sylow-subgraphs/transcription/` holds the scvt run's manifest and notes as
+   written: a candid working log.  Read them as a stranger would.
+4. `CLAUDE.md`, `TRANSITION.md`, `notes/`, `favors/`, `evaluation/`, and
+   `corpus/MANIFEST.md` become public with the rest.  They name people and plans.  The
+   history was searched: no session link or identifier, no large file, and the only
+   binary files are the two small PDFs of the example's figure.
+5. Not done: tuning the skill's `description` so that it is chosen when it should be;
+   scoring the other two cases (bibliography; tables) with a model; a way to keep cases
+   that have the look of another typesetting (a journal's class, two columns).
+6. Two things seen in PreTeXt that may deserve a report, neither drafted: validation is
+   silent on an `xref` with no target, while the conversions log an error and exit with
+   status 0; and the rendering of a CSL name without a style leaves out its
+   `non-dropping-particle` ("de la"), seen once, in a round-trip case.
+
 ## Demonstration directories (2026-09-04)
 
-EPUBCheck 5.3.0 is at `/home/rob/epubcheck/` (installed 2026-09-04, delete the directory
+EPUBCheck 5.3.0 is at `~/epubcheck/` (installed 2026-09-04, delete the directory
 to remove); the system 4.2.6 gives 36 false CSS errors on every PreTeXt EPUB.  Under
 5.3.0 the Farmer EPUB has 40 errors, one per numbered display, from MathJax's
 `data-mjx-viewBox` attribute; the scvt EPUB is clean.  Filed as PreTeXtBook/pretext issue #3209 (2026-09-04).
@@ -214,9 +302,12 @@ image; typos preserved, never corrected.  Builds are under `/tmp/pdf-to-pretext/
    diff against the PDF-only run; then a run from `published.pdf` (no key) and a diff of the
    submitted and revised texts.
 4. For Farmer: the PDF+LaTeX run, same comparison.
-5. Rewrite `SKILL.md` from the runs' notes.
+5. Done 2026-10-03: `SKILL.md` rewritten from the runs' notes (the section "The skill
+   organized for others").
 6. Done 2026-10-03, with Rob's approval: `CLAUDE.md` names the scripts where they are,
    `skill/pdf-to-pretext/scripts/`.
+8. Make the repository public: the list at the end of the section "The skill organized
+   for others".
 7. Rob's request, 2026-09-26: the `index.html` of the scvt and Farmer demonstrations
    should say what the Burau one now says, "The words and the mathematics are the
    authors' own; we made no corrections of apparent errors or typos."  ("author's" for the
@@ -225,10 +316,10 @@ image; typos preserved, never corrected.  Builds are under `/tmp/pdf-to-pretext/
 
 ## Open items
 
-- `compare.py` measures prose only; a display-mathematics comparison against a LaTeX key
-  (normalized) is still to be written.  A first one exists for one paper,
-  `runs/2026-10-03-vector-balancing-experiment/compare-sources.py`: two of its eight
-  equivalences name that paper's macros and operators and would have to be made general.
+- `compare.py` measures prose only.  The comparison of mathematics against a key now
+  exists, `tests/compare-transcriptions.py` (2026-10-03): it reads each document's macros
+  from its `docinfo` and does not compare identifiers.  It reproduces the experiment's
+  result (301 of 302 formulas equivalent).
 - The skill says to read every delivered output, and gives no way to read the HTML with
   its mathematics rendered; in the experiment of 2026-10-03 the HTML was checked from its
   files only.  Rob's ruling, 2026-10-03, on a step that would open the build in Chrome:
@@ -251,21 +342,23 @@ For a paper that is a local PDF (with or without LaTeX source):
 ```
 Read CLAUDE.md and TRANSITION.md, then skill/pdf-to-pretext/SKILL.md.  Run
 `git -C pretext pull` first.  The new document is the PDF at <path>; its LaTeX source, if
-any, is at <path>.  Put it in corpus/<own or wild>/<short-name>/ with the usual layout
-(paper.pdf, pages/, paper.txt, source/ unopened), add its entry to corpus/MANIFEST.md, and
-tell me the license situation before anything else.  Then pass 1 from the PDF alone: create
-the run directory, write its notes header with the model you are, start the effort log, and
-survey the whole paper into a manifest as SKILL.md describes.  Do not open the LaTeX source
-and never consult an HTML rendering.  Ask before creating anything outside runs/ other
-than the corpus directory.
+any, is at <path>.  Put it in corpus/<own or wild>/<short-name>/ (paper.pdf, source/
+unopened), add its entry to corpus/MANIFEST.md, and tell me the license situation before
+anything else.  Then pass 1 from the PDF alone: make the run directory
+runs/<date>-<short-name> with skill/pdf-to-pretext/scripts/new-transcription.sh, start the
+effort log in its notes, and survey the whole paper into the manifest as SKILL.md
+describes.  Do not open the LaTeX source and never consult an HTML rendering.  Ask before
+creating anything outside runs/ other than the corpus directory.
 ```
 
 For an arXiv paper, replace the second and third sentences with:
 
 ```
-The new document is arXiv <identifier>; fetch it with skill/pdf-to-pretext/scripts/fetch-arxiv.sh,
+The new document is arXiv <identifier>; fetch it with
+skill/pdf-to-pretext/scripts/fetch-arxiv.sh <identifier> corpus/arxiv/<identifier>,
 add its entry to corpus/MANIFEST.md, and tell me the license situation before anything else.
 ```
 
 Then, when pass 1 is done: "your decisions were good, on to pass 2" (or the corrections
-first).  Pass 2 runs through the pass-3 checks and ends with a results row.
+first).  Pass 2 runs through the pass-3 checks and ends with a results row in
+`evaluation/RESULTS.md` (the workbench's record; the skill itself does not ask for one).
