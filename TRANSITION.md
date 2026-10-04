@@ -193,13 +193,11 @@ section on transcribing from LaTeX.
   `poppler-last` is the last commit before the change.  Scores recorded before
   2026-10-03 used poppler's extraction and run lower (`evaluation/RESULTS.md`).
 
-**The repository is on GitHub, private** (2026-10-03):
-https://github.com/PreTeXtBook/pdf-to-pretext, created by Rob's choice as private first,
-with `main` and the tag `poppler-last` pushed and this clone's `origin` set to it.  The
-organization's default permission is "read", so every member of PreTeXtBook can read it
-now.  The merged branch `replace-poppler-with-pymupdf` was not pushed.  Making it public
-waits on Rob's word; the command is
-`gh repo edit PreTeXtBook/pdf-to-pretext --visibility public --accept-visibility-change-consequences`.
+**The repository is public** (2026-10-03, on Rob's word):
+https://github.com/PreTeXtBook/pdf-to-pretext.  It was created private and made public
+the same day, with `main` and the tag `poppler-last`; this clone's `origin` is set to it.
+The merged branch `replace-poppler-with-pymupdf` was not pushed.  From now on a push is a
+publication: ask Rob before pushing.
 
 **The history was rewritten once, on 2026-10-03, while the repository was private**: Rob
 asked that a person's name be taken out of two lines of the example's notes, and it was
@@ -208,9 +206,10 @@ changed; the 33 commits before them kept theirs.  `main` and the tag `poppler-la
 pushed again by force.  A hash from that day quoted anywhere outside this repository no
 longer names a commit of it.
 
-**Before the repository is made public** (Rob's to do or to rule on):
+**The list made before the repository was public** (what is not marked done is still
+open, and still Rob's to rule on):
 
-1. Done: `README.md` gives the address.  Rob's post to pretext-dev still says `<REPO>`.
+1. Done: `README.md` gives the address, and so does Rob's post to pretext-dev.
 2. `COPYING` names Robert A. Beezer as the copyright holder, 2026, in PreTeXt's wording.
 3. `examples/sylow-subgraphs/transcription/` holds the scvt run's manifest and notes as
    written: a candid working log.  Read them as a stranger would.
