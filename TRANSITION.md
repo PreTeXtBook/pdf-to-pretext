@@ -193,16 +193,27 @@ section on transcribing from LaTeX.
   `poppler-last` is the last commit before the change.  Scores recorded before
   2026-10-03 used poppler's extraction and run lower (`evaluation/RESULTS.md`).
 
+**The repository is on GitHub, private** (2026-10-03):
+https://github.com/PreTeXtBook/pdf-to-pretext, created by Rob's choice as private first,
+with `main` and the tag `poppler-last` pushed and this clone's `origin` set to it.  The
+organization's default permission is "read", so every member of PreTeXtBook can read it
+now.  The merged branch `replace-poppler-with-pymupdf` was not pushed.  Making it public
+waits on Rob's word; the command is
+`gh repo edit PreTeXtBook/pdf-to-pretext --visibility public --accept-visibility-change-consequences`.
+
 **Before the repository is made public** (Rob's to do or to rule on):
 
-1. `README.md` says `REPOSITORY-URL` where the address of the repository belongs.
+1. Done: `README.md` gives the address.  Rob's post to pretext-dev still says `<REPO>`.
 2. `COPYING` names Robert A. Beezer as the copyright holder, 2026, in PreTeXt's wording.
 3. `examples/sylow-subgraphs/transcription/` holds the scvt run's manifest and notes as
    written: a candid working log.  Read them as a stranger would.
 4. `CLAUDE.md`, `TRANSITION.md`, `notes/`, `favors/`, `evaluation/`, and
    `corpus/MANIFEST.md` become public with the rest.  They name people and plans.  The
-   history was searched: no session link or identifier, no large file, and the only
-   binary files are the two small PDFs of the example's figure.
+   history was searched (again on 2026-10-03, all 47 commits, before the push): no
+   session link or identifier, no credential, no large file, and the only binary files
+   are the two small PDFs of the example's figure.  Also tracked: the arXiv metadata
+   records of the two corpus papers (`corpus/arxiv/*/metadata-oai.xml`), with their
+   abstracts and authors.
 5. Not done: tuning the skill's `description` so that it is chosen when it should be;
    scoring the other two cases (bibliography; tables) with a model; a way to keep cases
    that have the look of another typesetting (a journal's class, two columns).
