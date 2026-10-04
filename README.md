@@ -26,7 +26,7 @@ Claude Code looks for skills in `~/.claude/skills/`.  The skill is the directory
 file), and copy the one directory:
 
 ```
-git clone REPOSITORY-URL
+git clone https://github.com/PreTeXtBook/pdf-to-pretext.git
 mkdir -p ~/.claude/skills
 cp -r pdf-to-pretext/skill/pdf-to-pretext ~/.claude/skills/
 ```
@@ -37,7 +37,7 @@ To update a copy, get the repository again and copy the directory again.
 send a correction back, since a change you make is then in a working tree:
 
 ```
-git clone REPOSITORY-URL ~/src/pdf-to-pretext
+git clone https://github.com/PreTeXtBook/pdf-to-pretext.git ~/src/pdf-to-pretext
 mkdir -p ~/.claude/skills
 ln -s ~/src/pdf-to-pretext/skill/pdf-to-pretext ~/.claude/skills/pdf-to-pretext
 ```
