@@ -201,6 +201,13 @@ now.  The merged branch `replace-poppler-with-pymupdf` was not pushed.  Making i
 waits on Rob's word; the command is
 `gh repo edit PreTeXtBook/pdf-to-pretext --visibility public --accept-visibility-change-consequences`.
 
+**The history was rewritten once, on 2026-10-03, while the repository was private**: Rob
+asked that a person's name be taken out of two lines of the example's notes, and it was
+taken out of the 16 commits that held it as well (all made that day), so their hashes
+changed; the 33 commits before them kept theirs.  `main` and the tag `poppler-last` were
+pushed again by force.  A hash from that day quoted anywhere outside this repository no
+longer names a commit of it.
+
 **Before the repository is made public** (Rob's to do or to rule on):
 
 1. Done: `README.md` gives the address.  Rob's post to pretext-dev still says `<REPO>`.
