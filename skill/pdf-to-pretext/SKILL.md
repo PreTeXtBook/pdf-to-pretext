@@ -196,6 +196,6 @@ from those entries only: show the draft, and leave the filing to the person you 
 | `references/block-classes.md` | when classing a theorem, remark, example, and the like |
 | `references/identifiers.md` | in pass 1, when naming things |
 | `references/numbering.md` | in pass 1, for the publication file |
-| `references/macros.md` | in pass 1, for `docinfo/macros` |
+| `references/macros.md` | in pass 1, for `docinfo/macros`, and when the paper loads a LaTeX package for its notation |
 | `references/csl-bibliography.md` | for the bibliography and its DOIs |
 | `references/figures.md` | when the paper has figures |
