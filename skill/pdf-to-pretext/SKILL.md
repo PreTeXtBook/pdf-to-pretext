@@ -92,6 +92,10 @@ Read every page image with the extracted text beside it. Fill in
 9. Anything unreadable, with page numbers.
 10. What looks wrong in the original, kept as printed.
 11. Judgments: decisions the page did not settle, each with its reason.
+12. Advice for the authors, added as the passes find it: a construct that is theirs to
+    change and that no renderer sets well (a formula too long to stay inline, a list item
+    whose only content is a list, a package command that fails inside an environment).
+    About structure, never style; short; never applied to the transcription.
 
 Most of PreTeXt is global (identifiers, numbering, macros, the bibliography), and the
 manifest is what keeps work done one section at a time consistent. Finish it before
@@ -170,6 +174,12 @@ work for, goes in the notes with the reason.
 Finish `transcription/notes.md`: what was done in each pass, the counts from the
 assembled source, the comparison's leftovers with each one accounted for, the differences
 from the original that remain, and the effort (clock time for each pass).
+
+**Advice for the authors.** A transcription is the one time a paper is set by five
+renderers its authors never use, and a few things that are the authors' to change would
+set better in every one of them. The manifest's last section collects them; at the end,
+hand that section to the person you work for, with its opening sentence, for them to pass
+on or not. It is advice, not correction: nothing in it was applied.
 
 **Notes for upstream.** Whenever you had to work something out that this skill should
 have told you, or the skill told you something wrong, or PreTeXt itself misbehaved, add an

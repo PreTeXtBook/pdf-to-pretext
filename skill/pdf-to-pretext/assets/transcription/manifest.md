@@ -63,3 +63,12 @@ Page and place of anything that could not be read.  A formula is never guessed.
 
 Decisions the page did not settle (where an upright remark ends, whether a sentence
 belongs to a block), each with its reason.
+
+## 12. Advice for the authors
+
+A transcription is the one time a paper is set by five renderers its authors never use,
+and a few things that are the authors' to change would set better in every one of them.
+Nothing below was applied to the transcription; it is offered in case it is useful.
+
+(One line each: the construct, where it is, what would set better.  Structure, never
+style.  Leave the section with its opening paragraph when there is nothing to say.)
