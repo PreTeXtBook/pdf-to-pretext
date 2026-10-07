@@ -43,7 +43,11 @@ PreTeXt changes; this list was last checked on 2026-10-03 against commit `bf795a
 - Text: `p`, `em`, `term` (a defined term), `q` and `sq` (double and single quotation
   marks), `ndash`, `mdash`, `nbsp`, `ellipsis`, `fn`, `url`, lists (`ul`, `ol`, and `dl`
   with titled items; a list sits inside the `p` whose sentence introduces it; an `li`
-  holds `p`s; `ol/@marker` is the first label as printed, `(a)`, `1.`, `i.`, `A`),
+  holds `p`s; `ol/@marker` is the first label as printed, `(a)`, `1.`, `i.`, `A`; a list
+  whose labels are words that the text cites, "Fact 1", "(H2)", is a `dl` whose titles are
+  the labels, each cited with `xref/@text="title"`, since a marker cannot hold a word; give
+  that `dl` `width="narrow"` when its labels are a word or two, because the default label
+  column is wide and leaves the text beside it narrow and loosely set),
   `blockquote`, `articletitle` and `pubtitle` (a title cited in prose), `notation` (feeds
   a notation list), `idx` (index entries, optional in a paper).
 - Back matter: `backmatter/references` with `biblio` entries (see `csl-bibliography.md`).
